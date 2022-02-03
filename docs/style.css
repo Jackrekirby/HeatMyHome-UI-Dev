@@ -1,0 +1,495 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700;800&display=swap");
+
+/* sections
+    globals
+    nav
+    home-discover
+    home-our-cards
+    footer
+    about
+    motivation'
+    goals
+*/
+
+/* global */
+:root {
+  --dark-accent: #024557;
+  --brown-accent: #eae9e4;
+  --white: white;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Sora", sans-serif;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex.row {
+  flex-direction: row;
+}
+
+.flex.wrap {
+  flex-wrap: wrap;
+}
+
+.hide {
+  display: none;
+}
+
+main {
+  justify-content: space-evenly;
+}
+
+section {
+  width: 100%;
+}
+
+button {
+  color: var(--white);
+  background-color: var(--dark-accent);
+  border-radius: 4px;
+  border-style: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+button:hover {
+  background: #69a7a7;
+  color: var(--white);
+  transition: all 0.35s;
+}
+
+.fadein {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* nav */
+
+nav {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 4rem;
+  background-color: var(--dark-accent);
+  justify-content: space-between;
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 5px #535353;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--white);
+  padding: 0.5rem 2rem;
+  margin: 1rem;
+}
+
+nav img {
+  width: 4rem;
+  height: 4rem;
+  padding: 0rem 1rem;
+}
+
+nav .button {
+  background-color: var(--white);
+  border-radius: 4px;
+  color: var(--dark-accent);
+  border-style: none;
+}
+
+nav a:hover {
+  color: #69a7a7;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background: #69a7a7;
+  color: var(--white);
+  transition: all 0.35s;
+}
+
+.nav-toggle {
+  display: none;
+  width: 3rem;
+  justify-content: center;
+}
+
+.nav-toggle div {
+  width: 25px;
+  height: 3px;
+  margin: 3px 0px;
+  transition: all 0.3s ease-in-out;
+  background: #fff;
+}
+
+@media screen and (max-width: 900px) {
+  .nav-toggle {
+    display: unset;
+  }
+
+  #nav-menu {
+    display: none;
+  }
+
+  #nav-menu {
+    display: none;
+  }
+
+  #nav-menu.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 4rem;
+    width: 100%;
+    background-color: var(--dark-accent);
+    animation: open-nav 0.2s;
+  }
+
+  @keyframes open-nav {
+    0% {
+      opacity: 0;
+      transform-origin: top left;
+      transform: scaleY(0.01);
+    }
+    100% {
+      opacity: 1;
+      transform-origin: top left;
+      transform: scaleY(1);
+    }
+  }
+}
+
+/* home discover */
+
+#home-discover {
+  height: 100vh;
+  justify-content: center;
+  align-content: center;
+
+  background-color: #ffffff;
+  opacity: 1;
+  background-image: repeating-radial-gradient(
+      circle at 0 0,
+      transparent 0,
+      #ffffff 36px
+    ),
+    repeating-linear-gradient(#e1edff55, #e1edff);
+}
+
+#home-discover > div {
+  margin: 1rem;
+}
+
+#home-discover h1 {
+  color: var(--dark-accent);
+  font-size: 5rem;
+  font-weight: bolder;
+  text-align: center;
+}
+
+#home-discover a {
+  color: var(--white);
+  text-decoration: none;
+  background-color: var(--dark-accent);
+  border-radius: 4px;
+  border-style: none;
+  padding: 0.5rem 1rem;
+  font-size: 3rem;
+  padding: 0.5rem 2rem;
+}
+
+#home-discover a:hover {
+  background: #69a7a7;
+  transition: all 0.35s;
+}
+
+#home-discover > img {
+  width: 30rem;
+}
+
+@media screen and (max-width: 800px) {
+  #home-discover h1 {
+    font-size: 3rem;
+  }
+
+  #home-discover a {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  #home-discover > img {
+    width: 20rem;
+  }
+}
+
+/* home-our-cards */
+
+#home-our-cards {
+  background-color: var(--brown-accent);
+  justify-content: space-evenly;
+  padding: 1rem 0rem;
+}
+
+#home-our-cards h2 {
+  padding: 0.5rem;
+  margin: 0rem;
+}
+
+#home-our-cards > div {
+  border: 1px var(--white) solid;
+  height: 25rem;
+  width: 20rem;
+  margin: 1rem;
+  justify-content: space-evenly;
+}
+
+#home-our-cards img {
+  width: 10rem;
+  height: 10rem;
+  margin: 1rem;
+}
+
+#home-our-cards p {
+  margin: 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+#home-our-cards button {
+  margin: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* footer */
+
+footer {
+  background-color: var(--dark-accent);
+  justify-content: space-evenly;
+
+  padding: 1rem;
+  background-color: var(--dark-accent);
+  justify-content: space-evenly;
+  color: var(--white);
+}
+footer h2 {
+  margin: 0rem;
+  padding: 0.5rem 0rem;
+  font-size: 1.5rem;
+}
+
+footer a {
+  text-decoration: none;
+  color: var(--white);
+  padding: 0.2rem 0rem;
+}
+
+footer > div {
+  width: 15rem;
+  height: 10rem;
+  border: 1px var(--white) solid;
+  margin: 1rem;
+  text-align: center;
+  justify-content: center;
+  font-weight: light;
+}
+
+/* about */
+
+.nav-buffer {
+  width: 100%;
+  height: 4rem;
+}
+
+#about-section {
+  justify-content: center;
+  min-height: 80vh;
+  background-color: var(--brown-accent);
+}
+
+#about-selection {
+  width: 100%;
+  padding: 2rem;
+  justify-content: center;
+}
+
+#about-selection button {
+  margin: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.grow {
+  animation: grow 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+.about-slides {
+  min-height: 25rem;
+}
+
+@media screen and (max-width: 900px) {
+  #about-selection button {
+    margin: 0.5rem;
+    font-size: 1rem;
+    padding: 0.5rem;
+    font-weight: bold;
+  }
+}
+
+/* motivation */
+
+#motivation-cards {
+  width: 100%;
+  justify-content: space-evenly;
+  padding: 1rem 0rem;
+}
+
+#motivation-cards > div {
+  border: 1px var(--white) solid;
+  height: 20rem;
+  width: 20rem;
+  margin: 1rem;
+  justify-content: space-evenly;
+}
+
+#motivation-cards img {
+  width: 10rem;
+  height: 10rem;
+  margin: 1rem;
+}
+
+#motivation-cards p {
+  margin: 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* goals / value cards */
+
+#goal-cards {
+  width: 100%;
+  justify-content: space-evenly;
+  padding: 1rem 0rem;
+}
+
+#goal-cards > div {
+  border: 1px var(--white) solid;
+  height: 25rem;
+  width: 20rem;
+  margin: 1rem;
+  justify-content: space-evenly;
+}
+
+#goal-cards h2 {
+  margin: 0.5rem;
+  padding: 0rem;
+}
+
+#goal-cards img {
+  width: 5rem;
+  height: 5rem;
+  margin: 1rem;
+}
+
+#goal-cards p {
+  margin: 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* education */
+
+section.education-introduction {
+  justify-content: center;
+  background-color: var(--brown-accent);
+}
+
+section.education-introduction > div {
+  max-width: 50rem;
+  min-width: 20rem;
+  padding: 0.5rem 1.5rem;
+  text-align: center;
+}
+
+section.education-options {
+  justify-content: center;
+  background-color: var(--brown-accent);
+  padding: 1rem;
+}
+
+.heat-option {
+  width: 9rem;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  margin: 0.5rem;
+  padding: 0.5rem 0rem;
+  cursor: pointer;
+}
+
+.heat-option img {
+  width: 8rem;
+  height: 8rem;
+}
+
+.heat-option > h2 {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+#education-slides {
+  width: 100%;
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  background-color: #ffffff;
+  opacity: 1;
+  background-image: radial-gradient(#e1edff 1.8px, transparent 1.8px),
+    radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
+  background-size: 72px 72px;
+  background-position: 0 0, 36px 36px;
+}
+
+#discover {
+  height: 90vh;
+  width: 100%;
+  justify-content: center;
+  background-color: #ffffff;
+  opacity: 1;
+  background-image: radial-gradient(#e1edff 1.8px, transparent 1.8px),
+    radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
+  background-size: 72px 72px;
+  background-position: 0 0, 36px 36px;
+}
