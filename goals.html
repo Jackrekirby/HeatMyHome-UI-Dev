@@ -27,7 +27,7 @@
           <span class="bar"></span>
           <span class="bar"></span>
         </div>
-        <ul class="navbar__menu">
+        <ul id="navbar-menu" class="navbar__menu">
           <li class="navbar__item">
             <a href="./" class="navbar__links"> Home </a>
           </li>
@@ -141,7 +141,12 @@
         <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
       </div>
     </div>
-
+    <script>
+      let nav_items = document
+        .getElementById("navbar-menu")
+        .getElementsByClassName("navbar__item");
+      nav_items[1].classList.add("underline");
+    </script>
     <script src="app.js"></script>
   </body>
 </html>

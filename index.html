@@ -22,13 +22,14 @@
             alt="HeatmyHome"
           />
         </a>
+        <p>Version 0.2</p>
         <div class="navbar__toggle" id="mobile-menu">
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
         </div>
-        <ul class="navbar__menu">
-          <li class="navbar__item">
+        <ul id="navbar-menu" class="navbar__menu">
+          <li class="navbar__item" onclick="highlight_nav_item(0);">
             <a href="./" class="navbar__links"> Home </a>
           </li>
           <li class="navbar__item">
@@ -126,7 +127,12 @@
         <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
       </div>
     </div>
-
+    <script>
+      let nav_items = document
+        .getElementById("navbar-menu")
+        .getElementsByClassName("navbar__item");
+      nav_items[0].classList.add("underline");
+    </script>
     <script src="app.js"></script>
   </body>
 </html>
