@@ -52,7 +52,9 @@ body {
 }
 
 .navbar__menu {
-  display: flex;
+  display: hide;
+  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   list-style: none;
   text-align: center;
@@ -74,7 +76,7 @@ body {
   font-weight: 500;
 }
 .navbar__btn {
-  display: flex;
+  display: hide;
   justify-content: center;
   align-items: center;
   padding: 0 3rem;
@@ -118,8 +120,9 @@ body {
   }
 
   .navbar__menu {
-    display: grid;
-    grid-template-columns: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     margin: 0;
     width: 100%;
     position: absolute;
@@ -177,7 +180,8 @@ body {
   }
 
   .navbar__btn {
-    padding-bottom: 2rem;
+    display: flex;
+    padding: 1rem;
   }
   .button {
     display: flex;
