@@ -544,7 +544,7 @@ body {
 }
 
 .heat-option {
-  width: 10rem;
+  width: 9rem;
   border: 1px solid white;
   display: flex;
   flex-direction: column;
@@ -552,7 +552,7 @@ body {
   justify-content: space-evenly;
   text-align: center;
   margin: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0rem;
 }
 
 .heat-option > h2 {
