@@ -401,7 +401,7 @@ footer > div {
   font-weight: bold;
 }
 
-.grow {
+#about-selection .grow {
   animation: grow 0.5s;
   animation-fill-mode: forwards;
   background: #69a7a7;
@@ -508,7 +508,7 @@ section.education-introduction > div {
 section.education-options {
   justify-content: center;
   background-color: var(--brown-accent);
-  padding: 0.5rem;
+  padding: 1rem;
 }
 
 .heat-option {
@@ -547,6 +547,11 @@ section.education-options {
     radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
   background-size: 72px 72px;
   background-position: 0 0, 36px 36px;
+}
+
+.education-options .grow {
+  animation: grow 0.5s;
+  animation-fill-mode: forwards;
 }
 
 /* discover */

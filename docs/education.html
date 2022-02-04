@@ -45,7 +45,7 @@
         </div>
       </section>
       <section class="education-options flex row wrap">
-        <div class="heat-option">
+        <div class="heat-option grow">
           <img src="./images/value.png" onclick="show_education_slide(0);" />
           <h2>Air Source<br />Heat Pump</h2>
         </div>
@@ -169,6 +169,15 @@
           field.classList.remove("fadein");
           field.classList.add("fadein");
         }
+
+        document
+          .getElementsByClassName("education-options")[0]
+          .getElementsByClassName("heat-option")
+          [slide_id].classList.remove("grow");
+        document
+          .getElementsByClassName("education-options")[0]
+          .getElementsByClassName("heat-option")
+          [new_slide_id].classList.add("grow");
 
         document.getElementById("education-slides").scrollIntoView({
           behavior: "smooth",
