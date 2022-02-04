@@ -129,22 +129,22 @@ nav a:hover {
   transition: all 0.35s;
 }
 
-.nav-toggle {
+#nav-toggle {
   display: none;
   width: 3rem;
   justify-content: center;
 }
 
-.nav-toggle div {
+#nav-toggle div {
   width: 25px;
-  height: 3px;
-  margin: 3px 0px;
+  height: 4px;
+  margin: 4px 0px;
   transition: all 0.3s ease-in-out;
   background: #fff;
 }
 
 @media screen and (max-width: 900px) {
-  .nav-toggle {
+  #nav-toggle {
     display: unset;
   }
 
@@ -160,6 +160,20 @@ nav a:hover {
     width: 100%;
     background-color: var(--dark-accent);
     animation: open-nav 0.2s;
+  }
+
+  #nav-toggle.open div:nth-child(2) {
+    opacity: 0;
+  }
+
+  #nav-toggle.open div:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    transform-origin: center;
+  }
+
+  #nav-toggle.open div:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    transform-origin: center;
   }
 
   @keyframes open-nav {

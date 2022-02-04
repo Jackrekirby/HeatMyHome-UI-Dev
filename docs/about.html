@@ -11,14 +11,14 @@
       <div>
         <img src="./images/logo.svg" alt="HeatMyHome" />
       </div>
-      <div>HeatMyHome [0.5]</div>
+      <div>HeatMyHome [0.6]</div>
       <div id="nav-menu" class="flex row">
         <a href="./"> Home </a>
         <a href="./about.html"> About </a>
         <a href="./education.html"> Education </a>
         <a href="./discover.html" class="button"> Discover </a>
       </div>
-      <div class="nav-toggle flex" onclick="toggle_nav_menu()">
+      <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
         <div></div>
         <div></div>
         <div></div>
@@ -161,16 +161,19 @@
       function toggle_nav_menu() {
         console.log("toggle nav menu");
         let menu = document.getElementById("nav-menu");
+        let toggle = document.getElementById("nav-toggle");
         if (menu.classList.contains("open")) {
           for (let div of menu.getElementsByTagName("a")) {
             div.classList.remove("open");
           }
           menu.classList.remove("open");
+          toggle.classList.remove("open");
         } else {
           for (let div of menu.getElementsByTagName("a")) {
             div.classList.add("open");
           }
           menu.classList.add("open");
+          toggle.classList.add("open");
         }
       }
       let current_slide_id = 0;
