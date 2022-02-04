@@ -4,14 +4,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>HeatMyHome</title>
+    <title>HeatMyHome | Discover</title>
   </head>
   <body>
     <nav class="flex row">
       <div>
         <img src="./images/logo.svg" alt="HeatMyHome" />
       </div>
-      <div>HeatMyHome</div>
+      <div class="title">HeatMyHome</div>
+      <div class="mobile title">HeatMyHome | Discover</div>
       <div id="nav-menu" class="flex row">
         <a href="./"> Home </a>
         <a href="./about.html"> About </a>
@@ -26,7 +27,45 @@
     </nav>
     <div class="nav-buffer"></div>
     <main class="flex">
-      <div id="discover" class="flex">Discovery Coming Soon...</div>
+      <div id="discover" class="flex row wrap">
+        <div class="side-panel flex">
+          <div class="flex row">
+            <img src="./images/environment.png" />
+            <div>
+              <h2>Reduce your carbon footprint</h2>
+              <p>explanation here</p>
+            </div>
+          </div>
+          <div class="flex row">
+            <img src="./images/time.png" />
+            <div>
+              <h2>Save time</h2>
+              <p>explanation here</p>
+            </div>
+          </div>
+          <div class="flex row">
+            <img src="./images/money.png" />
+            <div>
+              <h2>Save Money</h2>
+              <p>explanation here</p>
+            </div>
+          </div>
+        </div>
+        <div class="parameter-input">
+          <div class="flex">
+            <h2>Parameter Inputs</h2>
+            <div class="flex">
+              <p>Postcode</p>
+              <input type="text" id="input-postcode" />
+            </div>
+            <div class="flex">
+              <p>Address</p>
+              <select id="address"></select>
+            </div>
+            <button>Next</button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer class="flex row wrap">

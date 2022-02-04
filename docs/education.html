@@ -4,14 +4,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>HeatMyHome</title>
+    <title>HeatMyHome | Education</title>
   </head>
   <body>
     <nav class="flex row">
       <div>
         <img src="./images/logo.svg" alt="HeatMyHome" />
       </div>
-      <div>HeatMyHome</div>
+      <div class="title">HeatMyHome</div>
+      <div class="mobile title">HeatMyHome | Education</div>
       <div id="nav-menu" class="flex row">
         <a href="./"> Home </a>
         <a href="./about.html"> About </a>
@@ -98,7 +99,7 @@
         </div>
         <div class="hide">
           <h1>Biomass Boiler</h1>
-          <p>This is stuff about an Hydrogen Boiler.</p>
+          <p>This is stuff about an Biomass Boiler.</p>
           <p>And another paragraph...</p>
         </div>
       </section>
@@ -146,6 +147,15 @@
         }
       }
 
+      const heat_options = [
+        "#air-source-heat-pump",
+        "#ground-source-heat-pump",
+        "#electric-boiler",
+        "#hydrogen-boiler",
+        "#hydrogen-fuel-cell",
+        "#biomass-boiler",
+      ];
+
       let slide_id = 0;
       function show_education_slide(new_slide_id) {
         let slides = document
@@ -166,8 +176,20 @@
           inline: "nearest",
         });
 
+        window.location.hash = heat_options[new_slide_id];
         slide_id = new_slide_id;
       }
+
+      let heat_index = heat_options.indexOf(window.location.hash);
+      console.log("Hash: ", window.location.hash, "index: ", heat_index);
+      if (heat_index > -1) {
+        show_education_slide(heat_index);
+      }
+
+      document
+        .getElementById("nav-menu")
+        .getElementsByTagName("a")[2]
+        .classList.add("showing");
     </script>
   </body>
 </html>

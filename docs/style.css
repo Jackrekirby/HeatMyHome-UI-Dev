@@ -98,11 +98,16 @@ nav {
   z-index: 1;
 }
 
+nav .mobile {
+  display: none;
+}
+
 nav a {
   text-decoration: none;
   color: var(--white);
   padding: 0.5rem 2rem;
   margin: 1rem;
+  border-bottom: 3px solid transparent;
 }
 
 nav img {
@@ -118,15 +123,18 @@ nav .button {
   border-style: none;
 }
 
-nav a:hover {
-  color: #69a7a7;
-  transition: all 0.3s ease;
+nav a:hover,
+#nav-menu .showing {
+  /* color: #69a7a7; */
+  /* transition: all 0.3s ease; */
+  border-bottom: 3px solid var(--white);
 }
 
 .button:hover {
   background: #69a7a7;
   color: var(--white);
   transition: all 0.35s;
+  border-bottom: none;
 }
 
 #nav-toggle {
@@ -144,6 +152,23 @@ nav a:hover {
 }
 
 @media screen and (max-width: 900px) {
+  nav .title {
+    display: none;
+    font-size: 1rem;
+  }
+
+  nav a {
+    border-bottom: none;
+  }
+
+  #nav-menu .showing {
+    border-bottom: none;
+  }
+
+  nav .mobile {
+    display: unset;
+  }
+
   #nav-toggle {
     display: unset;
   }
@@ -524,6 +549,8 @@ section.education-options {
   background-position: 0 0, 36px 36px;
 }
 
+/* discover */
+
 #discover {
   height: 100vh;
   width: 100%;
@@ -534,4 +561,72 @@ section.education-options {
     radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
   background-size: 72px 72px;
   background-position: 0 0, 36px 36px;
+}
+
+#discover > div {
+  width: 25rem;
+}
+
+#discover .side-panel {
+  margin: 1rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#discover .side-panel img {
+  width: 8rem;
+  margin: 1rem;
+}
+
+#discover .side-panel h2 {
+  font-size: 1.5rem;
+}
+
+#discover .side-panel > div > div {
+  margin: 1rem;
+}
+
+@media screen and (max-width: 900px) {
+  #discover .side-panel {
+    margin: 0.5rem;
+  }
+
+  #discover .side-panel img {
+    width: 6rem;
+  }
+
+  #discover .side-panel h2 {
+    font-size: 1rem;
+  }
+
+  #discover .side-panel > div > div {
+    margin: 0.8rem;
+  }
+}
+
+#discover .parameter-input > div {
+  background-color: var(--brown-accent);
+  border-radius: 4px;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+#discover .parameter-input h2 {
+  margin: 1rem;
+}
+
+#discover .parameter-input input,
+#discover .parameter-input select {
+  width: 10rem;
+}
+
+#discover .parameter-input > div > div {
+  margin: 0.5rem;
+}
+
+#discover .parameter-input button {
+  margin: 1rem 0.5rem;
+  font-size: 1.2rem;
+  width: 5rem;
+  font-weight: bold;
 }
