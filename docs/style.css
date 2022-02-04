@@ -44,6 +44,7 @@ body {
 }
 
 main {
+  width: 100%;
   justify-content: space-evenly;
 }
 
@@ -92,6 +93,7 @@ nav {
   font-size: 1rem;
   font-weight: bold;
   box-shadow: 0 2px 5px #535353;
+  z-index: 1;
 }
 
 nav a {
@@ -142,10 +144,6 @@ nav a:hover {
 @media screen and (max-width: 900px) {
   .nav-toggle {
     display: unset;
-  }
-
-  #nav-menu {
-    display: none;
   }
 
   #nav-menu {
@@ -325,9 +323,9 @@ footer > div {
 }
 
 #about-selection {
-  width: 100%;
   padding: 2rem;
   justify-content: center;
+  z-index: 0;
 }
 
 #about-selection button {
