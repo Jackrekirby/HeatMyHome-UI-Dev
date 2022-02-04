@@ -11,7 +11,7 @@
       <div>
         <img src="./images/logo.svg" alt="HeatMyHome" />
       </div>
-      <div>HeatMyHome [0.4]</div>
+      <div>HeatMyHome [0.5]</div>
       <div id="nav-menu" class="flex row">
         <a href="./"> Home </a>
         <a href="./about.html"> About </a>
@@ -28,7 +28,9 @@
     <main class="flex">
       <section id="about-section" class="flex">
         <div id="about-selection" class="flex row">
-          <button onclick="select_about_slide(0);">Our Motivation</button>
+          <button onclick="select_about_slide(0);" class="grow">
+            Our Motivation
+          </button>
           <button onclick="select_about_slide(1);">Our Goals</button>
           <button onclick="select_about_slide(2);">Our Values</button>
         </div>
@@ -187,7 +189,23 @@
 
         buttons[current_slide_id].classList.remove("grow");
         buttons[slide_id].classList.add("grow");
+
+        const hashes = ["#motivation", "#goals", "#values"];
+        window.location.hash = hashes[slide_id];
+
         current_slide_id = slide_id;
+      }
+      console.log(window.location.hash);
+      switch (window.location.hash) {
+        case "#motivation":
+          select_about_slide(0);
+          break;
+        case "#goals":
+          select_about_slide(1);
+          break;
+        case "#values":
+          select_about_slide(2);
+          break;
       }
     </script>
   </body>

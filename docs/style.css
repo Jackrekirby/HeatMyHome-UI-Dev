@@ -337,8 +337,10 @@ footer > div {
 }
 
 .grow {
-  animation: grow 1s;
+  animation: grow 0.5s;
   animation-fill-mode: forwards;
+  background: #69a7a7;
+  color: var(--white);
 }
 
 @keyframes grow {
