@@ -11,7 +11,7 @@
       <div>
         <img src="./images/logo.svg" alt="HeatMyHome" />
       </div>
-      <div>HeatMyHome [0.6]</div>
+      <div>HeatMyHome [0.7]</div>
       <div id="nav-menu" class="flex row">
         <a href="./"> Home </a>
         <a href="./about.html"> About </a>
@@ -165,14 +165,18 @@
         if (menu.classList.contains("open")) {
           for (let div of menu.getElementsByTagName("a")) {
             div.classList.remove("open");
+            div.classList.add("close");
           }
           menu.classList.remove("open");
+          menu.classList.add("close");
           toggle.classList.remove("open");
         } else {
           for (let div of menu.getElementsByTagName("a")) {
             div.classList.add("open");
+            div.classList.remove("close");
           }
           menu.classList.add("open");
+          menu.classList.remove("close");
           toggle.classList.add("open");
         }
       }
