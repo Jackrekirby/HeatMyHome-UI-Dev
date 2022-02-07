@@ -1,0 +1,90 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="./simulator-how-it-works.css" />
+    <title>HeatMyHome | Education</title>
+  </head>
+  <body>
+    <nav class="flex row">
+      <div>
+        <img src="../images/logo.svg" alt="HeatMyHome" />
+      </div>
+      <div class="title">HeatMyHome</div>
+      <div class="mobile title">HeatMyHome | Education</div>
+      <div id="nav-menu" class="flex row">
+        <a href="../"> Home </a>
+        <a href="../about.html"> About </a>
+        <a href="../education.html"> Education </a>
+        <a href="../discover.html" class="button"> Discover </a>
+      </div>
+      <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+    <div class="nav-buffer"></div>
+    <main class="flex">
+      <section class="education-introduction flex">
+        <div class="flex">
+          <h1>Simulator: How-It-Works</h1>
+          <p>
+            This page provide an overview on how the simulator works. For full
+            details read the journal article.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="flex row wrap">
+      <div class="flex">
+        <h2>Help and FAQs</h2>
+        <a href="../sign__up">Government Incentives</a>
+        <a href="../">FAQs</a>
+        <a href="../">Privacy Policy</a>
+      </div>
+      <div class="flex">
+        <img src="../images/logo.svg" />
+      </div>
+      <div class="flex">
+        <h2>Contact Us</h2>
+        <a href="../">heatmyhome@ninja.co.uk</a>
+        <a href="https://warwick.ac.uk/fac/sci/eng/">School of Engineering</a>
+        <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
+      </div>
+    </footer>
+
+    <script>
+      function toggle_nav_menu() {
+        console.log("toggle nav menu");
+        let menu = document.getElementById("nav-menu");
+        let toggle = document.getElementById("nav-toggle");
+        if (menu.classList.contains("open")) {
+          for (let div of menu.getElementsByTagName("a")) {
+            div.classList.remove("open");
+            div.classList.add("close");
+          }
+          menu.classList.remove("open");
+          menu.classList.add("close");
+          toggle.classList.remove("open");
+        } else {
+          for (let div of menu.getElementsByTagName("a")) {
+            div.classList.add("open");
+            div.classList.remove("close");
+          }
+          menu.classList.add("open");
+          menu.classList.remove("close");
+          toggle.classList.add("open");
+        }
+      }
+
+      document
+        .getElementById("nav-menu")
+        .getElementsByTagName("a")[2]
+        .classList.add("showing");
+    </script>
+  </body>
+</html>

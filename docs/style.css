@@ -45,6 +45,21 @@ body {
   display: none;
 }
 
+.img {
+  background-color: pink;
+  color: white;
+  font-weight: bold;
+  border: 1px solid black;
+  content: "image";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0.25rem;
+  padding: 0.25rem;
+}
+
 main {
   width: 100%;
   justify-content: space-evenly;
@@ -244,7 +259,7 @@ nav a:hover,
 /* home discover */
 
 #home-discover {
-  height: 100vh;
+  min-height: calc(100vh - 4rem);
   justify-content: center;
   align-content: center;
 
@@ -536,7 +551,7 @@ section.education-options {
 
 #education-slides {
   width: 100%;
-  height: 20rem;
+  min-height: 20rem;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -547,11 +562,21 @@ section.education-options {
     radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
   background-size: 72px 72px;
   background-position: 0 0, 36px 36px;
+  padding: 0rem 1rem;
+}
+
+#education-slides > * {
+  padding: 0.5rem;
 }
 
 .education-options .grow {
   animation: grow 0.5s;
   animation-fill-mode: forwards;
+}
+
+.education-options .img {
+  width: 6.5rem;
+  height: 6.5rem;
 }
 
 /* discover */
@@ -634,4 +659,103 @@ section.education-options {
   font-size: 1.2rem;
   width: 5rem;
   font-weight: bold;
+}
+
+/* education V2 */
+
+.education-main {
+  background-color: #ffffff;
+  opacity: 1;
+  background-image: radial-gradient(#e1edff 1.8px, transparent 1.8px),
+    radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
+  background-size: 72px 72px;
+  background-position: 0 0, 36px 36px;
+
+  min-height: calc(100% - 4rem);
+}
+
+.education-box {
+  justify-content: space-evenly;
+  width: 15rem;
+  height: 22rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--dark-accent);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.education-box .img {
+  width: 8rem;
+  height: 8rem;
+}
+
+.education-box h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+  margin: 0.25rem 0rem;
+  padding: 0rem;
+  color: var(--dark-accent);
+}
+
+.education-box p {
+  font-size: 0.8rem;
+  margin: 0.25rem 0rem;
+  padding: 0rem;
+  text-align: center;
+  color: var(--dark-accent);
+}
+
+.education-box > a {
+  background-color: var(--dark-accent);
+  border-radius: 5rem;
+  color: var(--white);
+  border-style: none;
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem 0rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.education-box > a:hover {
+  background: #69a7a7;
+  color: var(--white);
+  transition: all 0.35s;
+  border-bottom: none;
+}
+
+/* Background */
+
+.background {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0rem;
+  padding: 0rem 1rem;
+}
+
+.foreground {
+  max-width: 80rem;
+  height: 100%;
+  /* border: 1px black solid; */
+}
+
+.background.radial {
+  background-color: #ffffff;
+  opacity: 1;
+  background-image: repeating-radial-gradient(
+      circle at 0 0,
+      transparent 0,
+      #ffffff 36px
+    ),
+    repeating-linear-gradient(#e1edff55, #e1edff);
+}
+
+.background.dots {
+  background-color: #ffffff;
+  opacity: 1;
+  background-image: radial-gradient(#e1edff 1.8px, transparent 1.8px),
+    radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
+  background-size: 72px 72px;
+  background-position: 0 0, 36px 36px;
 }

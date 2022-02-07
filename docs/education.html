@@ -26,83 +26,67 @@
       </div>
     </nav>
     <div class="nav-buffer"></div>
-    <main class="flex">
-      <section class="education-introduction flex">
-        <div class="flex">
-          <h1>Heating Technology Options</h1>
-          <p>
-            There are many rewable heating options available. Click on one of
-            the technologies below to learn more about it.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-            volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-            consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate
-            velit esse molestie consequat, vel
-          </p>
-        </div>
-      </section>
-      <section class="education-options flex row wrap">
-        <div class="heat-option grow">
-          <img src="./images/value.png" onclick="show_education_slide(0);" />
-          <h2>Air Source<br />Heat Pump</h2>
-        </div>
-        <div class="heat-option">
-          <img src="./images/value.png" onclick="show_education_slide(1);" />
-          <h2>Ground Source<br />Heat Pump</h2>
-        </div>
-        <div class="heat-option">
-          <img src="./images/value.png" onclick="show_education_slide(2);" />
-          <h2>Electric<br />Boiler</h2>
-        </div>
-        <div class="heat-option">
-          <img src="./images/value.png" onclick="show_education_slide(3);" />
-          <h2>Hydrogen<br />Boiler</h2>
-        </div>
-        <div class="heat-option">
-          <img src="./images/value.png" onclick="show_education_slide(4);" />
-          <h2>Hydrogen<br />Fuel Cell</h2>
-        </div>
-        <div class="heat-option">
-          <img src="./images/value.png" onclick="show_education_slide(5);" />
-          <h2>Biomass<br />Boiler</h2>
-        </div>
-      </section>
-
-      <section id="education-slides">
-        <div class="">
-          <h1>Air Source Heat Pump</h1>
-          <p>This is stuff about an ASHP.</p>
-          <p>And another paragraph...</p>
-        </div>
-        <div class="hide">
-          <h1>Ground Source Heat Pump</h1>
-          <p>This is stuff about an GSHP.</p>
-          <p>And another paragraph...</p>
-        </div>
-        <div class="hide">
-          <h1>Electric Boiler</h1>
-          <p>This is stuff about an Electric Boiler.</p>
-          <p>And another paragraph...</p>
-        </div>
-        <div class="hide">
-          <h1>Hydrogen Boiler</h1>
-          <p>This is stuff about an Hydrogen Boiler.</p>
-          <p>And another paragraph...</p>
-        </div>
-        <div class="hide">
-          <h1>Hydrogen Fuel Cell</h1>
-          <p>This is stuff about an Hydrogen Fuel Cell.</p>
-          <p>And another paragraph...</p>
-        </div>
-        <div class="hide">
-          <h1>Biomass Boiler</h1>
-          <p>This is stuff about an Biomass Boiler.</p>
-          <p>And another paragraph...</p>
-        </div>
-      </section>
+    <main class="flex education-main row wrap">
+      <div class="education-box flex">
+        <div class="img">heat tech image</div>
+        <h2>
+          Heating<br />
+          Technologies
+        </h2>
+        <p>
+          Learn about the various low carbon heating technologies that could
+          heat your home.
+        </p>
+        <a href="./education/heating-technologies.html">Read more</a>
+      </div>
+      <div class="education-box flex">
+        <div class="img">solar tech image</div>
+        <h2>
+          Solar<br />
+          Technologies
+        </h2>
+        <p>
+          Learn about the various solar thermal and photovoltaic technologies
+          that could supplement your heating system.
+        </p>
+        <a href="./education/solar-technologies.html">Read more</a>
+      </div>
+      <div class="education-box flex">
+        <div class="img">inputs image</div>
+        <h2>
+          Simulator<br />
+          Inputs
+        </h2>
+        <p>
+          Learn about the what each of the inputs into the simulator are, and
+          how they are used to determine your optimal heating system.
+        </p>
+        <a href="./education/simulator-inputs.html">Read more</a>
+      </div>
+      <div class="education-box flex">
+        <div class="img">outputs image</div>
+        <h2>
+          Simulator<br />
+          Outputs
+        </h2>
+        <p>
+          Learn about the what the data the simulator outputs, and how you can
+          use it to inform your choice of heating system.
+        </p>
+        <a href="./education/simulator-outputs.html">Read more</a>
+      </div>
+      <div class="education-box flex">
+        <div class="img">how-it-works image</div>
+        <h2>
+          Simulator<br />
+          How-It-Works
+        </h2>
+        <p>
+          Learn about how the simulator determines the optimal heating systems
+          for your home.
+        </p>
+        <a href="./education/simulator-how-it-works.html">Read more</a>
+      </div>
     </main>
 
     <footer class="flex row wrap">
@@ -145,54 +129,6 @@
           menu.classList.remove("close");
           toggle.classList.add("open");
         }
-      }
-
-      const heat_options = [
-        "#air-source-heat-pump",
-        "#ground-source-heat-pump",
-        "#electric-boiler",
-        "#hydrogen-boiler",
-        "#hydrogen-fuel-cell",
-        "#biomass-boiler",
-      ];
-
-      let slide_id = 0;
-      function show_education_slide(new_slide_id) {
-        let slides = document
-          .getElementById("education-slides")
-          .getElementsByTagName("div");
-        slides[slide_id].classList.add("hide");
-        slides[new_slide_id].classList.remove("hide");
-
-        let fields = slides[new_slide_id].children;
-        for (let field of fields) {
-          field.classList.remove("fadein");
-          field.classList.add("fadein");
-        }
-
-        document
-          .getElementsByClassName("education-options")[0]
-          .getElementsByClassName("heat-option")
-          [slide_id].classList.remove("grow");
-        document
-          .getElementsByClassName("education-options")[0]
-          .getElementsByClassName("heat-option")
-          [new_slide_id].classList.add("grow");
-
-        document.getElementById("education-slides").scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "nearest",
-        });
-
-        window.location.hash = heat_options[new_slide_id];
-        slide_id = new_slide_id;
-      }
-
-      let heat_index = heat_options.indexOf(window.location.hash);
-      console.log("Hash: ", window.location.hash, "index: ", heat_index);
-      if (heat_index > -1) {
-        show_education_slide(heat_index);
       }
 
       document

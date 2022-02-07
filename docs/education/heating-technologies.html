@@ -1,0 +1,196 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>HeatMyHome | Education</title>
+  </head>
+  <body>
+    <nav class="flex row">
+      <div>
+        <img src="../images/logo.svg" alt="HeatMyHome" />
+      </div>
+      <div class="title">HeatMyHome</div>
+      <div class="mobile title">HeatMyHome | Education</div>
+      <div id="nav-menu" class="flex row">
+        <a href="../"> Home </a>
+        <a href="../about.html"> About </a>
+        <a href="../education.html"> Education </a>
+        <a href="../discover.html" class="button"> Discover </a>
+      </div>
+      <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+    <div class="nav-buffer"></div>
+    <main class="flex">
+      <section class="education-introduction flex">
+        <div class="flex">
+          <h1>Heating Technology Options</h1>
+          <p>
+            There are many renewable heating options available. Click on one of
+            the technologies below to learn more about it.
+          </p>
+        </div>
+      </section>
+      <section class="education-options flex row wrap">
+        <div class="heat-option grow" onclick="show_education_slide(0);">
+          <div class="img">ashp</div>
+          <h2>Air Source<br />Heat Pump</h2>
+        </div>
+        <div class="heat-option" onclick="show_education_slide(1);">
+          <div class="img">gshp</div>
+          <h2>Ground Source<br />Heat Pump</h2>
+        </div>
+        <div class="heat-option" onclick="show_education_slide(2);">
+          <div class="img">electric boiler</div>
+          <h2>Electric<br />Boiler</h2>
+        </div>
+        <div class="heat-option" onclick="show_education_slide(3);">
+          <div class="img">hydrogen boiler</div>
+          <h2>Hydrogen<br />Boiler</h2>
+        </div>
+        <div class="heat-option" onclick="show_education_slide(4);">
+          <div class="img">hydrogen fuel cell</div>
+          <h2>Hydrogen<br />Fuel Cell</h2>
+        </div>
+        <div class="heat-option" onclick="show_education_slide(5);">
+          <div class="img">biomass boiler</div>
+          <h2>Biomass<br />Boiler</h2>
+        </div>
+      </section>
+
+      <section id="education-slides">
+        <div class="">
+          <h1>Air Source Heat Pump</h1>
+          <p>This is stuff about an ASHP.</p>
+          <p>And another paragraph...</p>
+        </div>
+        <div class="hide">
+          <h1>Ground Source Heat Pump</h1>
+          <p>This is stuff about an GSHP.</p>
+          <p>And another paragraph...</p>
+        </div>
+        <div class="hide">
+          <h1>Electric Boiler</h1>
+          <p>This is stuff about an Electric Boiler.</p>
+          <p>And another paragraph...</p>
+        </div>
+        <div class="hide">
+          <h1>Hydrogen Boiler</h1>
+          <p>This is stuff about an Hydrogen Boiler.</p>
+          <p>And another paragraph...</p>
+        </div>
+        <div class="hide">
+          <h1>Hydrogen Fuel Cell</h1>
+          <p>This is stuff about an Hydrogen Fuel Cell.</p>
+          <p>And another paragraph...</p>
+        </div>
+        <div class="hide">
+          <h1>Biomass Boiler</h1>
+          <p>This is stuff about an Biomass Boiler.</p>
+          <p>And another paragraph...</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="flex row wrap">
+      <div class="flex">
+        <h2>Help and FAQs</h2>
+        <a href="../sign__up">Government Incentives</a>
+        <a href="../">FAQs</a>
+        <a href="../">Privacy Policy</a>
+      </div>
+      <div class="flex">
+        <img src="../images/logo.svg" />
+      </div>
+      <div class="flex">
+        <h2>Contact Us</h2>
+        <a href="../">heatmyhome@ninja.co.uk</a>
+        <a href="https://warwick.ac.uk/fac/sci/eng/">School of Engineering</a>
+        <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
+      </div>
+    </footer>
+
+    <script>
+      function toggle_nav_menu() {
+        console.log("toggle nav menu");
+        let menu = document.getElementById("nav-menu");
+        let toggle = document.getElementById("nav-toggle");
+        if (menu.classList.contains("open")) {
+          for (let div of menu.getElementsByTagName("a")) {
+            div.classList.remove("open");
+            div.classList.add("close");
+          }
+          menu.classList.remove("open");
+          menu.classList.add("close");
+          toggle.classList.remove("open");
+        } else {
+          for (let div of menu.getElementsByTagName("a")) {
+            div.classList.add("open");
+            div.classList.remove("close");
+          }
+          menu.classList.add("open");
+          menu.classList.remove("close");
+          toggle.classList.add("open");
+        }
+      }
+
+      const heat_options = [
+        "#air-source-heat-pump",
+        "#ground-source-heat-pump",
+        "#electric-boiler",
+        "#hydrogen-boiler",
+        "#hydrogen-fuel-cell",
+        "#biomass-boiler",
+      ];
+
+      let slide_id = 0;
+      function show_education_slide(new_slide_id) {
+        let slides = document
+          .getElementById("education-slides")
+          .getElementsByTagName("div");
+        slides[slide_id].classList.add("hide");
+        slides[new_slide_id].classList.remove("hide");
+
+        let fields = slides[new_slide_id].children;
+        for (let field of fields) {
+          field.classList.remove("fadein");
+          field.classList.add("fadein");
+        }
+
+        document
+          .getElementsByClassName("education-options")[0]
+          .getElementsByClassName("heat-option")
+          [slide_id].classList.remove("grow");
+        document
+          .getElementsByClassName("education-options")[0]
+          .getElementsByClassName("heat-option")
+          [new_slide_id].classList.add("grow");
+
+        document.getElementById("education-slides").scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+
+        window.location.hash = heat_options[new_slide_id];
+        slide_id = new_slide_id;
+      }
+
+      let heat_index = heat_options.indexOf(window.location.hash);
+      console.log("Hash: ", window.location.hash, "index: ", heat_index);
+      if (heat_index > -1) {
+        show_education_slide(heat_index);
+      }
+
+      document
+        .getElementById("nav-menu")
+        .getElementsByTagName("a")[2]
+        .classList.add("showing");
+    </script>
+  </body>
+</html>
