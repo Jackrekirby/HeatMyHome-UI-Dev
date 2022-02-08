@@ -1,0 +1,21 @@
+#home-discover {
+  background: transparent;
+}
+
+.reveal {
+  position: relative;
+  transform: translateY(2rem);
+  transform-origin: bottom;
+  opacity: 0;
+  transition: 1s all ease;
+}
+
+.reveal.active {
+  transform: translateY(0rem);
+  opacity: 1;
+}
+
+#home-our-cards {
+  scroll-snap-type: y mandatory;
+  scroll-snap-align: center;
+}

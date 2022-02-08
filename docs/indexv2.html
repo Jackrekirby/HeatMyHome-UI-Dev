@@ -4,15 +4,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>HeatMyHome | Education</title>
+    <link rel="stylesheet" href="index.css" />
+    <title>HeatMyHome</title>
   </head>
   <body>
     <nav class="flex row">
       <div>
         <img src="./images/logo.svg" alt="HeatMyHome" />
       </div>
-      <div class="title">HeatMyHome</div>
-      <div class="mobile title">HeatMyHome | Education</div>
+      <div class="title">HeatMyHome | 0.12</div>
+      <div class="mobile title">HeatMyHome | 0.12</div>
       <div id="nav-menu" class="flex row">
         <a href="./"> Home </a>
         <a href="./about.html"> About </a>
@@ -26,8 +27,16 @@
       </div>
     </nav>
     <div class="nav-buffer"></div>
-    <main class="flex education-main background radial row wrap">
-      <div class="education-box flex">
+    <main class="flex background radial row wrap">
+      <section id="home-discover" class="flex row wrap reveal">
+        <div class="flex">
+          <h1>Heat My Home</h1>
+          <a href="./discover.html" class="button"> Discover </a>
+        </div>
+        <img id="home__img" src="./images/pic1.svg" />
+      </section>
+
+      <div class="education-box flex reveal">
         <div class="img">heat tech</div>
         <h2>
           Heating<br />
@@ -39,68 +48,43 @@
         </p>
         <a href="./education/heating-technologies.html">Read more</a>
       </div>
-      <div class="education-box flex">
-        <div class="img">solar tech</div>
-        <h2>
-          Solar<br />
-          Technologies
-        </h2>
-        <p>
-          Learn about the various solar thermal and photovoltaic technologies
-          that could supplement your heating system.
-        </p>
-        <a href="./education/solar-technologies.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">why switch</div>
-        <h2>
-          Why<br />
-          Switch?
-        </h2>
-        <p>
-          Learn about the various reasons switching to a low-carbon heating
-          technology could be beneficial to you and the planet!
-        </p>
-        <a href="./education/why-switch.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">inputs</div>
-        <h2>
-          Simulator<br />
-          Inputs
-        </h2>
-        <p>
-          Learn about the what each of the inputs into the simulator are, and
-          how they are used to determine your optimal heating system.
-        </p>
-        <a href="./education/simulator-inputs.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">outputs</div>
-        <h2>
-          Simulator<br />
-          Outputs
-        </h2>
-        <p>
-          Learn about the what the data the simulator outputs, and how you can
-          use it to inform your choice of heating system.
-        </p>
-        <a href="./education/simulator-outputs.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">how-it-works</div>
-        <h2>
-          Simulator<br />
-          How-It-Works
-        </h2>
-        <p>
-          Learn about how the simulator determines the optimal heating systems
-          for your home.
-        </p>
-        <a href="./education/simulator-how-it-works.html">Read more</a>
-      </div>
-    </main>
 
+      <section id="home-our-cards" class="flex row wrap">
+        <div class="flex">
+          <img src="./images/motivation.png" />
+          <h2>Our Motivation</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+            nonummy nibh euismod
+          </p>
+          <a href="./about.html#motivation">
+            <button>Read more</button>
+          </a>
+        </div>
+        <div class="flex">
+          <img src="./images/aims.png" />
+          <h2>Our Goals</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+            nonummy nibh euismod
+          </p>
+          <a href="./about.html#goals">
+            <button>Read more</button>
+          </a>
+        </div>
+        <div class="flex">
+          <img src="./images/goals.png" />
+          <h2>Our Values</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+            nonummy nibh euismod
+          </p>
+          <a href="./about.html#values">
+            <button>Read more</button>
+          </a>
+        </div>
+      </section>
+    </main>
     <footer class="flex row wrap">
       <div class="flex">
         <h2>Help and FAQs</h2>
@@ -145,8 +129,27 @@
 
       document
         .getElementById("nav-menu")
-        .getElementsByTagName("a")[2]
+        .getElementsByTagName("a")[0]
         .classList.add("showing");
+
+      function reveal() {
+        let reveals = document.querySelectorAll(".reveal");
+
+        for (let i = 0; i < reveals.length; i++) {
+          let windowHeight = window.innerHeight;
+          let elementTop = reveals[i].getBoundingClientRect().top;
+          console.log(reveals[i].getBoundingClientRect());
+          let elementVisible = 0;
+
+          if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+          } else {
+            reveals[i].classList.remove("active");
+          }
+        }
+      }
+
+      window.addEventListener("scroll", reveal);
     </script>
   </body>
 </html>

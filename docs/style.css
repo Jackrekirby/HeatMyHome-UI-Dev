@@ -664,13 +664,6 @@ section.education-options {
 /* education V2 */
 
 .education-main {
-  background-color: #ffffff;
-  opacity: 1;
-  background-image: radial-gradient(#e1edff 1.8px, transparent 1.8px),
-    radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
-  background-size: 72px 72px;
-  background-position: 0 0, 36px 36px;
-
   min-height: calc(100% - 4rem);
 }
 
