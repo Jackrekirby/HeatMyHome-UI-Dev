@@ -55,8 +55,8 @@ nav {
 nav .link {
   text-decoration: none;
   color: white;
-  padding: 0.5rem 2rem;
-  margin: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
   border-bottom: 3px solid transparent;
 }
 
@@ -85,6 +85,7 @@ nav .button {
   justify-content: center;
   align-items: center;
   justify-content: space-between;
+  margin-right: 1rem;
 }
 
 nav .link:hover,
@@ -108,7 +109,7 @@ nav .link:hover,
   scroll-snap-type: y mandatory;
 }
 
-.parent > section {
+.parent .page {
   height: 100%;
   scroll-snap-align: center;
   display: flex;
@@ -118,7 +119,7 @@ nav .link:hover,
   justify-content: space-evenly;
 }
 
-.parent > section > h2 {
+.parent > .page > h2 {
   padding: 0rem;
   margin: 0rem;
 }
@@ -328,5 +329,200 @@ nav .link:hover,
 
   .home .link {
     font-size: 2rem;
+  }
+}
+
+button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #00aeff;
+  border-radius: 5rem;
+  color: white;
+  border-style: none;
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem 0.2rem;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+  font-size: 1rem;
+  width: 7rem;
+}
+
+button.left {
+  border-top-left-radius: 5rem;
+  border-bottom-left-radius: 5rem;
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem;
+}
+
+button.middle {
+  width: 5rem;
+  border-radius: 0px;
+  transform: scale(1.05);
+  background-image: linear-gradient(90deg, #00aeff, #a68eff);
+}
+
+button.middle.active {
+  background-image: linear-gradient(-90deg, #00aeff, #a68eff);
+}
+
+button.right {
+  border-top-left-radius: 0rem;
+  border-bottom-left-radius: 0rem;
+  border-top-right-radius: 5rem;
+  border-bottom-right-radius: 5rem;
+}
+
+button:hover,
+button.active {
+  background-color: #a68eff;
+  transform: scale(1.05);
+}
+
+button.middle:hover {
+  background-color: #a68eff;
+  transform: scale(1.05);
+}
+
+.button-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#education-expanded {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+  overflow-y: hidden;
+  width: 100%;
+}
+
+#education-compact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+  min-width: 17rem;
+  min-height: 24rem;
+  margin: 0rem 1rem;
+  padding: 0rem 1rem;
+  margin-bottom: 5rem;
+  /* border: 1px solid rgba(2, 69, 87, 0.5); */
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(2, 69, 87, 0.5);
+}
+
+#education-compact p {
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+
+  width: 80%;
+  padding: 0.5rem 0rem;
+  text-align: center;
+  background-image: linear-gradient(45deg, #00aeff, #a68eff);
+  opacity: 0.5;
+  transition: 0.3s all ease-in-out;
+}
+
+#education-compact p:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.hide {
+  display: none !important;
+}
+
+.carosel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: centre;
+  align-items: center;
+  width: 100%;
+  overflow-x: overlay;
+  height: 5rem;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  margin: 2rem 0rem;
+}
+
+.carosel p {
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  background-image: linear-gradient(45deg, #00aeff, #a68eff);
+  opacity: 0.5;
+  transition: 0.3s all ease-in-out;
+  margin: 0rem 1rem;
+  min-width: max-content;
+  scroll-snap-align: center;
+}
+.carosel p:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.carosel p.active {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 80%;
+  max-width: 75rem;
+  min-height: 60%;
+  margin: 1rem 1rem;
+  padding: 1rem 1rem;
+  background-image: linear-gradient(45deg, #00aeff, #a68eff);
+  opacity: 0.6;
+}
+
+.subeducation {
+  height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.subeducation > h2 {
+  padding: 0rem;
+  margin: 0rem;
+}
+
+.info > div {
+  width: 100%;
+  height: 100%;
+}
+
+.info .fadein {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
