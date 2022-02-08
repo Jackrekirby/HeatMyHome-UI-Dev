@@ -102,7 +102,7 @@ nav .link:hover,
 
 .parent {
   box-sizing: border-box;
-  overflow-y: scroll;
+  overflow-y: overlay;
   height: calc(100% - 4rem);
   scroll-snap-points-y: repeat(50vh);
   scroll-snap-type: y mandatory;
@@ -130,12 +130,11 @@ nav .link:hover,
   justify-content: start;
   align-items: center;
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: overlay;
   height: 100%;
   overflow-y: hidden;
-  padding: 0rem 1rem;
   scroll-snap-type: x mandatory;
-  cursor: grab;
+  padding-bottom: 2rem;
 }
 
 .parent3 {
@@ -167,7 +166,7 @@ nav .link:hover,
   justify-content: space-evenly;
   min-width: 15rem;
   min-height: 22rem;
-  margin: 1rem;
+  margin: 0rem 1rem;
   padding: 1rem;
   border: 1px solid rgba(2, 69, 87, 0.5);
   background-color: rgba(255, 255, 255, 0.5);
@@ -239,7 +238,7 @@ nav .link:hover,
   justify-content: center;
   align-items: center;
   justify-content: center;
-  padding: 1rem 0rem;
+  padding-bottom: 2rem;
 }
 
 .dots > div {
@@ -265,12 +264,12 @@ nav .link:hover,
   height: 15px;
 }
 .sc5::-webkit-scrollbar-track {
-  border-radius: 1px;
+  border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.1);
 }
 .sc5::-webkit-scrollbar-thumb {
   background-image: linear-gradient(45deg, #00aeff, #a68eff);
-  border-radius: 1px;
+  border-radius: 4px;
   /* -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 3px 13px 1px; */
 }
 
