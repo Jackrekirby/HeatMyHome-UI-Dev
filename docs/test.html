@@ -236,7 +236,7 @@
       </section>
     </div>
     <script>
-      console.log("script v2");
+      console.log("script v3");
       let current_id = 0;
       function test123(id) {
         document
@@ -424,6 +424,7 @@
         console.log("here");
         let a = document.getElementById("postcode");
         let b = document.getElementById("address-next");
+        b.classList.add("hide");
         let c = document.getElementById("address");
           let postcode = a.value;
           postcode = postcode.toUpperCase().replace(' ', '');
