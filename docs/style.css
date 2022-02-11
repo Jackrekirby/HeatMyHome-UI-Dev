@@ -277,11 +277,27 @@ nav a:hover,
   margin: 1rem;
 }
 
+#home-discover > div > div {
+  margin: 1rem;
+  justify-content: space-evenly;
+  margin-bottom: 3rem;
+}
+
 #home-discover h1 {
   color: var(--dark-accent);
   font-size: 5rem;
   font-weight: bolder;
   text-align: center;
+  margin: 0rem;
+}
+
+#home-discover h2 {
+  color: var(--dark-accent);
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  margin: 0rem;
+  max-width: 80%;
 }
 
 #home-discover a {
@@ -451,6 +467,8 @@ footer > div {
   width: 100%;
   justify-content: space-evenly;
   padding: 1rem 0rem;
+  font-size: 0.8rem;
+  text-align: justify;
 }
 
 #motivation-cards > div {
@@ -461,6 +479,15 @@ footer > div {
   justify-content: space-evenly;
 }
 
+#motivation-cards > div:nth-child(2) {
+  border: 1px var(--white) solid;
+  height: 25rem;
+  width: 25rem;
+  margin: 1rem;
+  padding: 1rem;
+  justify-content: space-evenly;
+}
+
 #motivation-cards img {
   width: 10rem;
   height: 10rem;
@@ -468,9 +495,11 @@ footer > div {
 }
 
 #motivation-cards p {
-  margin: 1rem;
-  font-size: 0.8rem;
-  text-align: center;
+  margin: 0rem;
+}
+
+#motivation-cards ol {
+  padding-left: 0.5rem;
 }
 
 /* goals / value cards */

@@ -217,7 +217,23 @@
         </section>
       </section>
       <section class="page">About</section>
-      <section class="page">Footer</section>
+      <section class="page">
+        <div class="form">
+        <div class="input-field">
+          <input type="text" id="postcode" maxlength=8 onfocusout="unfocusPostcode();" onfocus="focusPostcode();"/>
+          <!-- <input type="text" id="postcode" maxlength=8 onfocusout="unfocusPostcode();" onfocus="focusPostcode();" onchange="testPostcode();" /> -->
+          <p>postcode</p>
+        </div>
+        <select id="address" class="hide" onchange="testAddress();">
+          <option>select address</option>
+          <option>address not listed</option>
+          <option>1 example avenue</option>
+          <option>2 main street</option>
+          <option>3 oakly road</option>
+        </select>
+        <button id="address-next" class="hide">next</button>
+      </div>
+      </section>
     </div>
     <script>
       console.log("script");
@@ -297,6 +313,209 @@
         document.getElementsByClassName('subeducation')[bid].classList.remove("fadein");
         bid = id;
       }
+
+      function focusPostcode(){
+        let a = document.getElementById("postcode");
+        a.classList.add("focus");
+      }
+
+      function unfocusPostcode(){
+        let a = document.getElementById("postcode");
+        a.classList.remove("focus");
+      }
+
+
+      // function focusAddress(){
+      //   let a = document.getElementById("address");
+      //   a.classList.add("focus");
+      //   a.classList.remove("valid");
+      //   a.classList.remove("invalid");
+      // }
+
+      // function unfocusAddress(){
+      //   let a = document.getElementById("address");
+      //   a.classList.remove("focus");
+      //   testAddress()
+      // }
+
+      async function testPostcode() {
+          let a = document.getElementById("postcode");
+          let postcode = a.value;
+          postcode = postcode.toUpperCase().replace(' ', '');
+          a.value = postcode;
+          // a.classList.remove("focus");
+          let b = document.getElementById("address-next");
+          let c = document.getElementById("address");
+          b.classList.add("hide");
+          if (postcode == "") {
+            a.classList.remove("valid");
+            a.classList.remove("invalid");
+            
+            document.getElementById("address").classList.add("hide");
+          } else {
+            const postcode_url = 'https://api.postcodes.io/postcodes/' + postcode;
+          fetch(postcode_url).then(response => response.json())
+              .then(data => {
+                  if (data['status'] == 200) {
+                      console.log('postcode api data:', data);
+                      if (data.result.latitude != null && data.result.longitude != null) {
+                        a.classList.add("valid");
+                          a.classList.remove("invalid");
+                          document.getElementById("address").classList.remove("hide");
+                          document.getElementById("address").classList.remove("fadein");
+                          document.getElementById("address").classList.add("fadein");
+                          return true;
+                      } {
+                          throw new Error('Postcode found on API, but does not have an associated latitude and longitude.');
+                      }
+                  } else {
+                    throw new Error(data['error']);
+                  }
+              })
+              .catch((error) => {
+                  console.error('Error:', error);
+                  a.classList.add("invalid");
+                  a.classList.remove("valid");
+                  c.classList.add("hide");
+                  c.value = "select address";
+                  c.classList.remove("valid");
+                  c.classList.remove("invalid");
+
+                  return false;
+              });
+          }
+      }
+
+      function testAddress() {
+        let a = document.getElementById("address");
+        let b = document.getElementById("address-next");
+        let address = a.value;
+
+        console.log(address);
+        switch (address) {
+            case "select address":
+              a.classList.remove("valid");
+              a.classList.remove("invalid");
+              b.classList.add("hide");
+              break;
+            case "address not listed":
+              a.classList.remove("valid");
+              a.classList.add("invalid");
+              b.classList.add("hide");
+              break;
+            default:
+              a.classList.add("valid");
+              a.classList.remove("invalid");
+              b.classList.remove("hide");
+
+        }
+      }
+
+      function inputPostcode() {
+        function invalidPostcode(a, c) {
+          a.classList.add("invalid");
+          a.classList.remove("valid");
+          c.classList.add("hide");
+          c.value = "select address";
+          c.classList.remove("valid");
+          c.classList.remove("invalid");
+        }
+
+        console.log("here");
+        let a = document.getElementById("postcode");
+        let b = document.getElementById("address-next");
+        let c = document.getElementById("address");
+          let postcode = a.value;
+          postcode = postcode.toUpperCase().replace(' ', '');
+          a.value = postcode;
+
+          if (postcode.length > 4) {
+            let hh = postcode.substr(-3,1);
+            console.log("hh", hh);
+            let h = postcode.substr(-2);
+              console.log("h", h);
+            if(!isNaN(hh) && /^[a-zA-Z]+$/.test(h)) {
+                console.log("POSTCODE", hh, h);
+                const postcode_url = 'https://api.postcodes.io/postcodes/' + postcode;
+                fetch(postcode_url).then(response => response.json())
+                    .then(data => {
+                        if (data['status'] == 200) {
+                            console.log('postcode api data:', data);
+                            if (data.result.latitude != null && data.result.longitude != null) {
+                              a.classList.add("valid");
+                              a.classList.remove("invalid");
+
+                              c.classList.remove("hide");
+                              c.classList.remove("fadein");
+                              c.classList.add("fadein");
+                              find_address();
+                            } else {
+                                throw new Error('Postcode found on API, but does not have an associated latitude and longitude.');
+                            }
+                        } else {
+                          throw new Error(data['error']);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        invalidPostcode(a, c);
+                });
+            } else {
+              invalidPostcode(a, c);
+            }
+          } else if (postcode.length > 0) {
+            invalidPostcode(a, c);
+          } else {
+            a.classList.remove("invalid");
+            a.classList.remove("valid"); 
+          }
+      } 
+
+
+    function find_address() {
+        console.log("find address");
+        const postcode = document.getElementById('postcode').value;
+        const api_url = 'http://localhost:3000';
+        const epc_api_url = api_url + '/epc';
+        fetch(`${epc_api_url}?postcode=${postcode}`).then(response => response.json())
+            .then(data => {
+                if (data['status'] == 200) {
+                    console.log('addresses: ', data);
+                    let element = document.getElementById('address');
+                    //console.log(document.getElementsByTagName('option').length);
+                    while (element.getElementsByTagName('option').length > 2) {
+                        element.removeChild(element.lastChild);
+                    }
+                    for (const [address, certificate] of data.result) {
+                        //console.log(address, certificate);
+                        let option_ele = document.createElement('option');
+                        option_ele.value = certificate;
+
+                        let n = address.split(',', 2).join(',').length;
+
+                        let address2 = address.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+
+                        option_ele.text = address2.substring(0, 45);
+                        element.appendChild(option_ele);
+                    }
+                } else {
+                    throw new Error(data['error']);
+                }
+            })
+            .catch((error) => {
+                console.error('Could not find postcode on EPC API:', error);
+                let element = document.getElementById('sim-addresses');
+                while (element.getElementsByTagName('option').length > 0) {
+                    element.removeChild(element.lastChild);
+                }
+                let option_ele = document.createElement('option');
+                option_ele.text = 'Postcode not on EPC API';
+                element.appendChild(option_ele);
+            });;
+    }
+
+      let a = document.getElementById("postcode");
+      a.addEventListener('input', inputPostcode);
     </script>
   </body>
 </html>

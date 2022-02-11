@@ -526,3 +526,142 @@ button.middle:hover {
     opacity: 1;
   }
 }
+
+.form {
+  margin: 1rem;
+  padding: 2rem;
+  border: 1px solid rgba(2, 69, 87, 0.5);
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 20rem;
+}
+
+select {
+  margin: 0rem;
+  padding: 0rem;
+  width: 100%;
+  height: 3rem;
+  border: 0px;
+  outline: 0px;
+  border: 2px solid #d3d3d3;
+  color: #d3d3d3;
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  font-family: "Sora", sans-serif;
+  /* transition: 0.2s all ease-in-out; */
+}
+
+.fadein {
+  animation: fadeIn 1s;
+}
+
+select.valid {
+  border-color: #00dd22;
+  color: #00dd22;
+}
+
+select.invalid {
+  border-color: #ff2300;
+  color: #ff2300;
+}
+
+select option {
+  color: #00dd22;
+}
+
+select option:nth-child(1) {
+  color: #d3d3d3;
+}
+
+select option:nth-child(2) {
+  color: #ff2300;
+}
+
+.form button {
+  background-color: #d3d3d3;
+  transition: 0.2s all ease-in-out;
+  margin-top: 1rem;
+}
+
+.form button:hover {
+  background-color: #00dd22;
+}
+
+/* select.focus {
+  border-color: #00aeff;
+  color: #00aeff;
+} */
+
+.input-field {
+  position: relative;
+  margin: 0rem 0.5rem;
+  padding: 0rem;
+  width: 100%;
+  height: 3rem;
+}
+
+.input-field > * {
+  /* transition: 0.2s all ease-in-out; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #d3d3d3;
+  padding: 0.5rem 0rem;
+  margin: 0rem;
+  font-size: 1rem;
+}
+.input-field p {
+  transition: 0.2s all;
+  cursor: text;
+  pointer-events: none;
+}
+
+.input-field input {
+  border: 0;
+  outline: 0;
+  padding: 0.5rem 0rem;
+  border-bottom: 2px solid #d3d3d3;
+  box-shadow: none;
+  color: black;
+  background-color: transparent;
+  font-family: "Sora", sans-serif;
+}
+
+.input-field input.focus {
+  /* border-color: #00aeff; */
+}
+
+.input-field input.focus ~ p {
+  font-size: 0.9rem;
+  top: calc(-0.9rem - 0.5rem);
+  /* color: #00aeff; */
+}
+
+.input-field input.invalid {
+  outline: 0;
+  border-color: #ff2300;
+}
+
+.input-field input.valid {
+  border-color: #00dd22;
+}
+
+.input-field input.valid ~ p {
+  font-size: 0.9rem;
+  top: calc(-0.9rem - 0.5rem);
+  color: #00dd22;
+}
+
+.input-field input.invalid ~ p {
+  font-size: 0.9rem;
+  top: calc(-0.9rem - 0.5rem);
+  color: #ff2300;
+}
+
+#address option {
+  font-size: 1rem;
+}
