@@ -551,6 +551,8 @@ select {
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
   font-family: "Sora", sans-serif;
+  background: transparent;
+  border-radius: 0px;
   /* transition: 0.2s all ease-in-out; */
 }
 
@@ -629,6 +631,7 @@ select option:nth-child(2) {
   color: black;
   background-color: transparent;
   font-family: "Sora", sans-serif;
+  border-radius: 0px;
 }
 
 .input-field input.focus {
