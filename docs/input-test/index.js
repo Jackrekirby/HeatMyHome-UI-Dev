@@ -160,7 +160,8 @@ function check_submit() {
         if (submit) {
             submit_element.classList.remove("hide");
             if (button.classList.contains("active")) {
-                unhide_all(['run-location', 'input-box-optimisation']);
+                unhide_all(['run-location']);
+                set_run_location();
             }
         } else {
             submit_element.classList.add("hide");
@@ -176,7 +177,8 @@ function toggle_advanced_inputs() {
     if (run_location.classList.contains("hide")) {
         run_location.classList.remove("hide");
         button.classList.add("active");
-        unhide_all(['run-location', 'help-advanced', 'input-box-optimisation']);
+        unhide_all(['run-location', 'help-advanced']);
+        set_run_location();
     } else {
         button.classList.remove("active");
         hide_all(['run-location', 'help-advanced', 'input-box-optimisation']);
@@ -219,8 +221,6 @@ function toggle_optimisation() {
         box.classList.add("ticked");
     }
 
-
-
     for (let div of divs) {
         if (div.classList.contains("checkmark")) {
             div.classList.add("crossmark");
@@ -230,6 +230,31 @@ function toggle_optimisation() {
             div.classList.add("checkmark");
         }
 
+    }
+}
+
+const input_ranges = { // MIN, MAX, MULTIPLIER
+    'temperature': [0, 35, 10],
+    'occupants': [1, 20, 1],
+    'tes-volume': [0.1, 3.0, 10],
+    'epc-space-heating': [0, 999999, 1],
+    'floor-area': [25, 999, 1],
+}
+
+
+function get_check_input_fnc(id, apply_transform) {
+    const MIN = 0; const MAX = 1; const MULTIPLIER = 2;
+    switch (id) {
+
+        default:
+            const [min_input, max_input, multipler] = input_ranges[id];
+            return () =>
+                check_input(id,
+                    apply_transform ? (value) => { return Math.round(Math.min(Math.max(value, min_input), max_input) * multipler) / multipler; } : undefined,
+                    [
+                        (value) => { if (value >= min_input && value <= max_input) { return ""; } else { return "range" } },
+                    ]
+                );
     }
 }
 
@@ -255,85 +280,93 @@ let epc_api_connection = true;
 
 click_dismiss();
 
-document.getElementById("input-temperature").addEventListener('input', () =>
-    check_input("temperature",
-        undefined,
-        [
-            (value) => { if (value >= temperature_min && value <= temperature_max) { return ""; } else { return "range" } },
-        ]));
+const input_id_list = ['temperature', 'occupants', 'tes-volume', 'epc-space-heating', 'floor-area'];
 
-document.getElementById("input-temperature").addEventListener('change', () =>
-    check_input("temperature",
-        (value) => { return Math.round(Math.min(Math.max(value, temperature_min), temperature_max) * 10) / 10; },
-        [
-            (value) => { if (value >= temperature_min && value <= temperature_max) { return ""; } else { return "range" } },
-        ]
-    )
-);
+for (let input_id of input_id_list) {
+    let element = document.getElementById('input-' + input_id);
+    element.addEventListener('input', get_check_input_fnc(input_id, false));
+    element.addEventListener('change', get_check_input_fnc(input_id, true));
+}
 
-document.getElementById("input-occupants").addEventListener('input', () =>
-    check_input("occupants",
-        undefined,
-        [
-            (value) => { if (value >= occupants_min && value <= occupants_max) { return ""; } else { return "range" } },
-        ]));
+// document.getElementById("input-temperature").addEventListener('input', () =>
+//     check_input("temperature",
+//         undefined,
+//         [
+//             (value) => { if (value >= temperature_min && value <= temperature_max) { return ""; } else { return "range" } },
+//         ]));
 
-document.getElementById("input-occupants").addEventListener('change', () =>
-    check_input("occupants",
-        (value) => { return Math.round(Math.min(Math.max(value, occupants_min), occupants_max)); },
-        [
-            (value) => { if (value >= occupants_min && value <= occupants_max) { return ""; } else { return "range" } },
-        ]
-    )
-);
+// document.getElementById("input-temperature").addEventListener('change', () =>
+//     check_input("temperature",
+//         (value) => { return Math.round(Math.min(Math.max(value, temperature_min), temperature_max) * 10) / 10; },
+//         [
+//             (value) => { if (value >= temperature_min && value <= temperature_max) { return ""; } else { return "range" } },
+//         ]
+//     )
+// );
 
-document.getElementById("input-tes-volume").addEventListener('input', () =>
-    check_input("tes-volume",
-        undefined,
-        [
-            (value) => { if (value >= tes_min && value <= tes_max) { return ""; } else { return "range" } },
-        ]));
+// document.getElementById("input-occupants").addEventListener('input', () =>
+//     check_input("occupants",
+//         undefined,
+//         [
+//             (value) => { if (value >= occupants_min && value <= occupants_max) { return ""; } else { return "range" } },
+//         ]));
 
-document.getElementById("input-tes-volume").addEventListener('change', () =>
-    check_input("tes-volume",
-        (value) => { return Math.round(Math.min(Math.max(value, tes_min), tes_max) * 10) / 10; },
-        [
-            (value) => { if (value >= tes_min && value <= tes_max) { return ""; } else { return "range" } },
-        ]
-    )
-);
+// document.getElementById("input-occupants").addEventListener('change', () =>
+//     check_input("occupants",
+//         (value) => { return Math.round(Math.min(Math.max(value, occupants_min), occupants_max)); },
+//         [
+//             (value) => { if (value >= occupants_min && value <= occupants_max) { return ""; } else { return "range" } },
+//         ]
+//     )
+// );
 
-document.getElementById("input-epc-space-heating").addEventListener('input', () =>
-    check_input("epc-space-heating",
-        undefined,
-        [
-            (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
-        ]));
+// document.getElementById("input-tes-volume").addEventListener('input', () =>
+//     check_input("tes-volume",
+//         undefined,
+//         [
+//             (value) => { if (value >= tes_min && value <= tes_max) { return ""; } else { return "range" } },
+//         ]));
 
-document.getElementById("input-epc-space-heating").addEventListener('change', () =>
-    check_input("epc-space-heating",
-        (value) => { return Math.round(Math.min(Math.max(value, epc_space_heating_min), epc_space_heating_max)); },
-        [
-            (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
-        ]
-    )
-);
+// document.getElementById("input-tes-volume").addEventListener('change', () =>
+//     check_input("tes-volume",
+//         (value) => { return Math.round(Math.min(Math.max(value, tes_min), tes_max) * 10) / 10; },
+//         [
+//             (value) => { if (value >= tes_min && value <= tes_max) { return ""; } else { return "range" } },
+//         ]
+//     )
+// );
 
-document.getElementById("input-floor-area").addEventListener('input', () =>
-    check_input("floor-area",
-        undefined,
-        [
-            (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
-        ]));
+// document.getElementById("input-epc-space-heating").addEventListener('input', () =>
+//     check_input("epc-space-heating",
+//         undefined,
+//         [
+//             (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
+//         ]));
 
-document.getElementById("input-floor-area").addEventListener('change', () =>
-    check_input("floor-area",
-        (value) => { return Math.round(Math.min(Math.max(value, floor_area_min), floor_area_max)); },
-        [
-            (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
-        ]
-    )
-);
+// document.getElementById("input-epc-space-heating").addEventListener('change', () =>
+//     check_input("epc-space-heating",
+//         (value) => { return Math.round(Math.min(Math.max(value, epc_space_heating_min), epc_space_heating_max)); },
+//         [
+//             (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
+//         ]
+//     )
+// );
+
+// document.getElementById("input-floor-area").addEventListener('input', () =>
+//     check_input("floor-area",
+//         undefined,
+//         [
+//             (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
+//         ]));
+
+// document.getElementById("input-floor-area").addEventListener('change', () =>
+//     check_input("floor-area",
+//         (value) => { return Math.round(Math.min(Math.max(value, floor_area_min), floor_area_max)); },
+//         [
+//             (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
+//         ]
+//     )
+// );
 
 
 document.getElementById("input-postcode").addEventListener('input', async () => {

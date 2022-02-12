@@ -399,14 +399,14 @@ input.hide-spinner[type="number"] {
 
 .crossmark {
   width: 2px;
-  height: 1rem;
+  height: 1.2rem;
   background-color: var(--experimental-color);
   transform-origin: center;
-  transform: rotate(45deg);
+  transform: rotate(45deg) translateX(1px);
 }
 
 .crossmark.other {
-  transform: rotate(-45deg);
+  transform: rotate(-45deg) translateX(-1px);
 }
 
 .ticked .checkbox {
