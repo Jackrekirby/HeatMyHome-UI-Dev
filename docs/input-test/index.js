@@ -6,16 +6,16 @@
 const api_url = 'http://localhost:3000';
 const epc_api_url = api_url + '/epc';
 
-async function check_input(id, transform, conditions) {
-    function clear_warnings(id) {
-        let input_box_element = document.getElementById("input-box-" + id);
-        let warn_elements = input_box_element.getElementsByClassName("warn");
-        console.log(warn_elements)
-        for (let warn_element of warn_elements) {
-            warn_element.classList.add("hide");
-        }
+function clear_warnings(id) {
+    let input_box_element = document.getElementById("input-box-" + id);
+    let warn_elements = input_box_element.getElementsByClassName("warn");
+    console.log(warn_elements)
+    for (let warn_element of warn_elements) {
+        warn_element.classList.add("hide");
     }
+}
 
+async function check_input(id, transform, conditions) {
     console.log('on_input', id);
     let input_element = document.getElementById("input-" + id);
     let help_element = document.getElementById("help-" + id);
@@ -50,6 +50,7 @@ async function check_input(id, transform, conditions) {
             input_element.classList.remove("valid");
         }
     }
+    check_submit();
 }
 
 function input_help(id) {
@@ -73,7 +74,7 @@ function unhide_all(ids) {
     }
 }
 
-function check_address() {
+async function check_address() {
     function set_hide(unhide, hide) {
         for (let element of hide) {
             element.classList.add("hide");
@@ -84,31 +85,83 @@ function check_address() {
     }
 
     let address_element = document.getElementById("input-address");
-    let next_element = document.getElementById("address-next");
+    // let next_element = document.getElementById("address-next");
     let warn_element = document.getElementById("warn-address-not-listed");
     let epc_element = document.getElementById("input-box-epc-space-heating");
     let floor_element = document.getElementById("input-box-floor-area");
 
+
+    let epc_input = document.getElementById("input-epc-space-heating");
+    epc_input.value = "";
+
+    check_input("epc-space-heating",
+        (value) => { return value; },
+        [
+            (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
+        ]
+    );
+
+    let floor_input = document.getElementById("input-floor-area");
+    floor_input.value = "";
+
+    check_input("floor-area",
+        (value) => { return value; },
+        [
+            (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
+        ]
+    );
+
+    clear_warnings("address");
     console.log(address_element.value);
     switch (address_element.value) {
         case "select address":
             address_element.classList.remove("valid", "invalid");
-            set_hide([], [next_element, warn_element, epc_element, floor_element]);
+            set_hide([], [warn_element, epc_element, floor_element]);
             break;
         case "address not listed":
             address_element.classList.remove("valid");
             address_element.classList.add("invalid");
-            set_hide([epc_element, floor_element, warn_element], [next_element]);
+            set_hide([epc_element, floor_element, warn_element], []);
             break;
         default:
             address_element.classList.add("valid");
             address_element.classList.remove("invalid");
-            set_hide([next_element], [warn_element, epc_element, floor_element]);
+            set_hide([], [warn_element, epc_element, floor_element]);
+            let searching = document.getElementById("epc-searching");
+            searching.classList.remove("hide");
+            await get_epc_data();
+            searching.classList.add("hide");
+            set_hide([epc_element, floor_element], [warn_element]);
+
+    }
+}
+
+function check_submit() {
+    let ids = ["postcode", "epc-space-heating", "floor-area", "temperature", "occupants", "tes-volume"]
+    let submit = true;
+    for (let id of ids) {
+        let element = document.getElementById('input-' + id);
+        if (!element.classList.contains("valid")) {
+            submit = false;
+        }
+    }
+
+    let submit_element = document.getElementById('input-submit');
+    if (submit) {
+        submit_element.classList.remove("hide");
+    } else {
+        submit_element.classList.add("hide");
     }
 }
 
 const temperature_min = 0;
 const temperature_max = 35;
+
+const occupants_min = 1;
+const occupants_max = 20;
+
+const tes_min = 0.1;
+const tes_max = 3.0;
 
 const epc_space_heating_min = 0;
 const epc_space_heating_max = 999999;
@@ -133,6 +186,38 @@ document.getElementById("input-temperature").addEventListener('change', () =>
         (value) => { return Math.round(Math.min(Math.max(value, temperature_min), temperature_max) * 10) / 10; },
         [
             (value) => { if (value >= temperature_min && value <= temperature_max) { return ""; } else { return "range" } },
+        ]
+    )
+);
+
+document.getElementById("input-occupants").addEventListener('input', () =>
+    check_input("occupants",
+        (value) => { return value; },
+        [
+            (value) => { if (value >= occupants_min && value <= occupants_max) { return ""; } else { return "range" } },
+        ]));
+
+document.getElementById("input-occupants").addEventListener('change', () =>
+    check_input("occupants",
+        (value) => { return Math.round(Math.min(Math.max(value, occupants_min), occupants_max)); },
+        [
+            (value) => { if (value >= occupants_min && value <= occupants_max) { return ""; } else { return "range" } },
+        ]
+    )
+);
+
+document.getElementById("input-tes-volume").addEventListener('input', () =>
+    check_input("tes-volume",
+        (value) => { return value; },
+        [
+            (value) => { if (value >= tes_min && value <= tes_max) { return ""; } else { return "range" } },
+        ]));
+
+document.getElementById("input-tes-volume").addEventListener('change', () =>
+    check_input("tes-volume",
+        (value) => { return Math.round(Math.min(Math.max(value, tes_min), tes_max) * 10) / 10; },
+        [
+            (value) => { if (value >= tes_min && value <= tes_max) { return ""; } else { return "range" } },
         ]
     )
 );
@@ -178,6 +263,24 @@ document.getElementById("input-postcode").addEventListener('input', async () => 
         [
             (_) => {
                 hide_all(["input-address", "input-box-epc-space-heating", "input-box-floor-area"])
+                let epc_element = document.getElementById("input-epc-space-heating");
+                epc_element.value = "";
+                check_input("epc-space-heating",
+                    (value) => { return value; },
+                    [
+                        (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
+                    ]
+                );
+
+
+                let floor_element = document.getElementById("input-floor-area");
+                floor_element.value = "";
+                check_input("floor-area",
+                    (value) => { return value; },
+                    [
+                        (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
+                    ]
+                );
                 return "";
             },
             (postcode) => {
@@ -236,7 +339,7 @@ document.getElementById("input-postcode").addEventListener('input', async () => 
                             while (element.getElementsByTagName('option').length > 0) {
                                 element.removeChild(element.lastChild);
                             }
-
+                            element.classList.remove("valid", "invalid");
                             let opt1 = document.createElement('option');
                             opt1.text = "select address";
                             opt1.classList.add("color-neutral");
@@ -295,9 +398,9 @@ async function get_epc_data() {
     let select = document.getElementById('input-address');
     let certificate = select.options[select.selectedIndex].value;
     //console.log(certificate);
-    document.getElementById('input-box-epc-space-heating').classList.remove("hide");
-    document.getElementById('input-box-floor-area').classList.remove("hide");
-    document.getElementById('address-next').classList.add("hide");
+    // document.getElementById('input-box-epc-space-heating').classList.remove("hide");
+    // document.getElementById('input-box-floor-area').classList.remove("hide");
+    // document.getElementById('address-next').classList.add("hide");
 
     console.log("find address");
     const full_url = `${epc_api_url}?certificate=${certificate}`;
@@ -321,8 +424,7 @@ async function get_epc_data() {
                         (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
                     ]);
             } else {
-                epc_element.value = null;
-                epc_element.classList.add("invalid");
+                epc_element.value = undefined;
                 document.getElementById('warn-epc-space-heating-none').classList.remove("hide");
             }
             if (result['floor-area']) {
@@ -334,14 +436,14 @@ async function get_epc_data() {
                         (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
                     ]);
             } else {
-                floor_element.value = null;
-                epc_element.classList.add("invalid");
+                floor_element.value = undefined;
                 document.getElementById('warn-floor-area-none').classList.remove("hide");
             }
         }
     }
     catch (error) {
         console.error('EPC API Certificate error: ', error);
+        document.getElementById('warn-address-connection').classList.remove("hide");
         if (error.message == "Failed to fetch") {
             return "epc-connection";
         }

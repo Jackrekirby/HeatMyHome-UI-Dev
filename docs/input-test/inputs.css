@@ -12,8 +12,6 @@
   margin: 0px;
   padding: 0px;
   font-family: "Sora", sans-serif;
-  font-size: 1rem;
-  font-weight: normal;
 }
 
 .inputs-box {
@@ -21,7 +19,6 @@
   padding: 1rem;
   margin: 1rem;
   width: 20rem;
-  height: 45rem;
 
   display: flex;
   flex-direction: column;
@@ -155,15 +152,15 @@ input.hide-spinner[type="number"] {
 
 .inputs-box .msg-box {
   margin: 0.5rem 0rem;
-  padding: 0.5rem 0rem;
+  padding: 0.5rem 0.5rem;
   text-align: justify;
   width: 100%;
   border: 0px;
   outline: 0px;
   border: 2px solid var(--neutral-color);
   color: var(--neutral-color);
-  padding: 0.5rem 0.5rem;
-  font-size: 1rem;
+  margin-bottom: 0rem;
+  font-size: 0.8rem;
   font-family: "Sora", sans-serif;
   background: transparent;
   border-radius: 0px;
@@ -174,6 +171,7 @@ input.hide-spinner[type="number"] {
 
 .msg-box a {
   color: inherit;
+  font-size: 0.8rem;
 }
 
 .msg-box.warn {
@@ -246,6 +244,9 @@ input.hide-spinner[type="number"] {
   background: transparent;
   border-radius: 0px;
   transition: 0.2s all ease-in-out;
+  animation: fadeIn 0.2s;
+  animation-fill-mode: forwards;
+  transform-origin: top;
 }
 
 .inputs-box button:hover {
@@ -257,58 +258,65 @@ input.hide-spinner[type="number"] {
   height: 0.5rem;
 }
 
-#postcode-searching {
+.msg-box.search {
   display: flex;
   flex-direction: row;
 }
 
-#postcode-searching > div {
+.msg-box.search > div {
   position: relative;
   margin-left: 2rem;
-  padding: 0.5rem 0rem;
+  padding: 0.25rem 0rem;
 }
 
-.dot-typing {
-  position: absolute;
-  left: -9999px;
+.dots {
+  position: relative;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 0.5rem;
   background-color: var(--info-color);
   color: var(--info-color);
-  box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
-    10014px 0 0 0 var(--info-color);
-  animation: dotTyping 1.5s infinite linear;
+  animation: dotFlashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
 }
 
-@keyframes dotTyping {
+.dots::before,
+.dots::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.dots::before {
+  left: -15px;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--info-color);
+  color: var(--info-color);
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+
+.dots::after {
+  left: 15px;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--info-color);
+  color: var(--info-color);
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+
+@keyframes dotFlashing {
   0% {
-    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
-      10014px 0 0 0 var(--info-color);
+    background-color: var(--info-color);
   }
-  16.667% {
-    box-shadow: 9984px -10px 0 0 var(--info-color),
-      9999px 0 0 0 var(--info-color), 10014px 0 0 0 var(--info-color);
-  }
-  33.333% {
-    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
-      10014px 0 0 0 var(--info-color);
-  }
-  50% {
-    box-shadow: 9984px 0 0 0 var(--info-color),
-      9999px -10px 0 0 var(--info-color), 10014px 0 0 0 var(--info-color);
-  }
-  66.667% {
-    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
-      10014px 0 0 0 var(--info-color);
-  }
-  83.333% {
-    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
-      10014px -10px 0 0 var(--info-color);
-  }
+  50%,
   100% {
-    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
-      10014px 0 0 0 var(--info-color);
+    background-color: #c8edff;
   }
 }
 
@@ -318,4 +326,8 @@ input.hide-spinner[type="number"] {
 
 .pointer {
   cursor: pointer;
+}
+
+.input-box sup {
+  font-size: 0.6rem;
 }
