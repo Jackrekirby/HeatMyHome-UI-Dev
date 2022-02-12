@@ -24,7 +24,9 @@ async function check_input(id, transform, conditions) {
         input_element.classList.remove("valid", "invalid");
         clear_warnings(id);
     } else {
-        input_element.value = transform(input_element.value);
+        if (transform != undefined) {
+            input_element.value = transform(input_element.value);
+        }
         let is_valid = true;
         for (let condition of conditions) {
 
@@ -95,7 +97,7 @@ async function check_address() {
     epc_input.value = "";
 
     check_input("epc-space-heating",
-        (value) => { return value; },
+        undefined,
         [
             (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
         ]
@@ -105,13 +107,14 @@ async function check_address() {
     floor_input.value = "";
 
     check_input("floor-area",
-        (value) => { return value; },
+        undefined,
         [
             (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
         ]
     );
 
     clear_warnings("address");
+    document.getElementById('help-address').classList.add("hide");
     console.log(address_element.value);
     switch (address_element.value) {
         case "select address":
@@ -176,7 +179,7 @@ let epc_api_connection = true;
 
 document.getElementById("input-temperature").addEventListener('input', () =>
     check_input("temperature",
-        (value) => { return value; },
+        undefined,
         [
             (value) => { if (value >= temperature_min && value <= temperature_max) { return ""; } else { return "range" } },
         ]));
@@ -192,7 +195,7 @@ document.getElementById("input-temperature").addEventListener('change', () =>
 
 document.getElementById("input-occupants").addEventListener('input', () =>
     check_input("occupants",
-        (value) => { return value; },
+        undefined,
         [
             (value) => { if (value >= occupants_min && value <= occupants_max) { return ""; } else { return "range" } },
         ]));
@@ -208,7 +211,7 @@ document.getElementById("input-occupants").addEventListener('change', () =>
 
 document.getElementById("input-tes-volume").addEventListener('input', () =>
     check_input("tes-volume",
-        (value) => { return value; },
+        undefined,
         [
             (value) => { if (value >= tes_min && value <= tes_max) { return ""; } else { return "range" } },
         ]));
@@ -224,7 +227,7 @@ document.getElementById("input-tes-volume").addEventListener('change', () =>
 
 document.getElementById("input-epc-space-heating").addEventListener('input', () =>
     check_input("epc-space-heating",
-        (value) => { return value; },
+        undefined,
         [
             (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
         ]));
@@ -240,7 +243,7 @@ document.getElementById("input-epc-space-heating").addEventListener('change', ()
 
 document.getElementById("input-floor-area").addEventListener('input', () =>
     check_input("floor-area",
-        (value) => { return value; },
+        undefined,
         [
             (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
         ]));
@@ -266,7 +269,7 @@ document.getElementById("input-postcode").addEventListener('input', async () => 
                 let epc_element = document.getElementById("input-epc-space-heating");
                 epc_element.value = "";
                 check_input("epc-space-heating",
-                    (value) => { return value; },
+                    undefined,
                     [
                         (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
                     ]
@@ -276,7 +279,7 @@ document.getElementById("input-postcode").addEventListener('input', async () => 
                 let floor_element = document.getElementById("input-floor-area");
                 floor_element.value = "";
                 check_input("floor-area",
-                    (value) => { return value; },
+                    undefined,
                     [
                         (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
                     ]
@@ -419,7 +422,7 @@ async function get_epc_data() {
                 const space_heating = result['space-heating'].match(/\d+/)[0];
                 epc_element.value = space_heating;
                 check_input("epc-space-heating",
-                    (value) => { return value; },
+                    undefined,
                     [
                         (value) => { if (value >= epc_space_heating_min && value <= epc_space_heating_max) { return ""; } else { return "range" } },
                     ]);
@@ -431,7 +434,7 @@ async function get_epc_data() {
                 const floor_area = result['floor-area'].match(/\d+/)[0];
                 floor_element.value = floor_area;
                 check_input("floor-area",
-                    (value) => { return value; },
+                    undefined,
                     [
                         (value) => { if (value >= floor_area_min && value <= floor_area_max) { return ""; } else { return "range" } },
                     ]);
@@ -439,14 +442,17 @@ async function get_epc_data() {
                 floor_element.value = undefined;
                 document.getElementById('warn-floor-area-none').classList.remove("hide");
             }
+            document.getElementById('help-address').classList.remove("hide");
+        } else {
+            throw new Error(json['error']);
         }
     }
     catch (error) {
         console.error('EPC API Certificate error: ', error);
-        document.getElementById('warn-address-connection').classList.remove("hide");
         if (error.message == "Failed to fetch") {
-            return "epc-connection";
+            document.getElementById('warn-address-connection').classList.remove("hide");
+        } else {
+            document.getElementById('warn-address-unknown').classList.remove("hide");
         }
-        return "epc-api";
     }
 }
