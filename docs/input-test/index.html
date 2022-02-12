@@ -15,7 +15,9 @@
             <input type="text" id="input-postcode" class="hide-spinner" />
             <p>Postcode</p>
           </div>
-          <div class="help" onclick="input_help('postcode')">?</div>
+          <div class="input-side-button" onclick="input_help('postcode')">
+            ?
+          </div>
         </div>
         <div id="help-postcode" class="msg-box info hide">
           The postcode of the address you wish to simulate.
@@ -39,8 +41,7 @@
         </div>
         <div
           id="warn-postcode-epc-connection"
-          class="msg-box warn hide pointer"
-          onclick="document.getElementById('warn-postcode-epc-connection').classList.add('hide')"
+          class="msg-box warn hide click-dismiss"
         >
           Postcode is valid but could not connect to EPC API. Please enter
           details manually. Click to dismiss.
@@ -65,25 +66,16 @@
         </div>
         <div
           id="warn-address-connection"
-          class="msg-box warn hide"
-          onclick="document.getElementById('warn-address-connection').classList.add('hide')"
+          class="msg-box warn hide click-dismiss"
         >
           Could not connect to EPC API. Please enter details manually. Click to
           dismiss.
         </div>
-        <div
-          id="warn-address-unknown"
-          class="msg-box warn hide"
-          onclick="document.getElementById('warn-address-unknown').classList.add('hide')"
-        >
+        <div id="warn-address-unknown" class="msg-box warn hide click-dismiss">
           Connected to EPC API but response invalid. Please enter details
           manually. Click to dismiss.
         </div>
-        <div
-          id="help-address"
-          class="msg-box info hide"
-          onclick="document.getElementById('help-address').classList.add('hide')"
-        >
+        <div id="help-address" class="msg-box info hide click-dismiss">
           Your address was used to fill the space heating estimate and floor
           area parameters from your homes' EPC certificate. You may wish to
           adjust the parameters manually. Click to dismiss.
@@ -101,7 +93,12 @@
             />
             <p>EPC Space Heating</p>
           </div>
-          <div class="help" onclick="input_help('epc-space-heating')">?</div>
+          <div
+            class="input-side-button"
+            onclick="input_help('epc-space-heating')"
+          >
+            ?
+          </div>
         </div>
         <div id="help-epc-space-heating" class="msg-box info hide">
           The amount of energy required to heat your home per year. Must be in
@@ -129,7 +126,9 @@
             <input type="number" id="input-floor-area" class="hide-spinner" />
             <p>Floor Area</p>
           </div>
-          <div class="help" onclick="input_help('floor-area')">?</div>
+          <div class="input-side-button" onclick="input_help('floor-area')">
+            ?
+          </div>
         </div>
         <div id="help-floor-area" class="msg-box info hide">
           Your home's floor area. Must be in range 25-999 m<sup>2</sup>.
@@ -156,7 +155,9 @@
             <input type="number" id="input-temperature" class="hide-spinner" />
             <p>Thermostat Temperature</p>
           </div>
-          <div class="help" onclick="input_help('temperature')">?</div>
+          <div class="input-side-button" onclick="input_help('temperature')">
+            ?
+          </div>
         </div>
         <div id="help-temperature" class="msg-box info hide">
           The temperature you like your home at. Must be in the range 0.0 to
@@ -174,7 +175,9 @@
             <input type="number" id="input-occupants" class="hide-spinner" />
             <p>No. Occupants</p>
           </div>
-          <div class="help" onclick="input_help('occupants')">?</div>
+          <div class="input-side-button" onclick="input_help('occupants')">
+            ?
+          </div>
         </div>
         <div id="help-occupants" class="msg-box info hide">
           The number of people who live in your home. Must be in range 1-20
@@ -192,7 +195,9 @@
             <input type="number" id="input-tes-volume" class="hide-spinner" />
             <p>Water Tank Volume</p>
           </div>
-          <div class="help" onclick="input_help('tes-volume')">?</div>
+          <div class="input-side-button" onclick="input_help('tes-volume')">
+            ?
+          </div>
         </div>
         <div id="help-tes-volume" class="msg-box info hide">
           The maximum volume water tank you could install in your home. Must be
@@ -203,13 +208,35 @@
         </div>
       </div>
 
-      <select id="" class="hide" onchange="">
-        <option>Run Server-Side using Rust</option>
-        <option>Run Client-Side using Rust</option>
-        <option>Run Client-Side using C++</option>
+      <div id="help-advanced" class="msg-box info hide click-dismiss">
+        Advanced input mode. These features are experimental and may not produce
+        accurate results. Click to dismiss.
+      </div>
+      <select id="run-location" class="hide" onchange="set_run_location();">
+        <option value="server-rust">Run Server-Side using Rust</option>
+        <option value="client-rust">Run Client-Side using Rust</option>
+        <option value="client-cpp">Run Client-Side using C++</option>
       </select>
 
-      <button id="input-submit" class="hide" onclick="">Submit</button>
+      <div id="input-box-optimisation" class="check-row hide ticked">
+        <p>Use Optimisation</p>
+        <div
+          id="input-optimisation"
+          class="checkbox"
+          onclick="toggle_optimisation();"
+        >
+          <div class="checkmark"></div>
+          <div class="checkmark other"></div>
+        </div>
+      </div>
+
+      <div id="submit-group" class="input-box submit-group hide">
+        <div></div>
+        <button id="input-submit" class="" onclick="">Submit</button>
+        <div class="input-side-button" onclick="toggle_advanced_inputs()">
+          +
+        </div>
+      </div>
     </div>
     <script src="index.js"></script>
   </body>

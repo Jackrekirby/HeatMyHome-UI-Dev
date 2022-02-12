@@ -56,11 +56,16 @@ async function check_input(id, transform, conditions) {
 }
 
 function input_help(id) {
+    let box_element = document.getElementById("input-box-" + id);
+    let help_button = box_element.getElementsByClassName("input-side-button")[0];
+
     let help_element = document.getElementById("help-" + id);
     if (help_element.classList.contains("hide")) {
         help_element.classList.remove("hide");
+        help_button.classList.add("active");
     } else {
         help_element.classList.add("hide");
+        help_button.classList.remove("active");
     }
 }
 
@@ -138,7 +143,7 @@ async function check_address() {
 
     }
 }
-
+let submit_status = false;
 function check_submit() {
     let ids = ["postcode", "epc-space-heating", "floor-area", "temperature", "occupants", "tes-volume"]
     let submit = true;
@@ -148,12 +153,83 @@ function check_submit() {
             submit = false;
         }
     }
+    if (submit != submit_status) {
+        submit_status = submit;
+        let submit_element = document.getElementById('submit-group');
+        let button = submit_element.getElementsByClassName("input-side-button")[0];
+        if (submit) {
+            submit_element.classList.remove("hide");
+            if (button.classList.contains("active")) {
+                unhide_all(['run-location', 'input-box-optimisation']);
+            }
+        } else {
+            submit_element.classList.add("hide");
+            hide_all(['run-location', 'help-advanced', 'input-box-optimisation']);
+        }
+    }
+}
 
-    let submit_element = document.getElementById('input-submit');
-    if (submit) {
-        submit_element.classList.remove("hide");
+function toggle_advanced_inputs() {
+    let run_location = document.getElementById('run-location');
+    let submit_element = document.getElementById('submit-group');
+    let button = submit_element.getElementsByClassName("input-side-button")[0];
+    if (run_location.classList.contains("hide")) {
+        run_location.classList.remove("hide");
+        button.classList.add("active");
+        unhide_all(['run-location', 'help-advanced', 'input-box-optimisation']);
     } else {
-        submit_element.classList.add("hide");
+        button.classList.remove("active");
+        hide_all(['run-location', 'help-advanced', 'input-box-optimisation']);
+    }
+}
+
+function click_dismiss() {
+    let elements = document.getElementsByClassName('click-dismiss');
+    for (let element of elements) {
+        element.addEventListener('click', () => { document.getElementById(element.id).classList.add('hide') });
+    }
+}
+
+function set_run_location() {
+    let element = document.getElementById("run-location");
+    let opti_element = document.getElementById("input-box-optimisation");
+
+    let index = element.selectedIndex;
+    let value = element.getElementsByTagName("option")[index].value;
+    console.log('run-location', value);
+    switch (value) {
+        case 'server-rust':
+            opti_element.classList.add("hide");
+            break;
+        default:
+            opti_element.classList.remove("hide");
+    }
+}
+
+function toggle_optimisation() {
+    let element = document.getElementById("input-optimisation");
+    let box = document.getElementById("input-box-optimisation");
+    let divs = element.getElementsByTagName('div');
+
+    if (box.classList.contains("ticked")) {
+        // element.classList.remove("ticked");
+        box.classList.remove("ticked");
+    } else {
+        // element.classList.add("ticked");
+        box.classList.add("ticked");
+    }
+
+
+
+    for (let div of divs) {
+        if (div.classList.contains("checkmark")) {
+            div.classList.add("crossmark");
+            div.classList.remove("checkmark");
+        } else {
+            div.classList.remove("crossmark");
+            div.classList.add("checkmark");
+        }
+
     }
 }
 
@@ -176,6 +252,8 @@ let longitude = undefined;
 let latitude = undefined;
 let scottish_postcode = false;
 let epc_api_connection = true;
+
+click_dismiss();
 
 document.getElementById("input-temperature").addEventListener('input', () =>
     check_input("temperature",
