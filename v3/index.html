@@ -1,0 +1,147 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="inputs.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="inputs-box">
+      <div id="input-box-postcode" class="input-box">
+        <div class="input-row">
+          <div class="input-field">
+            <input type="text" id="input-postcode" class="hide-spinner" />
+            <p>Postcode</p>
+          </div>
+          <div class="help" onclick="input_help('postcode')">?</div>
+        </div>
+        <div id="help-postcode" class="msg-box info hide">
+          The postcode of the address you wish to simulate.
+        </div>
+        <div id="postcode-searching" class="msg-box info hide">
+          Searching
+          <div><div class="dot-typing"></div></div>
+        </div>
+        <div id="warn-postcode-postcodes-io" class="msg-box warn hide">
+          Postcode not found on <a href="http://postcodes.io">postcode API</a>.
+          Postcode may be invalid or not in the UK.
+        </div>
+        <div id="warn-postcode-epc-api" class="msg-box warn hide">
+          Postcode not found on
+          <a href="https://www.gov.uk/find-energy-certificate">GOV.UK</a>.
+          Postcode may be invalid or not in England or Wales.
+        </div>
+        <div id="warn-postcode-io-connection" class="msg-box warn hide">
+          Could not connect to <a href="http://postcodes.io">postcode API</a>.
+          Check your internet connection.
+        </div>
+        <div
+          id="warn-postcode-epc-connection"
+          class="msg-box warn hide pointer"
+          onclick="document.getElementById('warn-postcode-epc-connection').classList.add('hide')"
+        >
+          Postcode is valid but could not connect to EPC API. Please enter
+          details manually.
+        </div>
+      </div>
+
+      <div>
+        <select id="input-address" class="hide" onchange="check_address();">
+          <option>Select Address</option>
+          <option>Address Not Listed</option>
+          <option>1 Example Avenue</option>
+          <option>2 Main Street</option>
+          <option>3 Oakly Road</option>
+        </select>
+        <div id="warn-address-not-listed" class="msg-box warn hide">
+          Address needed for your homes' EPC Certificate. Enter details manually
+          or select a neighbours address whose home is similarly sized to yours.
+        </div>
+      </div>
+
+      <button id="address-next" class="hide" onclick="get_epc_data();">
+        next
+      </button>
+      <button id="address-manual" class="hide">enter details manually</button>
+
+      <div id="input-box-epc-space-heating" class="input-box hide">
+        <div class="input-spacer"></div>
+        <div class="input-row">
+          <div class="input-field">
+            <input
+              type="number"
+              id="input-epc-space-heating"
+              class="hide-spinner"
+            />
+            <p>EPC Space Heating</p>
+          </div>
+          <div class="help" onclick="input_help('epc-space-heating')">?</div>
+        </div>
+        <div id="help-epc-space-heating" class="msg-box info hide">
+          The amount of energy required to heat your home per year. Must be in
+          range 0-999999 kWh/yr.
+        </div>
+        <div id="warn-epc-space-heating-range" class="msg-box warn hide">
+          Must be in range 0-999999 kWh/yr.
+        </div>
+        <div id="warn-epc-space-heating-none" class="msg-box warn hide">
+          Your
+          <a
+            href="https://find-energy-certificate.service.gov.uk/find-a-certificate/search-by-postcode?lang=en&property_type=domestic"
+          >
+            EPC Certificate</a
+          >
+          does not contain a space heating estimate. Either enter it manually or
+          select a neighbours' address who does.
+        </div>
+      </div>
+
+      <div id="input-box-floor-area" class="input-box hide">
+        <div class="input-spacer"></div>
+        <div class="input-row">
+          <div class="input-field">
+            <input type="number" id="input-floor-area" class="hide-spinner" />
+            <p>Floor Area</p>
+          </div>
+          <div class="help" onclick="input_help('floor-area')">?</div>
+        </div>
+        <div id="help-floor-area" class="msg-box info hide">
+          Your home's floor area. Must be in range 25-999 m<sup>2</sup>.
+        </div>
+        <div id="warn-floor-area-range" class="msg-box warn hide">
+          Must be in range 25-999 m<sup>2</sup>.
+        </div>
+        <div id="warn-floor-area-none" class="msg-box warn hide">
+          Your
+          <a
+            href="https://find-energy-certificate.service.gov.uk/find-a-certificate/search-by-postcode?lang=en&property_type=domestic"
+          >
+            EPC Certificate</a
+          >
+          does not contain a floor area estimate. Either enter it manually or
+          select a neighbours' address who does.
+        </div>
+      </div>
+
+      <div id="input-box-temperature" class="input-box hide">
+        <div class="input-row">
+          <div class="input-field">
+            <input type="number" id="input-temperature" class="hide-spinner" />
+            <p>Thermostat Temperature</p>
+          </div>
+          <div class="help" onclick="input_help('temperature')">?</div>
+        </div>
+        <div id="help-temperature" class="msg-box info hide">
+          The temperature you like your home at. Must be in the range 0.0 to
+          35.0°C.
+        </div>
+        <div id="warn-temperature-range" class="msg-box warn hide">
+          Must be in range 0.0-35.0°C
+        </div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

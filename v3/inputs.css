@@ -1,0 +1,321 @@
+:root {
+  --warn-color: #ff2300;
+  --valid-color: #00dd22;
+  --info-color: #00aeff;
+  --neutral-color: #d3d3d3;
+  --white-color: white;
+  --black-color: black;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Sora", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.inputs-box {
+  border: 2px solid var(--neutral-color);
+  padding: 1rem;
+  margin: 1rem;
+  width: 20rem;
+  height: 45rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+}
+
+.input-box {
+  padding: 0rem 1rem;
+  width: 20rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 2rem white inset !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input.hide-spinner::-webkit-outer-spin-button,
+input.hide-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input.hide-spinner[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  align-items: flex-end;
+  align-content: center;
+}
+
+.input-field {
+  position: relative;
+  margin: 0rem 0rem;
+  padding: 0rem;
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+}
+
+.input-box .help {
+  position: relative;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--neutral-color);
+  border: 2px solid var(--neutral-color);
+  transition: 0.2s all ease-in-out;
+}
+
+.input-box .help:hover {
+  color: var(--info-color);
+  border-color: #00aeff;
+}
+
+.input-field > * {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 15rem;
+  color: var(--neutral-color);
+  padding: 0.5rem 0rem;
+  margin: 0rem;
+  font-size: 1rem;
+}
+
+.input-field input {
+  border: 0;
+  outline: 0;
+  padding: 0rem 0rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.2rem;
+  border-radius: 0px;
+  box-shadow: none;
+  border-bottom: 2px solid var(--neutral-color);
+  background-color: transparent;
+  color: var(--black-color);
+}
+
+.input-field p {
+  transition: 0.2s all ease-in-out;
+  cursor: text;
+  pointer-events: none;
+}
+
+.input-field input:focus ~ p {
+  font-size: 0.9rem;
+  bottom: calc(0.9rem + 0.5rem);
+}
+
+.input-field input.invalid {
+  border-color: var(--warn-color);
+}
+
+.input-field input.invalid ~ p {
+  color: var(--warn-color);
+  font-size: 0.9rem;
+  bottom: calc(0.9rem + 0.5rem);
+}
+
+.input-field input.valid {
+  border-color: var(--valid-color);
+}
+
+.input-field input.valid ~ p {
+  color: var(--valid-color);
+  font-size: 0.9rem;
+  bottom: calc(0.9rem + 0.5rem);
+}
+
+.inputs-box .msg-box {
+  margin: 0.5rem 0rem;
+  padding: 0.5rem 0rem;
+  text-align: justify;
+  width: 100%;
+  border: 0px;
+  outline: 0px;
+  border: 2px solid var(--neutral-color);
+  color: var(--neutral-color);
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  font-family: "Sora", sans-serif;
+  background: transparent;
+  border-radius: 0px;
+  animation: fadeIn 0.2s;
+  animation-fill-mode: forwards;
+  transform-origin: top;
+}
+
+.msg-box a {
+  color: inherit;
+}
+
+.msg-box.warn {
+  border-color: var(--warn-color);
+  color: var(--warn-color);
+}
+
+.msg-box.info {
+  border-color: var(--info-color);
+  color: var(--info-color);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+.inputs-box select {
+  margin-top: 1rem;
+  padding: 0rem;
+  width: 100%;
+  height: 3rem;
+  border: 0px;
+  outline: 0px;
+  border: 2px solid var(--neutral-color);
+  color: var(--neutral-color);
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  background: transparent;
+  border-radius: 0px;
+}
+
+.inputs-box select.valid {
+  border-color: var(--valid-color);
+  color: var(--valid-color);
+}
+
+.inputs-box select.invalid {
+  border-color: var(--warn-color);
+  color: var(--warn-color);
+}
+
+.color-neutral {
+  color: var(--neutral-color);
+}
+
+.color-valid {
+  color: var(--valid-color);
+}
+
+.color-warn {
+  color: var(--warn-color);
+}
+
+.inputs-box button {
+  margin-top: 1rem;
+  padding: 0rem;
+  border: 0px;
+  outline: 0px;
+  border: 2px solid var(--neutral-color);
+  color: var(--neutral-color);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background: transparent;
+  border-radius: 0px;
+  transition: 0.2s all ease-in-out;
+}
+
+.inputs-box button:hover {
+  color: var(--valid-color);
+  border-color: var(--valid-color);
+}
+
+.input-spacer {
+  height: 0.5rem;
+}
+
+#postcode-searching {
+  display: flex;
+  flex-direction: row;
+}
+
+#postcode-searching > div {
+  position: relative;
+  margin-left: 2rem;
+  padding: 0.5rem 0rem;
+}
+
+.dot-typing {
+  position: absolute;
+  left: -9999px;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--info-color);
+  color: var(--info-color);
+  box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
+    10014px 0 0 0 var(--info-color);
+  animation: dotTyping 1.5s infinite linear;
+}
+
+@keyframes dotTyping {
+  0% {
+    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
+      10014px 0 0 0 var(--info-color);
+  }
+  16.667% {
+    box-shadow: 9984px -10px 0 0 var(--info-color),
+      9999px 0 0 0 var(--info-color), 10014px 0 0 0 var(--info-color);
+  }
+  33.333% {
+    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
+      10014px 0 0 0 var(--info-color);
+  }
+  50% {
+    box-shadow: 9984px 0 0 0 var(--info-color),
+      9999px -10px 0 0 var(--info-color), 10014px 0 0 0 var(--info-color);
+  }
+  66.667% {
+    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
+      10014px 0 0 0 var(--info-color);
+  }
+  83.333% {
+    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
+      10014px -10px 0 0 var(--info-color);
+  }
+  100% {
+    box-shadow: 9984px 0 0 0 var(--info-color), 9999px 0 0 0 var(--info-color),
+      10014px 0 0 0 var(--info-color);
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
