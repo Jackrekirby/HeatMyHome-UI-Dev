@@ -67,6 +67,7 @@ let longitude = undefined;
 let latitude = undefined;
 let scottish_postcode = false;
 let epc_api_connection = true;
+let epc_api_error = false;
 const input_id_list = ['postcode', 'epc-space-heating', 'floor-area', 'temperature', 'occupants', 'tes-volume'];
 
 
@@ -385,6 +386,8 @@ function get_check_input_fnc(pid, apply_transform) {
                 hide_elements([searching]);
                 if (!epc_api_connection) {
                     unhide_ids(['warn-postcode-epc-connection']);
+                } else if (epc_api_error) {
+                    unhide_ids(['warn-postcode-epc-api']);
                 }
             };
             break;
@@ -401,6 +404,9 @@ function get_check_input_fnc(pid, apply_transform) {
 }
 
 function hide_postcode_related_inputs() {
+    scottish_postcode = false;
+    epc_api_connection = true;
+    epc_api_error = false;
     hide_ids(['input-address', 'input-box-epc-space-heating', 'input-box-floor-area', 'epc-searching', 'help-address']);
     clear_warnings('address');
     clear_value('epc-space-heating');
@@ -443,10 +449,10 @@ async function validate_postcode(postcode) {
         }
     } catch (error) {
         console.error('postcode-api-error: ', error);
-        if (error.message == "Failed to fetch") {
-            return "io-connection";
+        if (error.message == 'Failed to fetch' || error.message == 'Load failed') {
+            return 'io-connection';
         }
-        return "postcodes-io";
+        return 'postcodes-io';
     }
 }
 
@@ -493,18 +499,19 @@ async function get_address_certificates(postcode) {
             }
         } catch (error) {
             console.error('api-address-certificate-error: ', error);
-            if (error.message == "Failed to fetch") {
+            if (error.message == 'Failed to fetch' || error.message == 'Load failed') {
                 epc_api_connection = false;
                 return "";
             }
-            return "epc-api";
+            epc_api_error = true;
+            return "";
         }
     }
     return "";
 }
 
 function show_manual_epc_input() {
-    if (scottish_postcode || !epc_api_connection) {
+    if (scottish_postcode || !epc_api_connection || epc_api_error) {
         unhide_ids(['input-box-epc-space-heating', 'input-box-floor-area']);
     } return "";
 }
