@@ -15,6 +15,13 @@
   font-family: "Sora", sans-serif;
 }
 
+.body-spacer {
+  padding: 2rem;
+  width: 20rem;
+  text-align: center;
+  color: var(--neutral-color);
+}
+
 .inputs-box {
   border: 2px solid var(--neutral-color);
   padding: 1rem;
