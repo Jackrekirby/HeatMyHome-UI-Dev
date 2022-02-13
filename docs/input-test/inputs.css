@@ -246,20 +246,33 @@ input.hide-spinner[type="number"] {
   border: 0px;
   outline: 0px;
   border: 2px solid var(--neutral-color);
-  color: var(--neutral-color);
+  color: var(--valid-color);
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background: transparent;
   border-radius: 0px;
   transition: 0.2s all ease-in-out;
-  animation: fadeIn 0.2s;
-  animation-fill-mode: forwards;
-  transform-origin: top;
+  /* animation: fadeIn 0.2s; */
+  /* animation-fill-mode: forwards; */
+  /* transform-origin: top; */
+}
+
+.inputs-box button.invalid {
+  color: var(--warn-color);
+  /* border-color: var(--warn-color); */
 }
 
 .inputs-box button:hover {
-  color: var(--valid-color);
   border-color: var(--valid-color);
+}
+
+.inputs-box button.active {
+  border-color: var(--valid-color);
+  color: var(--valid-color);
+}
+
+.inputs-box button.invalid:hover {
+  border-color: var(--warn-color);
 }
 
 .input-spacer {

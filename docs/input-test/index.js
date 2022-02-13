@@ -53,6 +53,7 @@
 // ---- GLOBALS
 const api_url = 'http://localhost:3000';
 const epc_api_url = api_url + '/epc';
+const simulate_api_url = api_url + '/simulate';
 let submit_status = false;
 
 const input_ranges = { // MIN, MAX, MULTIPLIER
@@ -63,8 +64,19 @@ const input_ranges = { // MIN, MAX, MULTIPLIER
     'floor-area': [25, 999, 1],
 }
 
-let longitude = undefined;
-let latitude = undefined;
+let input_values = {
+    'postcode': undefined,
+    'longitude': undefined,
+    'latitude': undefined,
+    'epc-space-heating': undefined,
+    'floor-area': undefined,
+    'temperature': undefined,
+    'occupants': undefined,
+    'tes-volume': undefined,
+    'run-on': 'server-rust',
+    'enable-optimisation': true,
+}
+
 let scottish_postcode = false;
 let epc_api_connection = true;
 let epc_api_error = false;
@@ -101,7 +113,7 @@ async function check_input(pid, transform, conditions) {
 
     help_element.classList.add("hide");
     if (input_element.value == "") {
-        input_element.classList.remove("valid", "invalid");
+        clear_element_validation(input_element);
         clear_warnings(pid);
     } else {
         if (transform != undefined) {
@@ -124,12 +136,15 @@ async function check_input(pid, transform, conditions) {
         }
 
         if (is_valid) {
-            input_element.classList.add("valid");
-            input_element.classList.remove("invalid");
+            validate_element(input_element);
+            if (/[a-z]/i.test(input_element.value)) {
+                input_values[pid] = input_element.value;
+            } else { // if parameter does not contain letters assume number
+                input_values[pid] = Number(input_element.value);
+            }
             clear_warnings(pid);
         } else {
-            input_element.classList.add("invalid");
-            input_element.classList.remove("valid");
+            invalidate_element(input_element);
         }
     }
     check_submit();
@@ -242,6 +257,66 @@ async function onchange_address() {
     }
 }
 
+// submit_simulation()
+// -- ran when submit button clicks. Will submit if all inputs valid.
+// async submit_simulation_server()
+// -- submit inputs to server to run simulation
+
+
+function submit_simulation() {
+    let submit_input = document.getElementById("input-submit");
+    if (!submit_input.classList.contains('invalid')) {
+        submit_input.classList.add('active');
+        hide_ids(['warn-sim-api-connection', 'warn-sim-api-error']);
+        console.log("submit-simulation: ", input_values);
+        submit_simulation_server();
+    } else {
+        unhide_ids(['warn-submit']);
+    }
+}
+
+async function submit_simulation_server() {
+    unhide_ids(['submit-waiting']);
+    const parameter_name_list = [
+        'postcode',
+        'latitude',
+        'longitude',
+        'occupants',
+        'temperature',
+        'space_heating',
+        'floor_area',
+        'tes_max',
+    ];
+
+    search = Array();
+    for (const name of parameter_name_list) {
+        search.push(`${name}=${input_values[name]}`);
+    }
+
+    const simulator_url = simulate_api_url + `?${search.join('&')}`;
+    console.log('simulator-api-url: ', simulator_url);
+
+    try {
+        const response = await fetch(simulator_url);
+        const json = await response.json();
+        if (json['status'] == 200) {
+            console.log('simulator-api-json:', json);
+            unhide_ids(['submit-complete']);
+        } else {
+            throw new Error(json['error']);
+        }
+    } catch (error) {
+        console.error('simulator-api-error: ', error);
+        if (error.message == 'Failed to fetch' || error.message == 'Load failed') {
+            unhide_ids(['warn-sim-api-connection']);
+        } else {
+            unhide_ids(['warn-sim-api-error']);
+        }
+    }
+    hide_ids(['submit-waiting']);
+    submit_input.classList.remove('active');
+}
+
 function check_submit() {
     let submit = true;
     for (let pid of input_id_list) {
@@ -252,17 +327,15 @@ function check_submit() {
     }
     if (submit != submit_status) {
         submit_status = submit;
-        let submit_element = document.getElementById('submit-group');
-        let advanced_element = submit_element.getElementsByClassName("input-side-button")[0];
+        // let submit_element = document.getElementById('submit-group');
+        // let advanced_element = submit_element.getElementsByClassName("input-side-button")[0];
+        let submit_input = document.getElementById("input-submit");
+
         if (submit) {
-            unhide_elements([submit_element]);
-            if (advanced_element.classList.contains("active")) {
-                unhide_ids(['run-location']);
-                set_run_location();
-            }
+            submit_input.classList.remove('invalid');
+            hide_ids(['warn-submit']);
         } else {
-            hide_elements([submit_element]);
-            hide_ids(['run-location', 'help-advanced', 'input-box-optimisation']);
+            submit_input.classList.add('invalid');
         }
     }
 }
@@ -293,6 +366,8 @@ function set_run_location() {
     let element = document.getElementById("run-location");
     let optimisation_element = document.getElementById("input-box-optimisation");
     let value = element.getElementsByTagName("option")[element.selectedIndex].value;
+    input_values["run-on"] = value;
+
     switch (value) {
         case 'server-rust':
             hide_elements([optimisation_element]);
@@ -309,8 +384,10 @@ function toggle_optimisation() {
 
     if (box.classList.contains("ticked")) {
         box.classList.remove("ticked");
+        input_values["enable-optimisation"] = false;
     } else {
         box.classList.add("ticked");
+        input_values["enable-optimisation"] = true;
     }
 
     for (let div of divs) {
@@ -374,7 +451,7 @@ function get_check_input_fnc(pid, apply_transform) {
                 let searching = document.getElementById("postcode-searching");
                 unhide_elements([searching]);
                 await check_input("postcode",
-                    (postcode) => { return postcode.toUpperCase().replace(' ', ''); },
+                    (postcode) => { return postcode.toUpperCase().replace(/\s/g, '').substring(0, 7); },
                     [
                         hide_postcode_related_inputs,
                         (postcode) => { return check_postcode_format(postcode); },
@@ -438,14 +515,14 @@ async function validate_postcode(postcode) {
                 if (json.result.country == "Scotland") {
                     scottish_postcode = true;
                 }
-                latitude = json.result.latitude;
-                latitude = json.result.longitude;
+                input_values.latitude = Number(json.result.latitude);
+                input_values.longitude = Number(json.result.longitude);
                 return "";
             } else {
                 throw new Error('Postcode found on API, but does not have an associated latitude and longitude.');
             }
         } else {
-            throw new Error(data['error']);
+            throw new Error(json['error']);
         }
     } catch (error) {
         console.error('postcode-api-error: ', error);
