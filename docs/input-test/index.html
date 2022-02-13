@@ -8,7 +8,17 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="body-spacer">HeatMyHome V4</div>
+    <div class="body-spacer">HeatMyHome V5</div>
+    <select
+      id="api-location"
+      class=""
+      onchange="set_api_location();"
+      autocomplete="off"
+    >
+      <option value="server-host">Server Host</option>
+      <option value="local-host">Local Host</option>
+    </select>
+
     <div class="inputs-box">
       <div id="input-box-postcode" class="input-box">
         <div class="input-row">

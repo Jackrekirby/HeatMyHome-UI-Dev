@@ -55,9 +55,9 @@ console.log('index.js loaded');
 // -- submit inputs to server to run simulation
 
 // ---- GLOBALS
-const api_url = 'http://localhost:3000';
-const epc_api_url = api_url + '/epc';
-const simulate_api_url = api_url + '/simulate';
+let api_url = 'https://customapi.heatmyhome.ninja';
+let epc_api_url = api_url + '/epc';
+let simulate_api_url = api_url + '/simulate';
 let submit_status = false;
 
 const input_ranges = { // MIN, MAX, MULTIPLIER
@@ -86,7 +86,6 @@ let epc_api_connection = true;
 let epc_api_error = false;
 const input_id_list = ['postcode', 'epc-space-heating', 'floor-area', 'temperature', 'occupants', 'tes-volume'];
 
-
 // ---- INITIALISATION
 // apply validation functions to oninput and onchange events for each input (excluding selections and checkboxes)
 // run validation incase page was reloaded
@@ -105,9 +104,29 @@ click_dismiss();
 setTimeout(() => {
     console.log('reset');
     document.getElementById('run-location').value = 'server-rust';
+    document.getElementById('api-location').value = 'server-host';
 }, 10);
 
 // ---- FUNCTIONS
+
+function set_api_location() {
+    let element = document.getElementById("api-location");
+    let value = element.getElementsByTagName("option")[element.selectedIndex].value;
+
+    switch (value) {
+        case 'server-host':
+            set_api_host('https://customapi.heatmyhome.ninja');
+            break;
+        default:
+            set_api_host('http://localhost:3000');
+    }
+}
+
+function set_api_host(new_api_url) {
+    api_url = new_api_url;
+    epc_api_url = api_url + '/epc';
+    simulate_api_url = api_url + '/simulate';
+}
 
 function clear_warnings(pid) {
     let input_box_element = document.getElementById("input-box-" + pid);
