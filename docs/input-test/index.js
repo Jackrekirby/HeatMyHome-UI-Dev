@@ -1,3 +1,4 @@
+console.log('index.js loaded');
 // ---- SIMULATION INPUTS
 // -- this section includes the code for the functionality of the simulation inputs
 
@@ -48,7 +49,10 @@
 // -- get a list of addresses and their respective certificate codes for postcode
 // show_manual_epc_input()
 // -- if postcode is located in scotland or api request failed then fallback to manual floor area and space heating input
-
+// submit_simulation()
+// -- ran when submit button clicks. Will submit if all inputs valid.
+// async submit_simulation_server()
+// -- submit inputs to server to run simulation
 
 // ---- GLOBALS
 const api_url = 'http://localhost:3000';
@@ -85,6 +89,7 @@ const input_id_list = ['postcode', 'epc-space-heating', 'floor-area', 'temperatu
 
 // ---- INITIALISATION
 // apply validation functions to oninput and onchange events for each input (excluding selections and checkboxes)
+// run validation incase page was reloaded
 for (let input_id of input_id_list) {
     let element = document.getElementById('input-' + input_id);
     if (input_id != 'postcode') {
@@ -96,6 +101,11 @@ for (let input_id of input_id_list) {
 // apply onclick events to all elements with the click-dismiss class
 click_dismiss();
 
+// reset run-on select, must add delay otherwise autofill fills old value after reset.
+setTimeout(() => {
+    console.log('reset');
+    document.getElementById('run-location').value = 'server-rust';
+}, 10);
 
 // ---- FUNCTIONS
 
@@ -110,8 +120,9 @@ function clear_warnings(pid) {
 async function check_input(pid, transform, conditions) {
     let input_element = document.getElementById("input-" + pid);
     let help_element = document.getElementById("help-" + pid);
-
     help_element.classList.add("hide");
+    // console.log('check_input: ', pid, 'value: ', input_element.value);
+
     if (input_element.value == "") {
         clear_element_validation(input_element);
         clear_warnings(pid);
@@ -256,12 +267,6 @@ async function onchange_address() {
             hide_elements([searching, warn_element]);
     }
 }
-
-// submit_simulation()
-// -- ran when submit button clicks. Will submit if all inputs valid.
-// async submit_simulation_server()
-// -- submit inputs to server to run simulation
-
 
 function submit_simulation() {
     let submit_input = document.getElementById("input-submit");

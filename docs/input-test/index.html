@@ -8,12 +8,17 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="body-spacer">HeatMyHome</div>
+    <div class="body-spacer">HeatMyHome V4</div>
     <div class="inputs-box">
       <div id="input-box-postcode" class="input-box">
         <div class="input-row">
           <div class="input-field">
-            <input type="text" id="input-postcode" class="hide-spinner" />
+            <input
+              type="text"
+              id="input-postcode"
+              class="hide-spinner"
+              autocomplete="off"
+            />
             <p>Postcode</p>
           </div>
           <div class="input-side-button" onclick="input_help('postcode')">
@@ -45,8 +50,10 @@
           id="warn-postcode-epc-connection"
           class="msg-box warn hide click-dismiss"
         >
-          Postcode is valid but could not connect to EPC API. Please enter
-          details manually. Click to dismiss.
+          Postcode is valid but could not connect to EPC API. Please enter EPC
+          space heating and floor area parameters manually. These can be found
+          at <a href="https://www.gov.uk/find-energy-certificate">GOV.UK</a>.
+          Click to dismiss.
         </div>
       </div>
 
@@ -55,6 +62,7 @@
           id="input-address"
           class="hide"
           onchange="onchange_address();"
+          autocomplete="off"
         ></select>
         <div id="epc-searching" class="msg-box search info hide">
           Searching
@@ -90,6 +98,7 @@
               type="number"
               id="input-epc-space-heating"
               class="hide-spinner"
+              autocomplete="off"
             />
             <p>EPC Space Heating (kWh/yr)</p>
           </div>
@@ -123,7 +132,12 @@
         <div class="input-spacer"></div>
         <div class="input-row">
           <div class="input-field">
-            <input type="number" id="input-floor-area" class="hide-spinner" />
+            <input
+              type="number"
+              id="input-floor-area"
+              class="hide-spinner"
+              autocomplete="off"
+            />
             <p>Floor Area (m<sup>2</sup>)</p>
           </div>
           <div class="input-side-button" onclick="input_help('floor-area')">
@@ -152,7 +166,12 @@
         <div class="input-spacer"></div>
         <div class="input-row">
           <div class="input-field">
-            <input type="number" id="input-temperature" class="hide-spinner" />
+            <input
+              type="number"
+              id="input-temperature"
+              class="hide-spinner"
+              autocomplete="off"
+            />
             <p>Thermostat Temperature (°C)</p>
           </div>
           <div class="input-side-button" onclick="input_help('temperature')">
@@ -172,7 +191,12 @@
         <div class="input-spacer"></div>
         <div class="input-row">
           <div class="input-field">
-            <input type="number" id="input-occupants" class="hide-spinner" />
+            <input
+              type="number"
+              id="input-occupants"
+              class="hide-spinner"
+              autocomplete="off"
+            />
             <p>No. Occupants</p>
           </div>
           <div class="input-side-button" onclick="input_help('occupants')">
@@ -192,7 +216,12 @@
         <div class="input-spacer"></div>
         <div class="input-row">
           <div class="input-field">
-            <input type="number" id="input-tes-volume" class="hide-spinner" />
+            <input
+              type="number"
+              id="input-tes-volume"
+              class="hide-spinner"
+              autocomplete="off"
+            />
             <p>Water Tank Volume (m<sup>3</sup>)</p>
           </div>
           <div class="input-side-button" onclick="input_help('tes-volume')">
@@ -212,7 +241,12 @@
         Advanced input mode. These features are experimental and may not produce
         accurate results. Click to dismiss.
       </div>
-      <select id="run-location" class="hide" onchange="set_run_location();">
+      <select
+        id="run-location"
+        class="hide"
+        onchange="set_run_location();"
+        autocomplete="off"
+      >
         <option value="server-rust">Run Server-Side using Rust</option>
         <option value="client-rust">Run Client-Side using Rust</option>
         <option value="client-cpp">Run Client-Side using C++</option>
@@ -267,7 +301,7 @@
         Simulation complete. Results page coming soon. Click to dismiss.
       </div>
     </div>
-    <div class="body-spacer">V3</div>
+    <div class="body-spacer"></div>
     <script src="index.js"></script>
   </body>
 </html>

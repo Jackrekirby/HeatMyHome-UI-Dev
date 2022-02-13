@@ -16,7 +16,8 @@
 }
 
 .body-spacer {
-  padding: 2rem;
+  padding: 1rem;
+  padding-bottom: 0rem;
   width: 20rem;
   text-align: center;
   color: var(--neutral-color);
