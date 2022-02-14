@@ -2,20 +2,35 @@
   background: transparent;
 }
 
-.reveal {
-  position: relative;
-  transform: translateY(2rem);
-  transform-origin: bottom;
-  opacity: 0;
-  transition: 1s all ease;
-}
-
-.reveal.active {
-  transform: translateY(0rem);
-  opacity: 1;
-}
-
 #home-our-cards {
-  scroll-snap-type: y mandatory;
-  scroll-snap-align: center;
+  background: transparent;
+}
+
+main {
+  background-color: white;
+}
+
+.info-box {
+  border: 2px solid #d3d3d3;
+  margin: 1rem;
+  padding: 1rem;
+  max-width: 30rem;
+}
+
+.divider {
+  width: min(80%, 100rem);
+  height: 1px;
+  background-color: #024557;
+}
+
+#home-discover h3 {
+  font-size: 2rem;
+  margin: 0rem;
+  margin-top: 1rem;
+  color: white;
+  background-color: #024557;
+  padding: 1rem 2rem;
+  padding-bottom: 0.5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }

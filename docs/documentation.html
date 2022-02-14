@@ -4,8 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="index.css" />
-    <title>HeatMyHome</title>
+    <title>HeatMyHome | Education</title>
   </head>
   <body>
     <nav class="flex">
@@ -13,8 +12,8 @@
         <div>
           <img src="./images/logo.svg" alt="HeatMyHome" />
         </div>
-        <div class="title">HeatMyHome | 0.17</div>
-        <div class="mobile title">HeatMyHome | 0.17</div>
+        <div class="title">HeatMyHome</div>
+        <div class="mobile title">HeatMyHome | Documentation</div>
         <div id="nav-menu" class="flex row">
           <a href="./">Home</a>
           <a href="./about.html">About Us</a>
@@ -30,59 +29,47 @@
       </div>
     </nav>
     <div class="nav-buffer"></div>
-    <main class="flex">
-      <section id="home-discover" class="flex col">
-        <h1>Heat My Home</h1>
-        <div class="flex row wrap">
-          <div class="flex">
-            <div class="info-box flex">
-              <h2>What is HeatMyHome?</h2>
-              <p>
-                This website is centered around a home heating system simulator.
-                Input your postcode along with a few other parameters about your
-                home and we simulate a number of heating and solar technologies,
-                to determine the optimal low-carbon heating system unique to
-                your home.
-              </p>
-              <a href="./discover.html" class="button"> Find your solution </a>
-            </div>
-          </div>
-          <img id="home__img" src="./images/pic1.svg" />
-        </div>
-        <h3>Take-A-Tour</h3>
-      </section>
-
-      <div class="divider"></div>
-      <section id="home-our-cards" class="flex row wrap">
+    <main class="flex education-main">
+      <div class="max-width flex row wrap">
         <div class="card flex">
-          <div class="img">About Us</div>
-          <h2>About Us</h2>
+          <div class="img">inputs</div>
+          <h2>
+            Simulator<br />
+            Inputs
+          </h2>
           <p>
-            Learn about why we developed this website, our team and privacy
-            policy.
+            Learn about the what each of the inputs into the simulator are, and
+            how they are used to determine your optimal heating system.
           </p>
-          <a href="./about.html">Read more</a>
+          <a href="./documentation/simulator-inputs.html">Read more</a>
         </div>
         <div class="card flex">
-          <div class="img">Education</div>
-          <h2>Education</h2>
+          <div class="img">outputs</div>
+          <h2>
+            Simulator<br />
+            Outputs
+          </h2>
           <p>
-            Learn about the various heating and solar technologies we simulate,
-            as well as the benefits of switching to a low-carbon heating system.
+            Learn about the what the data the simulator outputs, and how you can
+            use it to inform your choice of heating system.
           </p>
-          <a href="./education.html">Read more</a>
+          <a href="./documentation/simulator-outputs.html">Read more</a>
         </div>
         <div class="card flex">
-          <div class="img">Documentation</div>
-          <h2>Documentation</h2>
+          <div class="img">how-it-works</div>
+          <h2>
+            Simulator<br />
+            How-It-Works
+          </h2>
           <p>
-            Learn about the inputs and outputs of the simulator, along with how
-            it works to determine the optimal heating system for your home.
+            Learn about how the simulator determines the optimal heating systems
+            for your home.
           </p>
-          <a href="./documentation.html">Read more</a>
+          <a href="./documentation/simulator-how-it-works.html">Read more</a>
         </div>
-      </section>
+      </div>
     </main>
+
     <footer class="flex">
       <div class="footer-contents flex row wrap">
         <div class="flex box">
@@ -129,7 +116,7 @@
 
       document
         .getElementById("nav-menu")
-        .getElementsByTagName("a")[0]
+        .getElementsByTagName("a")[3]
         .classList.add("showing");
     </script>
   </body>

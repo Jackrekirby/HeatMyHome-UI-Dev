@@ -7,115 +7,86 @@
     <title>HeatMyHome | Education</title>
   </head>
   <body>
-    <nav class="flex row">
-      <div>
-        <img src="./images/logo.svg" alt="HeatMyHome" />
-      </div>
-      <div class="title">HeatMyHome</div>
-      <div class="mobile title">HeatMyHome | Education</div>
-      <div id="nav-menu" class="flex row">
-        <a href="./"> Home </a>
-        <a href="./about.html"> About </a>
-        <a href="./education.html"> Education </a>
-        <a href="./discover.html" class="button"> Discover </a>
-      </div>
-      <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
-        <div></div>
-        <div></div>
-        <div></div>
+    <nav class="flex">
+      <div class="max-width flex row">
+        <div>
+          <img src="./images/logo.svg" alt="HeatMyHome" />
+        </div>
+        <div class="title">HeatMyHome</div>
+        <div class="mobile title">HeatMyHome | Education</div>
+        <div id="nav-menu" class="flex row">
+          <a href="./">Home</a>
+          <a href="./about.html">About Us</a>
+          <a href="./education.html">Education</a>
+          <a href="./documentation.html">Documentation</a>
+          <a href="./simulate.html" class="button">Simulate</a>
+        </div>
+        <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </nav>
     <div class="nav-buffer"></div>
-    <main class="flex education-main background radial row wrap">
-      <div class="education-box flex">
-        <div class="img">heat tech</div>
-        <h2>
-          Heating<br />
-          Technologies
-        </h2>
-        <p>
-          Learn about the various low carbon heating technologies that could
-          heat your home.
-        </p>
-        <a href="./education/heating-technologies.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">solar tech</div>
-        <h2>
-          Solar<br />
-          Technologies
-        </h2>
-        <p>
-          Learn about the various solar thermal and photovoltaic technologies
-          that could supplement your heating system.
-        </p>
-        <a href="./education/solar-technologies.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">why switch</div>
-        <h2>
-          Why<br />
-          Switch?
-        </h2>
-        <p>
-          Learn about the various reasons switching to a low-carbon heating
-          technology could be beneficial to you and the planet!
-        </p>
-        <a href="./education/why-switch.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">inputs</div>
-        <h2>
-          Simulator<br />
-          Inputs
-        </h2>
-        <p>
-          Learn about the what each of the inputs into the simulator are, and
-          how they are used to determine your optimal heating system.
-        </p>
-        <a href="./education/simulator-inputs.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">outputs</div>
-        <h2>
-          Simulator<br />
-          Outputs
-        </h2>
-        <p>
-          Learn about the what the data the simulator outputs, and how you can
-          use it to inform your choice of heating system.
-        </p>
-        <a href="./education/simulator-outputs.html">Read more</a>
-      </div>
-      <div class="education-box flex">
-        <div class="img">how-it-works</div>
-        <h2>
-          Simulator<br />
-          How-It-Works
-        </h2>
-        <p>
-          Learn about how the simulator determines the optimal heating systems
-          for your home.
-        </p>
-        <a href="./education/simulator-how-it-works.html">Read more</a>
+    <main class="flex education-main">
+      <div class="max-width flex row wrap">
+        <div class="card flex">
+          <div class="img">heat tech</div>
+          <h2>
+            Heating<br />
+            Technologies
+          </h2>
+          <p>
+            Learn about the various low carbon heating technologies that could
+            heat your home.
+          </p>
+          <a href="./education/heating-technologies.html">Read more</a>
+        </div>
+        <div class="card flex">
+          <div class="img">solar tech</div>
+          <h2>
+            Solar<br />
+            Technologies
+          </h2>
+          <p>
+            Learn about the various solar thermal and photovoltaic technologies
+            that could supplement your heating system.
+          </p>
+          <a href="./education/solar-technologies.html">Read more</a>
+        </div>
+        <div class="card flex">
+          <div class="img">why switch</div>
+          <h2>
+            Why<br />
+            Switch?
+          </h2>
+          <p>
+            Learn about the various reasons switching to a low-carbon heating
+            technology could be beneficial to you and the planet!
+          </p>
+          <a href="./education/why-switch.html">Read more</a>
+        </div>
       </div>
     </main>
 
-    <footer class="flex row wrap">
-      <div class="flex">
-        <h2>Help and FAQs</h2>
-        <a href="./sign__up">Government Incentives</a>
-        <a href="./">FAQs</a>
-        <a href="./">Privacy Policy</a>
-      </div>
-      <div class="flex">
-        <img src="./images/logo.svg" />
-      </div>
-      <div class="flex">
-        <h2>Contact Us</h2>
-        <a href="./">heatmyhome@ninja.co.uk</a>
-        <a href="https://warwick.ac.uk/fac/sci/eng/">School of Engineering</a>
-        <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
+    <footer class="flex">
+      <div class="footer-contents flex row wrap">
+        <div class="flex box">
+          <h2>Help and FAQs</h2>
+          <a href="./input-test/index.html">Government Incentives</a>
+          <a href="./test.html">FAQs</a>
+          <a href="./indexv2.html">Privacy Policy</a>
+        </div>
+        <div class="flex box">
+          <img src="./images/logo.svg" />
+        </div>
+        <div class="flex box">
+          <h2>Contact Us</h2>
+          <a href="./">heatmyhome@ninja.co.uk</a>
+          <a href="https://warwick.ac.uk/fac/sci/eng/">School of Engineering</a>
+          <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
+        </div>
       </div>
     </footer>
 

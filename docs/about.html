@@ -4,174 +4,88 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>HeatMyHome | About</title>
+    <title>HeatMyHome | Education</title>
   </head>
   <body>
-    <nav class="flex row">
-      <div>
-        <img src="./images/logo.svg" alt="HeatMyHome" />
-      </div>
-      <div class="title">HeatMyHome</div>
-      <div class="mobile title">HeatMyHome | About</div>
-      <div id="nav-menu" class="flex row">
-        <a href="./"> Home </a>
-        <a href="./about.html"> About </a>
-        <a href="./education.html"> Education </a>
-        <a href="./discover.html" class="button"> Discover </a>
-      </div>
-      <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
-        <div></div>
-        <div></div>
-        <div></div>
+    <nav class="flex">
+      <div class="max-width flex row">
+        <div>
+          <img src="./images/logo.svg" alt="HeatMyHome" />
+        </div>
+        <div class="title">HeatMyHome</div>
+        <div class="mobile title">HeatMyHome | About Us</div>
+        <div id="nav-menu" class="flex row">
+          <a href="./">Home</a>
+          <a href="./about.html">About Us</a>
+          <a href="./education.html">Education</a>
+          <a href="./documentation.html">Documentation</a>
+          <a href="./simulate.html" class="button">Simulate</a>
+        </div>
+        <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </nav>
     <div class="nav-buffer"></div>
-    <main class="flex">
-      <section id="about-section" class="flex">
-        <div id="about-selection" class="flex row">
-          <button onclick="select_about_slide(0);" class="grow">
-            Our Motivation
-          </button>
-          <button onclick="select_about_slide(1);">Our Goals</button>
-          <button onclick="select_about_slide(2);">Our Values</button>
+    <main class="flex education-main">
+      <div class="max-width flex row wrap">
+        <div class="card flex">
+          <div class="img">motivation</div>
+          <h2>Motivation</h2>
+          <p>
+            Learn about the why the simulation model and website was developed.
+          </p>
+          <a href="./documentation/simulator-inputs.html">Read more</a>
         </div>
-        <div id="motivation-cards" class="flex row wrap about-slides">
-          <div class="flex">
-            <img src="./images/pie1.png" />
-          </div>
-          <div class="flex">
-            <p>
-              <a href="https://heatmyhome.ninja">heatmyhome.ninja</a> was
-              developed to allow consumers make an informed choice when
-              selecting a new low carbon space and water heating solution for
-              their home.
-            </p>
-            <p>
-              Check out the <a href="./discover.html">discover page</a> where
-              you can simulate numerous heating appliances in combination with
-              solar thermal and photovoltaic technologies.
-            </p>
-            <p>
-              Check out the <a href="./education.html">education page</a> where
-              you can learn about:
-              <ol>
-                <li>The various heating and solar technologies we simulate.</li>
-                <li>What inputs the simulator requires, and how we use them to determine the optimal heating system for your home.</li>
-                <li>The results the simulator produces, and they you can use them to inform your selection of a heating system.</li>
-                <li>The importance of moving away from gas boilers, and the incentives the government offers to help you switch.</li>
-              </ol>
-            </p>
-          </div>
-          <div class="flex">
-            <img src="./images/pie2.png" />
-          </div>
+        <div class="card flex">
+          <div class="img">our<br />team</div>
+          <h2>
+            Our<br />
+            Team
+          </h2>
+          <p>
+            Learn about the team that worked to develop the simulation model and
+            website.
+          </p>
+          <a href="./documentation/simulator-outputs.html">Read more</a>
         </div>
-        <div id="goal-cards" class="flex row wrap about-slides hide">
-          <div class="flex">
-            <img src="./images/goal.png" />
-            <h2>Goal 1</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-              tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              consequat. Duis autem vel eum iriure dolor in hendrerit in
-              vulputate velit esse molestie consequat, vel
-            </p>
+        <div class="card flex">
+          <div class="img">
+            privacy<br />
+            policy
           </div>
-          <div class="flex">
-            <img src="./images/goal.png" />
-            <h2>Goal 2</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-              tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              consequat. Duis autem vel eum iriure dolor in hendrerit in
-              vulputate velit esse molestie consequat, vel
-            </p>
-          </div>
-          <div class="flex">
-            <img src="./images/goal.png" />
-            <h2>Goal 3</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-              tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              consequat. Duis autem vel eum iriure dolor in hendrerit in
-              vulputate velit esse molestie consequat, vel
-            </p>
-          </div>
-          <div class="flex">
-            <img src="./images/goal.png" />
-            <h2>Goal 4</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-              tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              consequat. Duis autem vel eum iriure dolor in hendrerit in
-              vulputate velit esse molestie consequat, vel
-            </p>
-          </div>
+          <h2>
+            Privacy<br />
+            Policy
+          </h2>
+          <p>
+            Learn about how we keep your connectin secure with HTTPS, and don't
+            use your data!
+          </p>
+          <a href="./documentation/simulator-how-it-works.html">Read more</a>
         </div>
-        <div id="goal-cards" class="flex row wrap about-slides hide">
-          <div class="flex">
-            <img src="./images/value.png" />
-            <h2>Value 1</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-              tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              consequat. Duis autem vel eum iriure dolor in hendrerit in
-              vulputate velit esse molestie consequat, vel
-            </p>
-          </div>
-          <div class="flex">
-            <img src="./images/value.png" />
-            <h2>Value 2</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-              tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              consequat. Duis autem vel eum iriure dolor in hendrerit in
-              vulputate velit esse molestie consequat, vel
-            </p>
-          </div>
-          <div class="flex">
-            <img src="./images/value.png" />
-            <h2>Value 3</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-              tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              consequat. Duis autem vel eum iriure dolor in hendrerit in
-              vulputate velit esse molestie consequat, vel
-            </p>
-          </div>
-        </div>
-      </section>
+      </div>
     </main>
 
-    <footer class="flex row wrap">
-      <div class="flex">
-        <h2>Help and FAQs</h2>
-        <a href="./sign__up">Government Incentives</a>
-        <a href="./">FAQs</a>
-        <a href="./">Privacy Policy</a>
-      </div>
-      <div class="flex">
-        <img src="./images/logo.svg" />
-      </div>
-      <div class="flex">
-        <h2>Contact Us</h2>
-        <a href="./">heatmyhome@ninja.co.uk</a>
-        <a href="https://warwick.ac.uk/fac/sci/eng/">School of Engineering</a>
-        <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
+    <footer class="flex">
+      <div class="footer-contents flex row wrap">
+        <div class="flex box">
+          <h2>Help and FAQs</h2>
+          <a href="./input-test/index.html">Government Incentives</a>
+          <a href="./test.html">FAQs</a>
+          <a href="./indexv2.html">Privacy Policy</a>
+        </div>
+        <div class="flex box">
+          <img src="./images/logo.svg" />
+        </div>
+        <div class="flex box">
+          <h2>Contact Us</h2>
+          <a href="./">heatmyhome@ninja.co.uk</a>
+          <a href="https://warwick.ac.uk/fac/sci/eng/">School of Engineering</a>
+          <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
+        </div>
       </div>
     </footer>
 
@@ -197,40 +111,6 @@
           menu.classList.remove("close");
           toggle.classList.add("open");
         }
-      }
-      let current_slide_id = 0;
-      function select_about_slide(slide_id) {
-        let slides = document
-          .getElementById("about-section")
-          .getElementsByClassName("about-slides");
-        slides[current_slide_id].classList.add("hide");
-        slides[slide_id].classList.remove("hide");
-
-        slides[current_slide_id].classList.remove("fadein");
-        slides[slide_id].classList.add("fadein");
-        let buttons = document
-          .getElementById("about-selection")
-          .getElementsByTagName("button");
-
-        buttons[current_slide_id].classList.remove("grow");
-        buttons[slide_id].classList.add("grow");
-
-        const hashes = ["#motivation", "#goals", "#values"];
-        window.location.hash = hashes[slide_id];
-
-        current_slide_id = slide_id;
-      }
-      console.log(window.location.hash);
-      switch (window.location.hash) {
-        case "#motivation":
-          select_about_slide(0);
-          break;
-        case "#goals":
-          select_about_slide(1);
-          break;
-        case "#values":
-          select_about_slide(2);
-          break;
       }
 
       document

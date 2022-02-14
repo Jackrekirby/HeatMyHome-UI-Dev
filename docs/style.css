@@ -99,13 +99,18 @@ button:hover {
 
 /* nav */
 
+.max-width {
+  width: min(80rem, 100%);
+  justify-content: space-between;
+}
+
 nav {
   position: fixed;
   top: 0px;
   width: 100%;
   height: 4rem;
   background-color: var(--dark-accent);
-  justify-content: space-between;
+  justify-content: center;
   color: var(--white);
   font-size: 1rem;
   font-weight: bold;
@@ -120,15 +125,15 @@ nav .mobile {
 nav a {
   text-decoration: none;
   color: var(--white);
-  padding: 0.5rem 2rem;
-  margin: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
   border-bottom: 3px solid transparent;
 }
 
 nav img {
   width: 4rem;
   height: 4rem;
-  padding: 0rem 1rem;
+  margin: 0rem 1rem;
 }
 
 nav .button {
@@ -166,7 +171,7 @@ nav a:hover,
   background: #fff;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 60rem) {
   nav .title {
     display: none;
     font-size: 1rem;
@@ -260,17 +265,8 @@ nav a:hover,
 
 #home-discover {
   min-height: calc(100vh - 4rem);
-  justify-content: center;
+  justify-content: space-between;
   align-content: center;
-
-  background-color: #ffffff;
-  opacity: 1;
-  background-image: repeating-radial-gradient(
-      circle at 0 0,
-      transparent 0,
-      #ffffff 36px
-    ),
-    repeating-linear-gradient(#e1edff55, #e1edff);
 }
 
 #home-discover > div {
@@ -288,16 +284,24 @@ nav a:hover,
   font-size: 5rem;
   font-weight: bolder;
   text-align: center;
-  margin: 0rem;
+  margin: 1rem;
+  margin-top: 2rem;
 }
 
 #home-discover h2 {
   color: var(--dark-accent);
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.5rem;
+  font-weight: bold;
   text-align: center;
   margin: 0rem;
-  max-width: 80%;
+}
+
+#home-discover p {
+  color: var(--dark-accent);
+  font-size: 1rem;
+  font-weight: normal;
+  text-align: justify;
+  margin: 1rem 0rem;
 }
 
 #home-discover a {
@@ -307,8 +311,9 @@ nav a:hover,
   border-radius: 4px;
   border-style: none;
   padding: 0.5rem 1rem;
-  font-size: 3rem;
+  font-size: 1rem;
   padding: 0.5rem 2rem;
+  align-self: center;
 }
 
 #home-discover a:hover {
@@ -316,11 +321,11 @@ nav a:hover,
   transition: all 0.35s;
 }
 
-#home-discover > img {
+#home-discover img {
   width: 30rem;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 60rem) {
   #home-discover h1 {
     font-size: 3rem;
   }
@@ -330,7 +335,7 @@ nav a:hover,
     padding: 0.5rem 1rem;
   }
 
-  #home-discover > img {
+  #home-discover img {
     width: 20rem;
   }
 }
@@ -338,53 +343,25 @@ nav a:hover,
 /* home-our-cards */
 
 #home-our-cards {
-  background-color: var(--brown-accent);
   justify-content: space-evenly;
   padding: 1rem 0rem;
-}
-
-#home-our-cards h2 {
-  padding: 0.5rem;
-  margin: 0rem;
-}
-
-#home-our-cards > div {
-  border: 1px var(--white) solid;
-  height: 25rem;
-  width: 20rem;
-  margin: 1rem;
-  justify-content: space-evenly;
-}
-
-#home-our-cards img {
-  width: 10rem;
-  height: 10rem;
-  margin: 1rem;
-}
-
-#home-our-cards p {
-  margin: 1rem;
-  font-size: 0.8rem;
-  text-align: center;
-}
-
-#home-our-cards button {
-  margin: 1rem;
-  font-size: 1rem;
-  font-weight: bold;
+  max-width: 80rem;
 }
 
 /* footer */
 
 footer {
   background-color: var(--dark-accent);
-  justify-content: space-evenly;
-
-  padding: 1rem;
-  background-color: var(--dark-accent);
-  justify-content: space-evenly;
   color: var(--white);
+  justify-content: space-evenly;
 }
+
+.footer-contents {
+  justify-content: space-evenly;
+  padding: 1rem 0rem;
+  max-width: 80rem;
+}
+
 footer h2 {
   margin: 0rem;
   padding: 0.5rem 0rem;
@@ -397,10 +374,9 @@ footer a {
   padding: 0.2rem 0rem;
 }
 
-footer > div {
+footer .box {
   width: 15rem;
   height: 10rem;
-  border: 1px var(--white) solid;
   margin: 1rem;
   text-align: center;
   justify-content: center;
@@ -452,7 +428,7 @@ footer > div {
   min-height: 25rem;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 60rem) {
   #about-selection button {
     margin: 0.5rem;
     font-size: 1rem;
@@ -645,7 +621,7 @@ section.education-options {
   margin: 1rem;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 60rem) {
   #discover .side-panel {
     margin: 0.5rem;
   }
@@ -694,9 +670,14 @@ section.education-options {
 
 .education-main {
   min-height: calc(100% - 4rem);
+  background-color: white;
 }
 
-.education-box {
+.education-main > div {
+  justify-content: space-evenly;
+}
+
+.card {
   justify-content: space-evenly;
   width: 15rem;
   height: 22rem;
@@ -706,12 +687,12 @@ section.education-options {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-.education-box .img {
+.card .img {
   width: 8rem;
   height: 8rem;
 }
 
-.education-box h2 {
+.card h2 {
   font-size: 1.5rem;
   text-align: center;
   font-weight: bold;
@@ -720,15 +701,15 @@ section.education-options {
   color: var(--dark-accent);
 }
 
-.education-box p {
+.card p {
   font-size: 0.8rem;
   margin: 0.25rem 0rem;
   padding: 0rem;
-  text-align: center;
+  text-align: justify;
   color: var(--dark-accent);
 }
 
-.education-box > a {
+.card > a {
   background-color: var(--dark-accent);
   border-radius: 5rem;
   color: var(--white);
@@ -740,7 +721,7 @@ section.education-options {
   font-size: 0.8rem;
 }
 
-.education-box > a:hover {
+.card > a:hover {
   background: #69a7a7;
   color: var(--white);
   transition: all 0.35s;
