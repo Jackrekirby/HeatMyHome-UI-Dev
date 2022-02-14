@@ -180,8 +180,12 @@ input.hide-spinner[type="number"] {
 }
 
 .msg-box a {
-  color: inherit;
+  color: blue;
   font-size: 0.8rem;
+}
+
+.msg-box a:hover {
+  text-decoration: none;
 }
 
 .msg-box.warn {

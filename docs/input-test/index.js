@@ -55,6 +55,7 @@ console.log('index.js loaded');
 // -- submit inputs to server to run simulation
 
 // ---- GLOBALS
+//let api_url = 'http://localhost:3000';
 let api_url = 'https://customapi.heatmyhome.ninja';
 let epc_api_url = api_url + '/epc';
 let simulate_api_url = api_url + '/simulate';
@@ -84,6 +85,7 @@ let input_values = {
 let scottish_postcode = false;
 let epc_api_connection = true;
 let epc_api_error = false;
+let certificate = undefined;
 const input_id_list = ['postcode', 'epc-space-heating', 'floor-area', 'temperature', 'occupants', 'tes-volume'];
 
 // ---- INITIALISATION
@@ -100,33 +102,16 @@ for (let input_id of input_id_list) {
 // apply onclick events to all elements with the click-dismiss class
 click_dismiss();
 
+// update epc url links
+update_epc_urls();
+
 // reset run-on select, must add delay otherwise autofill fills old value after reset.
 setTimeout(() => {
     console.log('reset');
     document.getElementById('run-location').value = 'server-rust';
-    document.getElementById('api-location').value = 'server-host';
 }, 10);
 
 // ---- FUNCTIONS
-
-function set_api_location() {
-    let element = document.getElementById("api-location");
-    let value = element.getElementsByTagName("option")[element.selectedIndex].value;
-
-    switch (value) {
-        case 'server-host':
-            set_api_host('https://customapi.heatmyhome.ninja');
-            break;
-        default:
-            set_api_host('http://localhost:3000');
-    }
-}
-
-function set_api_host(new_api_url) {
-    api_url = new_api_url;
-    epc_api_url = api_url + '/epc';
-    simulate_api_url = api_url + '/simulate';
-}
 
 function clear_warnings(pid) {
     let input_box_element = document.getElementById("input-box-" + pid);
@@ -285,6 +270,7 @@ async function onchange_address() {
             unhide_elements([epc_box_element, floor_area_box_element]);
             hide_elements([searching, warn_element]);
     }
+    update_epc_urls();
 }
 
 function submit_simulation() {
@@ -427,7 +413,7 @@ function toggle_optimisation() {
 
 async function get_epc_data() {
     let select = document.getElementById('input-address');
-    let certificate = select.options[select.selectedIndex].value;
+    certificate = select.options[select.selectedIndex].value;
     const full_url = `${epc_api_url}?certificate=${certificate}`;
 
     try {
@@ -490,6 +476,7 @@ function get_check_input_fnc(pid, apply_transform) {
                 } else if (epc_api_error) {
                     unhide_ids(['warn-postcode-epc-api']);
                 }
+                update_epc_urls();
             };
             break;
         default:
@@ -508,24 +495,14 @@ function hide_postcode_related_inputs() {
     scottish_postcode = false;
     epc_api_connection = true;
     epc_api_error = false;
-    hide_ids(['input-address', 'input-box-epc-space-heating', 'input-box-floor-area', 'epc-searching', 'help-address']);
+    certificate = undefined;
+    hide_ids(['input-address', 'help-scottish-postcode', 'input-box-epc-space-heating', 'input-box-floor-area', 'epc-searching', 'help-address']);
     clear_warnings('address');
     clear_value('epc-space-heating');
     get_check_input_fnc('epc-space-heating', false)();
     clear_value('floor-area');
     get_check_input_fnc('floor-area', false)();
     return "";
-}
-
-function check_postcode_format(postcode) {
-    if (postcode.length > 4) {
-        let outcode_num = postcode.substr(-3, 1);
-        let outcode_str = postcode.substr(-2);
-        if (!isNaN(outcode_num) && /^[a-zA-Z]+$/.test(outcode_str)) {
-            return "";
-        }
-    }
-    return "none";
 }
 
 async function validate_postcode(postcode) {
@@ -538,6 +515,7 @@ async function validate_postcode(postcode) {
             if (json.result.latitude != null && json.result.longitude != null) {
                 if (json.result.country == "Scotland") {
                     scottish_postcode = true;
+                    unhide_ids(['help-scottish-postcode']);
                 }
                 input_values.latitude = Number(json.result.latitude);
                 input_values.longitude = Number(json.result.longitude);
@@ -615,4 +593,61 @@ function show_manual_epc_input() {
     if (scottish_postcode || !epc_api_connection || epc_api_error) {
         unhide_ids(['input-box-epc-space-heating', 'input-box-floor-area']);
     } return "";
+}
+
+// https://ideal-postcodes.co.uk/guides/uk-postcode-format
+const postcode_formats = ["AA9A9AA", "A9A9AA", "A99AA", "A999AA", "AA99AA", "AA999AA"]
+
+function check_postcode_format(postcode) {
+    const valid_formats = [0, 1, 2, 3, 4, 5];
+    for (let format of postcode_formats) {
+        // console.log("format: ", format);
+
+        if (format.length == postcode.length) {
+            let valid_format = true;
+            for (let i in postcode) {
+                if (format[i] == "A" && postcode[i].match(/[a-z]/i)) {
+                    // console.log("i", i, "letter: ", postcode[i]);
+                } else if (format[i] == "9" && !isNaN(postcode[i])) {
+                    // console.log("i", i, "number: ", postcode[i]);
+                } else {
+                    // console.log("i", i, "wrong: ", postcode[i]);
+                    valid_format = false;
+                    break;
+                }
+            }
+            if (valid_format) {
+                console.log("valid format: ", format);
+                return ""
+            }
+        }
+    }
+    console.log("no valid format");
+    return "none";
+}
+
+function update_epc_urls() {
+    // GOV EPC, scotland EPC, postcode-specific EPC, address-specific EPC
+    if (scottish_postcode) {
+        for (let url of epc_urls) {
+            url.href = 'https://www.gov.uk/find-energy-certificate';
+            // https://www.scottishepcregister.org.uk
+        }
+    } else {
+        let epc_urls = document.getElementsByClassName('epc-url');
+        let postcode_element = document.getElementById('input-postcode');
+        if (certificate != undefined) {
+            for (let url of epc_urls) {
+                url.href = 'https://find-energy-certificate.service.gov.uk/energy-certificate/' + certificate;
+            }
+        } else if (postcode_element.classList.contains("valid")) {
+            for (let url of epc_urls) {
+                url.href = 'https://find-energy-certificate.service.gov.uk/find-a-certificate/search-by-postcode?postcode=' + postcode_element.value;
+            }
+        } else {
+            for (let url of epc_urls) {
+                url.href = 'https://www.gov.uk/find-energy-certificate';
+            }
+        }
+    }
 }
