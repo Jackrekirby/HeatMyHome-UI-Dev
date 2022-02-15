@@ -89,7 +89,7 @@ const input_ranges = { // MIN, MAX, MULTIPLIER
     'occupants': [1, 20, 1],
     'tes-volume': [0.1, 3.0, 10],
     'epc-space-heating': [0, 999999, 1],
-    'floor-area': [25, 999, 1],
+    'floor-area': [25, 500, 1],
 }
 
 let input_values = {
@@ -309,21 +309,24 @@ function submit_simulation() {
 }
 
 async function submit_simulation_server() {
+    let submit_input = document.getElementById("input-submit");
     unhide_ids(['submit-waiting']);
-    const parameter_name_list = [
-        'postcode',
-        'latitude',
-        'longitude',
-        'occupants',
-        'temperature',
-        'space_heating',
-        'floor_area',
-        'tes_max',
-    ];
+    hide_ids(['submit-complete']);
+    let input_names = {
+        'postcode': 'postcode',
+        'longitude': 'longitude',
+        'latitude': 'latitude',
+        'epc-space-heating': 'space_heating',
+        'floor-area': 'floor_area',
+        'temperature': 'temperature',
+        'occupants': 'occupants',
+        'tes-volume': 'tes_max',
+    }
 
     search = Array();
-    for (const name of parameter_name_list) {
-        search.push(`${name}=${input_values[name]}`);
+    for (const [key, value] of Object.entries(input_names)) {
+        console.log(key, value, input_values[key]);
+        search.push(`${value}=${input_values[key]}`);
     }
 
     const simulator_url = simulate_api_url + `?${search.join('&')}`;
