@@ -4,25 +4,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../style.css" />
-    <title>HeatMyHome | Education</title>
+    <title>HeatMyHome | Documentation</title>
   </head>
   <body>
-    <nav class="flex row">
-      <div>
-        <img src="../images/logo.svg" alt="HeatMyHome" />
-      </div>
-      <div class="title">HeatMyHome</div>
-      <div class="mobile title">HeatMyHome | Education</div>
-      <div id="nav-menu" class="flex row">
-        <a href="../"> Home </a>
-        <a href="../about.html"> About </a>
-        <a href="../education.html"> Education </a>
-        <a href="../discover.html" class="button"> Discover </a>
-      </div>
-      <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
-        <div></div>
-        <div></div>
-        <div></div>
+    <nav class="flex">
+      <div class="max-width flex row">
+        <div>
+          <img src="../images/logo.svg" alt="HeatMyHome" />
+        </div>
+        <div class="title">HeatMyHome</div>
+        <div class="mobile title">Documentation</div>
+        <div id="nav-menu" class="flex row">
+          <a href="./">Home</a>
+          <a href="../about-us.html">About Us</a>
+          <a href="../education.html">Education</a>
+          <a href="../documentation.html">Documentation</a>
+          <a href="../simulate.html" class="button">Simulate</a>
+        </div>
+        <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </nav>
     <div class="nav-buffer"></div>
@@ -66,7 +69,7 @@
         </div>
       </section>
 
-      <div class="background dots flex">
+      <div class="flex">
         <section id="education-slides" class="foreground">
           <div class="">
             <h1>Postcode</h1>
@@ -147,24 +150,25 @@
       </div>
     </main>
 
-    <footer class="flex row wrap">
-      <div class="flex">
-        <h2>Help and FAQs</h2>
-        <a href="../sign__up">Government Incentives</a>
-        <a href="../">FAQs</a>
-        <a href="../">Privacy Policy</a>
-      </div>
-      <div class="flex">
-        <img src="../images/logo.svg" />
-      </div>
-      <div class="flex">
-        <h2>Contact Us</h2>
-        <a href="../">heatmyhome@ninja.co.uk</a>
-        <a href="https://warwick.ac.uk/fac/sci/eng/">School of Engineering</a>
-        <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
+    <footer class="flex">
+      <div class="footer-contents flex row wrap">
+        <div class="flex box">
+          <h2>Help and FAQs</h2>
+          <a href="./input-test/index.html">Government Incentives</a>
+          <a href="./test.html">FAQs</a>
+          <a href="./indexv2.html">Privacy Policy</a>
+        </div>
+        <div class="flex box">
+          <img src="../images/logo.svg" />
+        </div>
+        <div class="flex box">
+          <h2>Contact Us</h2>
+          <a href="./">heatmyhome@ninja.co.uk</a>
+          <a href="https://warwick.ac.uk/fac/sci/eng/">School of Engineering</a>
+          <a href="https://warwick.ac.uk/fac/sci/eng/">University of Warwick</a>
+        </div>
       </div>
     </footer>
-
     <script>
       function toggle_nav_menu() {
         console.log("toggle nav menu");
@@ -223,7 +227,7 @@
 
         document.getElementById("education-slides").scrollIntoView({
           behavior: "smooth",
-          block: "center",
+          block: "end",
           inline: "nearest",
         });
 
@@ -239,7 +243,7 @@
 
       document
         .getElementById("nav-menu")
-        .getElementsByTagName("a")[2]
+        .getElementsByTagName("a")[3]
         .classList.add("showing");
     </script>
   </body>

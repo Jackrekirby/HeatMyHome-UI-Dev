@@ -3,23 +3,24 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>HeatMyHome | Education</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="./about-us.css" />
+    <title>HeatMyHome | About Us</title>
   </head>
   <body>
     <nav class="flex">
       <div class="max-width flex row">
         <div>
-          <img src="./images/logo.svg" alt="HeatMyHome" />
+          <img src="../images/logo.svg" alt="HeatMyHome" />
         </div>
         <div class="title">HeatMyHome</div>
-        <div class="mobile title">Education</div>
+        <div class="mobile title">About Us</div>
         <div id="nav-menu" class="flex row">
           <a href="./">Home</a>
-          <a href="./about-us.html">About Us</a>
-          <a href="./education.html">Education</a>
-          <a href="./documentation.html">Documentation</a>
-          <a href="./simulate.html" class="button">Simulate</a>
+          <a href="../about-us.html">About Us</a>
+          <a href="../education.html">Education</a>
+          <a href="../documentation.html">Documentation</a>
+          <a href="../simulate.html" class="button">Simulate</a>
         </div>
         <div id="nav-toggle" class="flex" onclick="toggle_nav_menu()">
           <div></div>
@@ -29,47 +30,16 @@
       </div>
     </nav>
     <div class="nav-buffer"></div>
-    <main class="flex education-main">
-      <div class="max-width flex row wrap">
-        <div class="card flex">
-          <div class="img">heat tech</div>
-          <h2>
-            Heating<br />
-            Technologies
-          </h2>
-          <p>
-            Learn about the various low carbon heating technologies that could
-            heat your home.
-          </p>
-          <a href="./education/heating-technologies.html">Read more</a>
-        </div>
-        <div class="card flex">
-          <div class="img">solar tech</div>
-          <h2>
-            Solar<br />
-            Technologies
-          </h2>
-          <p>
-            Learn about the various solar thermal and photovoltaic technologies
-            that could supplement your heating system.
-          </p>
-          <a href="./education/solar-technologies.html">Read more</a>
-        </div>
-        <div class="card flex">
-          <div class="img">why switch</div>
-          <h2>
-            Why<br />
-            Switch?
-          </h2>
-          <p>
-            Learn about the various reasons switching to a low-carbon heating
-            technology could be beneficial to you and the planet!
-          </p>
-          <a href="./education/why-switch.html">Read more</a>
-        </div>
-      </div>
+    <main class="flex">
+      <h1>Privacy Policy</h1>
+      <section>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium enim
+        numquam sapiente aut placeat earum saepe id neque inventore sequi,
+        quidem, voluptatibus quis corporis fuga ut reprehenderit exercitationem
+        perferendis eos.
+      </section>
+      <div></div>
     </main>
-
     <footer class="flex">
       <div class="footer-contents flex row wrap">
         <div class="flex box">
@@ -79,7 +49,7 @@
           <a href="./indexv2.html">Privacy Policy</a>
         </div>
         <div class="flex box">
-          <img src="./images/logo.svg" />
+          <img src="../images/logo.svg" />
         </div>
         <div class="flex box">
           <h2>Contact Us</h2>
@@ -116,7 +86,7 @@
 
       document
         .getElementById("nav-menu")
-        .getElementsByTagName("a")[2]
+        .getElementsByTagName("a")[1]
         .classList.add("showing");
     </script>
   </body>

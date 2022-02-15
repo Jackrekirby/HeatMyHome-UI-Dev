@@ -46,7 +46,7 @@ body {
 }
 
 .img {
-  background-color: pink;
+  background-color: var(--dark-accent);
   color: white;
   font-weight: bold;
   border: 1px solid black;
@@ -98,6 +98,11 @@ button:hover {
 }
 
 /* nav */
+
+.full-height {
+  min-height: calc(100% - 4rem);
+  justify-content: flex-start;
+}
 
 .max-width {
   width: min(80rem, 100%);
@@ -269,16 +274,6 @@ nav a:hover,
   align-content: center;
 }
 
-#home-discover > div {
-  margin: 1rem;
-}
-
-#home-discover > div > div {
-  margin: 1rem;
-  justify-content: space-evenly;
-  margin-bottom: 3rem;
-}
-
 #home-discover h1 {
   color: var(--dark-accent);
   font-size: 5rem;
@@ -327,11 +322,13 @@ nav a:hover,
 
 @media screen and (max-width: 60rem) {
   #home-discover h1 {
-    font-size: 3rem;
+    font-size: 2rem;
+    margin: 0.25rem;
+    margin-top: 1rem;
   }
 
   #home-discover a {
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding: 0.5rem 1rem;
   }
 
@@ -515,7 +512,7 @@ footer .box {
 
 section.education-introduction {
   justify-content: center;
-  background-color: var(--brown-accent);
+  background-color: var(--white);
 }
 
 section.education-introduction > div {
@@ -527,13 +524,13 @@ section.education-introduction > div {
 
 section.education-options {
   justify-content: center;
-  background-color: var(--brown-accent);
+  background-color: var(--white);
   padding: 1rem 0rem;
 }
 
 .heat-option {
   width: 9rem;
-  border: 1px solid white;
+  border: 1px solid var(--dark-accent);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -560,14 +557,16 @@ section.education-options {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  padding: 1rem;
+}
 
-  background-color: #ffffff;
-  opacity: 1;
-  background-image: radial-gradient(#e1edff 1.8px, transparent 1.8px),
-    radial-gradient(#e1edff 1.8px, #ffffff 1.8px);
-  background-size: 72px 72px;
-  background-position: 0 0, 36px 36px;
-  padding: 0rem 1rem;
+#education-slides > div {
+  box-sizing: border-box;
+  border: 2px solid #024557;
+  margin: 1rem;
+  padding: 1rem;
+  width: min(50rem, 80%);
+  min-height: 20rem;
 }
 
 #education-slides > * {

@@ -10,9 +10,14 @@ main {
   background-color: white;
 }
 
+.mobile-col {
+  flex-direction: row;
+  margin: 0rem 1rem;
+}
+
 .info-box {
   border: 2px solid #d3d3d3;
-  margin: 1rem;
+  margin: 0rem;
   padding: 1rem;
   max-width: 30rem;
 }
@@ -33,4 +38,18 @@ main {
   padding-bottom: 0.5rem;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+}
+
+@media screen and (max-width: 60rem) {
+  .mobile-col {
+    flex-direction: column-reverse;
+  }
+
+  #home-discover h3 {
+    font-size: 1rem;
+  }
+
+  #home-discover p {
+    font-size: 0.8rem;
+  }
 }
