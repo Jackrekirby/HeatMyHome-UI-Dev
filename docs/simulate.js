@@ -78,7 +78,7 @@ console.log('index.js loaded');
 // -- submit inputs to server to run simulation
 
 // ---- GLOBALS
-//let api_url = 'http://localhost:3000';
+// let api_url = 'http://localhost:3000';
 let api_url = 'https://customapi.heatmyhome.ninja';
 let epc_api_url = api_url + '/epc';
 let simulate_api_url = api_url + '/simulate';
@@ -300,7 +300,7 @@ function submit_simulation() {
     let submit_input = document.getElementById("input-submit");
     if (!submit_input.classList.contains('invalid')) {
         submit_input.classList.add('active');
-        hide_ids(['warn-sim-api-connection', 'warn-sim-api-error']);
+        hide_ids(['warn-sim-api-connection', 'warn-sim-api-error', 'warn-sim-api-busy']);
         console.log("submit-simulation: ", input_values);
         submit_simulation_server();
     } else {
@@ -345,7 +345,10 @@ async function submit_simulation_server() {
         console.error('simulator-api-error: ', error);
         if (error.message == 'Failed to fetch' || error.message == 'Load failed') {
             unhide_ids(['warn-sim-api-connection']);
-        } else {
+        } else if (error.message.startsWith('simulation exceeded allowed runtime')) {
+            unhide_ids(['warn-sim-api-busy']);
+        }
+        else {
             unhide_ids(['warn-sim-api-error']);
         }
     }
