@@ -1,0 +1,104 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="menu">
+      <div class="parent">
+        <div class="marker red"></div>
+        <div class="name">Ground Source Heat Pump</div>
+        <img class="show" src="./visible.png">
+        <div class="expand isopen"></div>
+      </div>
+      <div class="children">
+        <div class="child">
+            <img class="marker" src="../graph/markers/cross-black.png"></img>
+            <div class="name">None</div>
+            <img class="show" src="./visible.png">
+            <div class="expand"></div>
+        </div>
+        <div class="child">
+          <img class="marker" src="../graph/markers/diamond-black.png"></img>
+          <div class="name">Photovolatic Panels</div>
+          <img class="show" src="./visible.png">
+          <div class="expand"></div>
+        </div>
+        <div class="child">
+            <img class="marker" src="../graph/markers/circle-black.png"></img>
+            <div class="name">Evacuate Tubes</div>
+            <img class="show" src="./visible.png">
+            <div class="expand"></div>
+        </div>
+        <div class="child">
+          <img class="marker" src="../graph/markers/square-black.png"></img>
+          <div class="name">Flat Plate</div>
+          <img class="show" src="./visible.png">
+          <div class="expand"></div>
+        </div>
+
+        <div class="combo-info"><p>Water Tank Volume: 0.1m<sup>3</sup></p></div>
+
+
+        <div class="child">
+            <img class="marker" src="../graph/markers/uparrow-black.png"></img>
+            <div class="name">Evacuate Tubes + Photovolatic Panels</div>
+            <img class="show" src="./visible.png">
+            <div class="expand"></div>
+        </div>
+        <div class="child">
+        <img class="marker" src="../graph/markers/downarrow-black.png"></img>
+        <div class="name">Flat Plate + Photovolatic Panels</div>
+        <img class="show" src="./visible.png">
+        <div class="expand"></div>
+        </div>
+        <div class="child">
+            <img class="marker" src="../graph/markers/star-black.png"></img>
+            <div class="name">Photovolatic Thermal Hybrid</div>
+            <img class="show" src="./visible.png">
+            <div class="expand"></div>
+        </div>
+      </div>
+      <div class="parent">
+        <div class="marker blue"></div>
+      <div class="name">Air Source Heat Pump</div>
+      <img class="show" src="./hidden.png">
+      <div class="expand"></div>
+    </div>
+    <div class="parent">
+      <div class="marker green"></div>
+      <div class="name">Electric Boiler</div>
+      <img class="show" src="./visible.png">
+      <div class="expand"></div>
+    </div>
+    </div>
+  </body>
+  <script>
+    let show_elements = document.getElementsByClassName("show");
+    for (let element of show_elements) {
+      element.addEventListener("click", () => {
+        console.log(element.src);
+        if (element.src.endsWith("hidden.png")) {
+          element.src = "./visible.png";
+        } else {
+          element.src = "./hidden.png";
+        }
+      });
+    }
+
+    let expand_elements = document.getElementsByClassName("expand");
+    for (let element of expand_elements) {
+      element.addEventListener("click", () => {
+        console.log(element);
+        if (element.classList.contains("isopen")) {
+          element.classList.remove("isopen");
+        } else {
+          element.classList.add("isopen");
+        }
+      });
+    }
+  </script>
+</html>

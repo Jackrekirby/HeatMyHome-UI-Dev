@@ -1,0 +1,113 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Sora", sans-serif;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.parent {
+  font-size: 1rem;
+  font-weight: bold;
+  width: 20rem;
+  border: 2px solid black;
+  padding: 0.5rem 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.child {
+  font-size: 0.8rem;
+  font-weight: normal;
+  width: 20rem;
+  border: 1px solid black;
+  border-top: none;
+  padding: 0.5rem 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  flex-grow: 1;
+}
+
+div.marker {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  /* border: 1px solid black; */
+  background-color: black;
+}
+
+div.marker.red {
+  background-color: red;
+}
+
+div.marker.blue {
+  background-color: blue;
+}
+
+div.marker.green {
+  background-color: green;
+}
+
+img.marker {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  /* border: 1px solid black; */
+}
+
+.show {
+  height: 1rem;
+  margin: 0rem 0.5rem;
+  /* border: 1px solid black; */
+}
+
+.expand {
+  margin: 0.2rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1px solid black;
+  border-left: none;
+  border-top: none;
+  transform: rotate(45deg);
+  transition: all 0.2s ease-in-out;
+}
+
+.expand.isopen {
+  transform: rotate(-135deg);
+}
+
+.combo-info {
+  font-size: 0.8rem;
+  font-weight: normal;
+  width: 20rem;
+  border: 1px solid black;
+  border-top: none;
+  padding: 0.5rem 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

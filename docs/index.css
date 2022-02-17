@@ -1,5 +1,11 @@
 #home-discover {
   background: transparent;
+  /* background-image: url("./images/logo.png");
+  background-repeat: no-repeat, repeat;
+  height: 50rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1; */
 }
 
 #home-our-cards {
@@ -16,10 +22,10 @@ main {
 }
 
 .info-box {
-  border: 2px solid #d3d3d3;
-  margin: 0rem;
+  /* border: 2px solid #d3d3d3; */
+  margin: 1rem;
   padding: 1rem;
-  max-width: 30rem;
+  max-width: 35rem;
 }
 
 .divider {
@@ -40,16 +46,59 @@ main {
   border-top-right-radius: 1rem;
 }
 
-@media screen and (max-width: 60rem) {
+@media screen and (max-width: 90rem) {
   .mobile-col {
-    flex-direction: column-reverse;
+    flex-direction: column;
+  }
+
+  #home-discover img {
+    width: 25rem;
+    margin-top: 3rem;
+    margin-left: 0rem;
+  }
+
+  #home-discover h2 {
+    font-size: 3.5rem;
+  }
+
+  #home-discover p {
+    font-size: 1rem;
+    padding: 2rem 0rem;
+  }
+
+  .info-box {
+    max-width: 30rem;
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 50rem) {
+  #home-discover a {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  #home-discover img {
+    margin-top: 1rem;
+    width: 20rem;
   }
 
   #home-discover h3 {
-    font-size: 1rem;
+    font-size: 1.5rem;
+  }
+
+  #home-discover h2 {
+    font-size: 2rem;
+    margin: 0.25rem;
   }
 
   #home-discover p {
     font-size: 0.8rem;
+    padding: 0.5rem 0rem;
+  }
+
+  .info-box {
+    max-width: 20rem;
   }
 }

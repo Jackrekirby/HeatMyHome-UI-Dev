@@ -285,7 +285,7 @@ nav a:hover,
 
 #home-discover h2 {
   color: var(--dark-accent);
-  font-size: 1.5rem;
+  font-size: 5rem;
   font-weight: bold;
   text-align: center;
   margin: 0rem;
@@ -293,7 +293,7 @@ nav a:hover,
 
 #home-discover p {
   color: var(--dark-accent);
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: normal;
   text-align: justify;
   margin: 1rem 0rem;
@@ -306,7 +306,7 @@ nav a:hover,
   border-radius: 4px;
   border-style: none;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   padding: 0.5rem 2rem;
   align-self: center;
 }
@@ -317,24 +317,8 @@ nav a:hover,
 }
 
 #home-discover img {
-  width: 30rem;
-}
-
-@media screen and (max-width: 60rem) {
-  #home-discover h1 {
-    font-size: 2rem;
-    margin: 0.25rem;
-    margin-top: 1rem;
-  }
-
-  #home-discover a {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-
-  #home-discover img {
-    width: 20rem;
-  }
+  width: 40rem;
+  margin-left: 3rem;
 }
 
 /* home-our-cards */

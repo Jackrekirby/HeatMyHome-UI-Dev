@@ -68,13 +68,16 @@
             id="warn-postcode-epc-api"
             class="msg-box warn hide click-dismiss"
           >
-            Postcode is valid but not found on
+            No properties with a domestic EPC certificate were found for this
+            postcode on
             <a
               href="https://www.gov.uk/find-energy-certificate"
               target="_blank"
               rel="noopener noreferrer"
               >GOV.UK</a
-            >. Please enter details manually. Click to dismiss.
+            >. Please enter your home's EPC space heating and floor area values
+            manually, or try searching for another property that is similar to
+            yours. Click to dismiss.
           </div>
           <div id="warn-postcode-io-connection" class="msg-box warn hide">
             Could not connect to
@@ -98,9 +101,8 @@
           </div>
 
           <div id="help-scottish-postcode" class="msg-box info hide">
-            Unfortunately for homes located in Scotland, the EPC space heating
-            and floor area parameters cannot be filled out automatically. Please
-            visit the
+            For homes located in Scotland, the EPC space heating and floor area
+            parameters cannot be filled out automatically. Please visit the
             <a href="" target="_blank" rel="noopener noreferrer" class="epc-url"
               >Scottish EPC Register</a
             >
@@ -213,10 +215,10 @@
             Your home's floor area. This can be found on your home's
             <a href="" class="epc-url" target="_blank" rel="noopener noreferrer"
               >EPC certificate</a
-            >. Must be in range 25-500 m<sup>2</sup>.
+            >. Must be in range 25-1500 m<sup>2</sup>.
           </div>
           <div id="warn-floor-area-range" class="msg-box warn hide">
-            Must be in range 25-500 m<sup>2</sup>.
+            Must be in range 25-1500 m<sup>2</sup>.
           </div>
           <div id="warn-floor-area-none" class="msg-box warn hide">
             Your
@@ -293,7 +295,7 @@
                 class="hide-spinner"
                 autocomplete="off"
               />
-              <p>Water Tank Volume (m<sup>3</sup>)</p>
+              <p>Max Water Tank Volume (m<sup>3</sup>)</p>
             </div>
             <div class="input-side-button" onclick="input_help('tes-volume')">
               ?

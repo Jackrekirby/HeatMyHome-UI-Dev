@@ -89,7 +89,7 @@ const input_ranges = { // MIN, MAX, MULTIPLIER
     'occupants': [1, 20, 1],
     'tes-volume': [0.1, 3.0, 10],
     'epc-space-heating': [0, 999999, 1],
-    'floor-area': [25, 500, 1],
+    'floor-area': [25, 1500, 1],
 }
 
 let input_values = {
@@ -108,7 +108,7 @@ let input_values = {
 let scottish_postcode = false;
 let epc_api_connection = true;
 let epc_api_error = false;
-let certificate = undefined;
+let selected_certificate = undefined;
 const input_id_list = ['postcode', 'epc-space-heating', 'floor-area', 'temperature', 'occupants', 'tes-volume'];
 
 // ---- INITIALISATION
@@ -276,6 +276,7 @@ async function onchange_address() {
     clear_warnings("address");
     hide_ids(['help-address']);
 
+    selected_certificate = undefined;
     switch (address_element.value) {
         case "Select Address":
             clear_element_validation(address_element);
@@ -442,8 +443,8 @@ function toggle_optimisation() {
 
 async function get_epc_data() {
     let select = document.getElementById('input-address');
-    certificate = select.options[select.selectedIndex].value;
-    const full_url = `${epc_api_url}?certificate=${certificate}`;
+    selected_certificate = select.options[select.selectedIndex].value;
+    const full_url = `${epc_api_url}?certificate=${selected_certificate}`;
 
     try {
         const response = await fetch(full_url);
@@ -524,7 +525,7 @@ function hide_postcode_related_inputs() {
     scottish_postcode = false;
     epc_api_connection = true;
     epc_api_error = false;
-    certificate = undefined;
+    selected_certificate = undefined;
     hide_ids(['input-address', 'help-scottish-postcode', 'input-box-epc-space-heating', 'input-box-floor-area', 'epc-searching', 'help-address']);
     clear_warnings('address');
     clear_value('epc-space-heating');
@@ -665,9 +666,9 @@ function update_epc_urls() {
     } else {
         let epc_urls = document.getElementsByClassName('epc-url');
         let postcode_element = document.getElementById('input-postcode');
-        if (certificate != undefined) {
+        if (selected_certificate != undefined) {
             for (let url of epc_urls) {
-                url.href = 'https://find-energy-certificate.service.gov.uk/energy-certificate/' + certificate;
+                url.href = 'https://find-energy-certificate.service.gov.uk/energy-certificate/' + selected_certificate;
             }
         } else if (postcode_element.classList.contains("valid")) {
             for (let url of epc_urls) {
