@@ -3,969 +3,1041 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <link rel="stylesheet" href="index.css" />
     <title>Document</title>
   </head>
   <body>
-    <div class="graph"></div>
-    <div class="menu">
-      <div class="parent">
-        <div class="marker red"></div>
-        <div class="name">Ground Source Heat Pump</div>
-        <img class="show" src="./visible.png" />
-        <div class="parent-expand isopen"></div>
-      </div>
-      <div class="children">
-        <div class="child">
-          <img class="marker" src="../graph/markers/cross-red.png" />
-          <div class="name">None</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
+    <div class="output">
+      <div class="graph-container">
+        <div class="select-row">
+          <select id="x-param" onchange="plot_data();">
+            <option value="capital-expenditure">Upfront Cost</option>
+            <option value="operational-expenditure">Yearly Cost</option>
+            <option value="net-present-cost">Lifetime Cost</option>
+            <option value="operational-emissions">Yearly Emissions</option>
+          </select>
+          <select id="y-param" onchange="plot_data();">
+            <option value="capital-expenditure">Upfront Cost</option>
+            <option value="operational-expenditure">Yearly Cost</option>
+            <option value="net-present-cost">Lifetime Cost</option>
+            <option value="operational-emissions">Yearly Emissions</option>
+          </select>
         </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/diamond-red.png" />
-          <div class="name">Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/circle-red.png" />
-          <div class="name">Evacuate Tubes</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/square-red.png" />
-          <div class="name">Flat Plate</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/uparrow-red.png" />
-          <div class="name">Evacuate Tubes + Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/downarrow-red.png" />
-          <div class="name">Flat Plate + Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/star-red.png" />
-          <div class="name">Photovolatic Thermal Hybrid</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
+        <div class="graph">
+          <canvas id="myChart"></canvas>
         </div>
       </div>
-      <div class="parent">
-        <div class="marker blue"></div>
-        <div class="name">Air Source Heat Pump</div>
-        <img class="show" src="./hidden.png" />
-        <div class="parent-expand"></div>
-      </div>
-      <div class="children hide">
-        <div class="child">
-          <img class="marker" src="../graph/markers/cross-blue.png" />
-          <div class="name">None</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/diamond-blue.png" />
-          <div class="name">Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/circle-blue.png" />
-          <div class="name">Evacuate Tubes</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/square-blue.png" />
-          <div class="name">Flat Plate</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/uparrow-blue.png" />
-          <div class="name">Evacuate Tubes + Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/downarrow-blue.png" />
-          <div class="name">Flat Plate + Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/star-blue.png" />
-          <div class="name">Photovolatic Thermal Hybrid</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-      </div>
-      <div class="parent">
-        <div class="marker green"></div>
-        <div class="name">Electric Boiler</div>
-        <img class="show" src="./visible.png" />
-        <div class="parent-expand"></div>
-      </div>
-      <div class="children hide">
-        <div class="child">
-          <img class="marker" src="../graph/markers/cross-green.png" />
-          <div class="name">None</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/diamond-green.png" />
-          <div class="name">Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/circle-green.png" />
-          <div class="name">Evacuate Tubes</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/square-green.png" />
-          <div class="name">Flat Plate</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/uparrow-green.png" />
-          <div class="name">Evacuate Tubes + Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/downarrow-green.png" />
-          <div class="name">Flat Plate + Photovolatic Panels</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/star-green.png" />
-          <div class="name">Photovolatic Thermal Hybrid</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Photovolatic Panel Area</label>
-            <p>8m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Flat Plate Area</label>
-            <p>2m<sup>2</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Water Tank Volume</label>
-            <p>1.3m<sup>3</sup></p>
-          </div>
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-      </div>
-      <div class="parent">
-        <div class="marker cyan"></div>
-        <div class="name">Hydrogen Fuel Cell</div>
-        <img class="show" src="./visible.png" />
-        <div class="parent-expand"></div>
-      </div>
-      <div class="children hide">
-        <div class="child">
-          <img class="marker" src="../graph/markers/circle-cyan.png" />
-          <div class="name">Green Hydrogen</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/square-cyan.png" />
-          <div class="name">Blue Hydrogen</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
-          </div>
-        </div>
-        <div class="child">
-          <img class="marker" src="../graph/markers/uparrow-cyan.png" />
-          <div class="name">Grey Hydrogen</div>
-          <img class="show" src="./visible.png" />
-          <div class="child-expand"></div>
-        </div>
-        <div class="combo-info hide">
-          <div class="name-value">
-            <label>Upfront Cost</label>
-            <p>£2559</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Cost</label>
-            <p>£1343</p>
-          </div>
-          <div class="name-value">
-            <label>Lifetime Cost</label>
-            <p>£15034</p>
-          </div>
-          <div class="name-value">
-            <label>Yearly Emissions</label>
-            <p>345kgCO<sub>2</sub>eq</p>
+      <div class="menu-scroll">
+        <div class="menu">
+          <div class="grandparent">
+            <div class="parent btop">
+              <div class="marker red"></div>
+              <div class="name">Electric Boiler</div>
+              <img class="show" src="./visible.png" />
+              <div class="parent-expand"></div>
+            </div>
+            <div class="children hide">
+              <div class="child">
+                <img class="marker" src="../graph/markers/cross-red.png" />
+                <div class="name">None</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/diamond-red.png" />
+                <div class="name">Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/circle-red.png" />
+                <div class="name">Evacuate Tubes</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/square-red.png" />
+                <div class="name">Flat Plate</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/uparrow-red.png" />
+                <div class="name">Evacuate Tubes + Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/downarrow-red.png" />
+                <div class="name">Flat Plate + Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/star-red.png" />
+                <div class="name">Photovolatic Thermal Hybrid</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grandparent">
+            <div class="parent">
+              <div class="marker blue"></div>
+              <div class="name">Air Source Heat Pump</div>
+              <img class="show" src="./visible.png" />
+              <div class="parent-expand"></div>
+            </div>
+            <div class="children hide">
+              <div class="child">
+                <img class="marker" src="../graph/markers/cross-blue.png" />
+                <div class="name">None</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/diamond-blue.png" />
+                <div class="name">Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/circle-blue.png" />
+                <div class="name">Evacuate Tubes</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/square-blue.png" />
+                <div class="name">Flat Plate</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/uparrow-blue.png" />
+                <div class="name">Evacuate Tubes + Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/downarrow-blue.png" />
+                <div class="name">Flat Plate + Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/star-blue.png" />
+                <div class="name">Photovolatic Thermal Hybrid</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grandparent">
+            <div class="parent">
+              <div class="marker green"></div>
+              <div class="name">Ground Source Heat Pump</div>
+              <img class="show" src="./visible.png" />
+              <div class="parent-expand"></div>
+            </div>
+            <div class="children hide">
+              <div class="child">
+                <img class="marker" src="../graph/markers/cross-green.png" />
+                <div class="name">None</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/diamond-green.png" />
+                <div class="name">Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/circle-green.png" />
+                <div class="name">Evacuate Tubes</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/square-green.png" />
+                <div class="name">Flat Plate</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/uparrow-green.png" />
+                <div class="name">Evacuate Tubes + Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img
+                  class="marker"
+                  src="../graph/markers/downarrow-green.png"
+                />
+                <div class="name">Flat Plate + Photovolatic Panels</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/star-green.png" />
+                <div class="name">Photovolatic Thermal Hybrid</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Photovolatic Panel Area</label>
+                  <p>8m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Flat Plate Area</label>
+                  <p>2m<sup>2</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Water Tank Volume</label>
+                  <p>1.3m<sup>3</sup></p>
+                </div>
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grandparent">
+            <div class="parent">
+              <div class="marker cyan"></div>
+              <div class="name">Hydrogen Fuel Cell</div>
+              <img class="show" src="./visible.png" />
+              <div class="parent-expand"></div>
+            </div>
+            <div class="children hide">
+              <div class="child">
+                <img class="marker" src="../graph/markers/circle-cyan.png" />
+                <div class="name">Green Hydrogen</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/square-cyan.png" />
+                <div class="name">Blue Hydrogen</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/uparrow-cyan.png" />
+                <div class="name">Grey Hydrogen</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grandparent">
+            <div class="parent">
+              <div class="marker purple"></div>
+              <div class="name">Hydrogen Boiler</div>
+              <img class="show" src="./visible.png" />
+              <div class="parent-expand"></div>
+            </div>
+            <div class="children hide">
+              <div class="child">
+                <img class="marker" src="../graph/markers/circle-purple.png" />
+                <div class="name">Green Hydrogen</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/square-purple.png" />
+                <div class="name">Blue Hydrogen</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+              <div class="child">
+                <img class="marker" src="../graph/markers/uparrow-purple.png" />
+                <div class="name">Grey Hydrogen</div>
+                <img class="show" src="./visible.png" />
+                <div class="child-expand"></div>
+              </div>
+              <div class="combo-info hide">
+                <div class="name-value">
+                  <label>Upfront Cost</label>
+                  <p>£2559</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Cost</label>
+                  <p>£1343</p>
+                </div>
+                <div class="name-value">
+                  <label>Lifetime Cost</label>
+                  <p>£15034</p>
+                </div>
+                <div class="name-value">
+                  <label>Yearly Emissions</label>
+                  <p>345kgCO<sub>2</sub>eq</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grandparent">
+            <div class="parent">
+              <div class="marker orange"></div>
+              <div class="name">Biomass Boiler</div>
+              <img class="show" src="./visible.png" />
+              <div class="parent-expand"></div>
+            </div>
+            <div class="only-child combo-info hide">
+              <div class="name-value">
+                <label>Upfront Cost</label>
+                <p>£2559</p>
+              </div>
+              <div class="name-value">
+                <label>Yearly Cost</label>
+                <p>£1343</p>
+              </div>
+              <div class="name-value">
+                <label>Lifetime Cost</label>
+                <p>£15034</p>
+              </div>
+              <div class="name-value">
+                <label>Yearly Emissions</label>
+                <p>345kgCO<sub>2</sub>eq</p>
+              </div>
+            </div>
+          </div>
+          <div class="grandparent">
+            <div class="parent">
+              <div class="marker black"></div>
+              <div class="name">Gas Boiler</div>
+              <img class="show" src="./visible.png" />
+              <div class="parent-expand"></div>
+            </div>
+            <div class="only-child combo-info hide">
+              <div class="name-value">
+                <label>Upfront Cost</label>
+                <p>£2559</p>
+              </div>
+              <div class="name-value">
+                <label>Yearly Cost</label>
+                <p>£1343</p>
+              </div>
+              <div class="name-value">
+                <label>Lifetime Cost</label>
+                <p>£15034</p>
+              </div>
+              <div class="name-value">
+                <label>Yearly Emissions</label>
+                <p>345kgCO<sub>2</sub>eq</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </body>
-  <script>
-    let show_elements = document.getElementsByClassName("show");
-    for (let element of show_elements) {
-      element.addEventListener("click", () => {
-        console.log(element.src);
-        if (element.src.endsWith("hidden.png")) {
-          element.src = "./visible.png";
-        } else {
-          element.src = "./hidden.png";
-        }
-      });
-    }
-    function init_parent_expand() {
-      let parent_elements = document.getElementsByClassName("parent-expand");
-      let children_elements = document.getElementsByClassName("children");
-      console.log(parent_elements, children_elements);
-      for (let i of [...Array(parent_elements.length).keys()]) {
-        let parent_element = parent_elements[i];
-        let children_element = children_elements[i];
-        console.log(i, parent_element, children_element);
-        parent_element.addEventListener("click", () => {
-          console.log(parent_element, children_element);
-          if (children_element.classList.contains("hide")) {
-            let open_parents = document.getElementsByClassName(
-              "parent-expand isopen"
-            );
-
-            for (let open_parent of open_parents) {
-              open_parent.classList.remove("isopen");
-            }
-
-            let combo_infos = document.getElementsByClassName("children");
-
-            for (let cinfo of combo_infos) {
-              cinfo.classList.add("hide");
-            }
-
-            children_element.classList.remove("hide");
-            parent_element.classList.add("isopen");
-          } else {
-            children_element.classList.add("hide");
-            parent_element.classList.remove("isopen");
-          }
-
-          let childs = children_element.getElementsByClassName("child");
-          for (let child of childs) {
-            child.classList.remove("isopen");
-          }
-
-          let combo_infos = document.getElementsByClassName("combo-info");
-
-          for (let cinfo of combo_infos) {
-            cinfo.classList.add("hide");
-          }
-        });
-      }
-    }
-
-    function init_child_expand() {
-      let parent_elements = document.getElementsByClassName("child-expand");
-      let children_elements =
-        document.getElementsByClassName("combo-info hide");
-      console.log(parent_elements, children_elements);
-      for (let i of [...Array(parent_elements.length).keys()]) {
-        let parent_element = parent_elements[i];
-        let children_element = children_elements[i];
-        console.log(i, parent_element, children_element);
-        parent_element.addEventListener("click", () => {
-          console.log(parent_element, children_element);
-          if (children_element.classList.contains("hide")) {
-            let open_parents = document.getElementsByClassName(
-              "child-expand isopen"
-            );
-
-            for (let open_parent of open_parents) {
-              open_parent.classList.remove("isopen");
-            }
-
-            let combo_infos = document.getElementsByClassName("combo-info");
-
-            for (let cinfo of combo_infos) {
-              cinfo.classList.add("hide");
-            }
-
-            children_element.classList.remove("hide");
-            parent_element.classList.add("isopen");
-          } else {
-            children_element.classList.add("hide");
-            parent_element.classList.remove("isopen");
-          }
-        });
-      }
-    }
-
-    init_parent_expand();
-    init_child_expand();
-  </script>
+  <script src="index.js"></script>
 </html>
