@@ -310,6 +310,7 @@ let config = {
                 callbacks: {
                     label: function (context) {
                         console.log(context);
+
                         if (context.dataset.data.length == 1) {
                             return `${context.dataset.label}`
                         } else {
@@ -691,4 +692,53 @@ function plot_data() {
 
 }
 
+// document.getElementById("myChart").onclick = function (evt) {
+//     var activePoints = myChart.getElementAtEvent(evt);
+
+//     // make sure click was on an actual point
+//     if (activePoints.length > 0) {
+//         var clickedDatasetIndex = activePoints[0]._datasetIndex;
+//         var clickedElementindex = activePoints[0]._index;
+//         var label = myChart.data.labels[clickedElementindex];
+//         var value = myChart.data.datasets[clickedDatasetIndex].data[clickedElementindex];
+//         alert("Clicked: " + label + " - " + value);
+//     }
+// };
+
 plot_data();
+
+myChart.options.onClick = (e) => {
+    // const canvasPosition = Chart.helpers.getRelativePosition(e, myChart);
+
+    // // Substitute the appropriate scale IDs
+    // const dataX = myChart.scales.x.getValueForPixel(canvasPosition.x);
+    // const dataY = myChart.scales.y.getValueForPixel(canvasPosition.y);
+    // console.log(dataX, dataY);
+
+    let activePoints = myChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false)
+
+    // make sure click was on an actual point
+    if (activePoints.length > 0) {
+        let context = activePoints[0];
+        console.log(context);
+        for (let child of document.getElementsByClassName('children')) {
+            child.classList.add('hide');
+        }
+        for (let child of document.getElementsByClassName('only-child')) {
+            child.classList.add('hide');
+        }
+        if (context.datasetIndex > 4) {
+            document.getElementsByClassName('only-child')[context.datasetIndex - 5].classList.remove('hide');
+        } else {
+
+            let children_element = document.getElementsByClassName('children')[context.datasetIndex];
+            children_element.classList.remove('hide');
+            for (let child of children_element.getElementsByClassName('combo-info')) {
+                child.classList.add('hide');
+            }
+            children_element.getElementsByClassName('combo-info')[context.index].classList.remove('hide');
+        }
+    }
+};
+
+myChart.update();
