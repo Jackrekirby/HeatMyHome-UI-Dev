@@ -183,6 +183,8 @@ let marker_images = {
     'black': load_images('black')
 };
 
+
+let point_radius = 6;
 function load_images(color) {
     let marker_images = [];
     for (let [i, name] of marker_names.entries()) {
@@ -207,42 +209,49 @@ function markers_hydrogen(markers) {
 const data = {
     datasets: [{
         data: datafill(7),
+        radius: point_radius,
         label: system_order[0],
         backgroundColor: colors[color_order[0]],
         borderColor: colors[color_order[0]],
         pointStyle: marker_images[color_order[0]]
     }, {
         data: datafill(7),
+        radius: point_radius,
         label: system_order[1],
         backgroundColor: colors[color_order[1]],
         borderColor: colors[color_order[1]],
         pointStyle: marker_images[color_order[1]]
     }, {
         data: datafill(7),
+        radius: point_radius,
         label: system_order[2],
         backgroundColor: colors[color_order[2]],
         borderColor: colors[color_order[2]],
         pointStyle: marker_images[color_order[2]]
     }, {
         data: datafill(3),
+        radius: point_radius,
         label: system_order[3],
         backgroundColor: colors[color_order[3]],
         borderColor: colors[color_order[3]],
         pointStyle: markers_hydrogen(marker_images[color_order[3]])
     }, {
         data: datafill(3),
+        radius: point_radius,
         label: system_order[4],
         backgroundColor: colors[color_order[4]],
         borderColor: colors[color_order[4]],
         pointStyle: markers_hydrogen(marker_images[color_order[4]])
     }, {
         data: datafill(1),
+        radius: point_radius,
         label: system_order[5],
         backgroundColor: colors[color_order[5]],
         borderColor: colors[color_order[5]],
         pointStyle: marker_images[color_order[5]][3]
     }, {
         data: datafill(1),
+        radius: point_radius,
         label: system_order[6],
         backgroundColor: colors[color_order[6]],
         borderColor: colors[color_order[6]],
