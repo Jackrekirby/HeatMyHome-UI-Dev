@@ -187,7 +187,7 @@ function load_images(color) {
     let marker_images = [];
     for (let [i, name] of marker_names.entries()) {
         marker_images[i] = new Image(8, 8);
-        marker_images[i].src = `../graph/markers/${name}-${color}.png`
+        marker_images[i].src = `./markers/${name}-${color}.png`
     }
     return marker_images;
 }
