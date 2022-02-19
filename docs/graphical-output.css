@@ -6,7 +6,8 @@
 
 #system-menu {
   width: 100%;
-  max-height: 20rem;
+  /* max-height: 90%; */
+  /* height: calc(100% - 4rem); */
   margin: 0rem 0rem;
   display: flex;
   flex-direction: column;
@@ -14,8 +15,8 @@
   /* justify-items: center; */
   /* align-items: center; */
   /* align-content: flex-start; */
-  overflow-y: auto;
-  overflow-x: hidden;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
 
   border-top: 1px solid black;
   /* border-bottom: 1px solid black; */
@@ -242,21 +243,22 @@ img.marker {
 
 @media screen and (min-width: 80rem) {
   .output-group {
-    width: 50rem;
+    /* width: 50rem; */
+    width: fit-content;
     flex-direction: row;
-    height: min(35rem, 70%);
+    height: 60rem;
   }
 
   .graph-container {
-    height: 100%;
-    width: 25rem;
+    height: calc(100% - 10rem);
+    width: calc(100vw - 45rem - 5rem);
     max-height: 100%;
     margin-right: 1rem;
     margin-bottom: 0rem;
   }
 
   #system-menu {
-    max-height: 30rem;
+    /* max-height: 30rem; */
     width: 25rem;
     height: max-content;
   }
