@@ -203,7 +203,7 @@ img.marker {
   justify-content: center;
   align-content: center;
 
-  width: calc(100% - 3rem);
+  width: calc(100% - 4px);
   /* border: 1px solid black; */
 }
 
@@ -227,7 +227,7 @@ img.marker {
 }
 
 .output-group {
-  width: min(25rem, 100% - 2rem);
+  width: min(25rem, 100% - 4px);
   height: fit-content;
   display: flex;
   flex-direction: column;

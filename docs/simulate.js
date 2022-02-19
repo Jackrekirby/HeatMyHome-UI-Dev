@@ -1291,6 +1291,9 @@ let config = {
                 },
                 'min': 0,
                 'max': 20,
+                ticks: {
+                    includeBounds: false,
+                }
             },
             y: {
                 title: {
@@ -1309,6 +1312,9 @@ let config = {
                 },
                 'min': 0,
                 'max': 1000,
+                ticks: {
+                    includeBounds: false,
+                }
             }
         },
         aspectRatio: 1,
@@ -1325,6 +1331,7 @@ let config = {
                 },
                 pan: {
                     enabled: true,
+                    threshold: 10,
                 },
                 limits: {
                     x: {
