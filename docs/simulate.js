@@ -863,6 +863,7 @@ function build_parent_header(system_name, color) {
             console.log(system_name);
 
             chart.data.datasets[system_order.indexOf(system_name)].hidden = false;
+            apply_limits();
             chart.update();
         } else {
             visible_img.src = "./assets/hidden.png";
@@ -871,6 +872,7 @@ function build_parent_header(system_name, color) {
             // console.log(system_name);
 
             chart.data.datasets[system_order.indexOf(system_name)].hidden = true;
+            apply_limits();
             chart.update();
         }
     });
@@ -1115,32 +1117,86 @@ function replace_graph_data() {
     chart.options.scales.x.title.text = axes_label_map[x_param];
     chart.options.scales.y.title.text = axes_label_map[y_param];
     let i = 0;
+
     for (let system_name of system_order) {
         let dataset_data = [];
+
         switch (system_name) {
             case 'biomass-boiler':
             case 'gas-boiler':
                 let values = output.systems[system_name];
+                let x = values[x_param] / x_divisor;
+                let y = values[y_param] / y_divisor;
                 dataset_data.push({
-                    'x': values[x_param] / x_divisor,
-                    'y': values[y_param] / y_divisor
+                    'x': x,
+                    'y': y
                 });
                 break;
             default:
                 for (const subsystem_name of Object.keys(system_markers[system_name])) {
-
                     let values = output.systems[system_name][subsystem_name];
-                    // console.log(subsystem_name, values);
+                    let x = values[x_param] / x_divisor;
+                    let y = values[y_param] / y_divisor;
                     dataset_data.push({
-                        'x': values[x_param] / x_divisor,
-                        'y': values[y_param] / y_divisor
+                        'x': x,
+                        'y': y
                     });
                 }
         }
         chart.data.datasets[i].data = dataset_data;
         i += 1;
     }
+
     chart.update();
+}
+
+function apply_limits() {
+    let limits = {
+        x: {
+            'min': undefined,
+            'max': undefined,
+        },
+        y: {
+            'min': undefined,
+            'max': undefined,
+        }
+    }
+
+    for (let dataset of chart.data.datasets) {
+        for (const data of dataset.data) {
+            let x = data.x;
+            let y = data.y
+
+            if (!dataset.hidden) {
+                if (limits.x.min == undefined || x < limits.x.min) { limits.x.min = x };
+                if (limits.x.max == undefined || x > limits.x.max) { limits.x.max = x };
+                if (limits.y.min == undefined || y < limits.y.min) { limits.y.min = y };
+                if (limits.y.max == undefined || y > limits.y.max) { limits.y.max = y };
+            }
+        }
+    }
+
+    const dr = 0.1;
+    let dx = limits.x.max - limits.x.min;
+    limits.x.max += Math.max(dx * dr, 1);
+    limits.x.min -= Math.max(dx * dr, 1);
+
+    let dy = limits.y.max - limits.y.min;
+    limits.y.max += Math.max(dy * dr, 1);
+    limits.y.min -= Math.max(dy * dr, 1);
+
+    limits.x.max = Math.ceil(limits.x.max);
+    limits.x.min = Math.floor(limits.x.min);
+    limits.y.max = Math.ceil(limits.y.max);
+    limits.y.min = Math.floor(limits.y.min);
+
+    console.log(limits)
+    chart.options.plugins.zoom.limits = limits;
+
+    chart.options.scales.x.min = limits.x.min;
+    chart.options.scales.x.max = limits.x.max;
+    chart.options.scales.y.min = limits.y.min;
+    chart.options.scales.y.max = limits.y.max;
 }
 
 function build_graph_data() {
@@ -1186,6 +1242,8 @@ function build_graph_data() {
     return data;
 }
 
+
+
 let config = {
     type: 'scatter',
     data: build_graph_data(),
@@ -1230,7 +1288,9 @@ let config = {
                         size: 12,
                         family: 'Sora'
                     }
-                }
+                },
+                'min': 0,
+                'max': 20,
             },
             y: {
                 title: {
@@ -1246,11 +1306,38 @@ let config = {
                         size: 12,
                         family: 'Sora'
                     }
-                }
+                },
+                'min': 0,
+                'max': 1000,
             }
         },
         aspectRatio: 1,
         plugins: {
+            zoom: {
+                zoom: {
+                    wheel: {
+                        enabled: true,
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    mode: 'xy',
+                },
+                pan: {
+                    enabled: true,
+                },
+                limits: {
+                    x: {
+                        'min': 0,
+                        'max': 20,
+                    },
+                    y: {
+                        'min': 0,
+                        'max': 1000,
+                    }
+                }
+            },
+
             legend: {
                 display: false,
                 labels: {
@@ -1287,27 +1374,9 @@ config.options.animation = {
     }
 }
 
-
-
-// chart.options.onClick = (e) => {
-//     let activePoints = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false)
-
-//     // make sure click was on an actual point
-//     if (activePoints.length > 0) {
-//         let context = activePoints[0];
-
-
-//         let system_id = system_order[context.datasetIndex];
-//         if (system_id == 'gas-boiler' || system_id == 'biomass-boiler') {
-//             open_child('system-' + system_id)
-//         } else {
-//             let subsystem_id = full_order[system_id][context.index];
-//             open_child('system-' + system_id + '-' + subsystem_id);
-//         }
-//     }
-
-// };
 let chart = undefined;
+
+
 
 function load_output() {
     document.getElementsByClassName('output-group')[0].classList.remove('hide');
@@ -1319,5 +1388,274 @@ function load_output() {
     }
     replace_graph_data();
     set_system_visibility();
+    apply_limits();
+    chart.update();
 }
+
+output = {
+    "demand": {
+        "boiler": {
+            "hot-water": 1460.07,
+            "space": 1515.96,
+            "total": 2976.03,
+            "peak-hourly": 8.36874
+        },
+        "heat-pump": {
+            "hot-water": 1460.07,
+            "space": 1552.12,
+            "total": 3012.19,
+            "peak-hourly": 1.56076
+        }
+    },
+    "systems": {
+        "electric-boiler": {
+            "none": {
+                "pv-size": 0,
+                "solar-thermal-size": 0,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 232.091,
+                "capital-expenditure": 678.913,
+                "net-present-cost": 4092.94,
+                "operational-emissions": 644775
+            },
+            "photovoltaic": {
+                "pv-size": 14,
+                "solar-thermal-size": 0,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -35.5481,
+                "capital-expenditure": 3758.91,
+                "net-present-cost": 3236.01,
+                "operational-emissions": 214478
+            },
+            "flat-plate": {
+                "pv-size": 0,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 173.86,
+                "capital-expenditure": 3256.41,
+                "net-present-cost": 5813.87,
+                "operational-emissions": 507729
+            },
+            "evacuated-tube": {
+                "pv-size": 0,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 157.84,
+                "capital-expenditure": 3366.41,
+                "net-present-cost": 5688.21,
+                "operational-emissions": 463252
+            },
+            "flat-plate-and-photovoltaic": {
+                "pv-size": 12,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -39.0105,
+                "capital-expenditure": 5896.41,
+                "net-present-cost": 5322.57,
+                "operational-emissions": 182792
+            },
+            "evacuated-tube-and-photovoltaic": {
+                "pv-size": 12,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -64.4958,
+                "capital-expenditure": 6006.41,
+                "net-present-cost": 5057.69,
+                "operational-emissions": 115537
+            },
+            "photovoltaic-thermal-hybrid": {
+                "pv-size": 4,
+                "solar-thermal-size": 4,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 102.037,
+                "capital-expenditure": 5323.91,
+                "net-present-cost": 6824.87,
+                "operational-emissions": 364656
+            }
+        },
+        "air-source-heat-pump": {
+            "none": {
+                "pv-size": 0,
+                "solar-thermal-size": 0,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 79.5922,
+                "capital-expenditure": 6237.67,
+                "net-present-cost": 7408.46,
+                "operational-emissions": 232146
+            },
+            "photovoltaic": {
+                "pv-size": 14,
+                "solar-thermal-size": 0,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -197.882,
+                "capital-expenditure": 9317.67,
+                "net-present-cost": 6406.86,
+                "operational-emissions": -182272
+            },
+            "flat-plate": {
+                "pv-size": 0,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 58.3877,
+                "capital-expenditure": 8815.17,
+                "net-present-cost": 9674.04,
+                "operational-emissions": 191942
+            },
+            "evacuated-tube": {
+                "pv-size": 0,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 52.8353,
+                "capital-expenditure": 8925.17,
+                "net-present-cost": 9702.37,
+                "operational-emissions": 178927
+            },
+            "flat-plate-and-photovoltaic": {
+                "pv-size": 12,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -171.235,
+                "capital-expenditure": 11455.2,
+                "net-present-cost": 8936.33,
+                "operational-emissions": -153667
+            },
+            "evacuated-tube-and-photovoltaic": {
+                "pv-size": 12,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -186.652,
+                "capital-expenditure": 11565.2,
+                "net-present-cost": 8819.54,
+                "operational-emissions": -177541
+            },
+            "photovoltaic-thermal-hybrid": {
+                "pv-size": 2,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 37.9702,
+                "capital-expenditure": 10245.2,
+                "net-present-cost": 10803.7,
+                "operational-emissions": 158842
+            }
+        },
+        "ground-source-heat-pump": {
+            "none": {
+                "pv-size": 0,
+                "solar-thermal-size": 0,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 53.459,
+                "capital-expenditure": 7937.67,
+                "net-present-cost": 8724.04,
+                "operational-emissions": 154280
+            },
+            "photovoltaic": {
+                "pv-size": 14,
+                "solar-thermal-size": 0,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -247.103,
+                "capital-expenditure": 11017.7,
+                "net-present-cost": 7382.83,
+                "operational-emissions": -260026
+            },
+            "flat-plate": {
+                "pv-size": 0,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 39.7321,
+                "capital-expenditure": 10515.2,
+                "net-present-cost": 11099.6,
+                "operational-emissions": 134456
+            },
+            "evacuated-tube": {
+                "pv-size": 0,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 36.1047,
+                "capital-expenditure": 10625.2,
+                "net-present-cost": 11156.3,
+                "operational-emissions": 128096
+            },
+            "flat-plate-and-photovoltaic": {
+                "pv-size": 12,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -211.235,
+                "capital-expenditure": 13155.2,
+                "net-present-cost": 10047.9,
+                "operational-emissions": -216005
+            },
+            "evacuated-tube-and-photovoltaic": {
+                "pv-size": 12,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": -223.614,
+                "capital-expenditure": 13265.2,
+                "net-present-cost": 9975.85,
+                "operational-emissions": -229065
+            },
+            "photovoltaic-thermal-hybrid": {
+                "pv-size": 2,
+                "solar-thermal-size": 2,
+                "thermal-energy-storage-volume": 0.1,
+                "operational-expenditure": 19.2099,
+                "capital-expenditure": 11945.2,
+                "net-present-cost": 12227.7,
+                "operational-emissions": 101650
+            }
+        },
+        "hydrogen-boiler": {
+            "grey": {
+                "operational-expenditure": 162.028,
+                "capital-expenditure": 2120,
+                "net-present-cost": 4503.41,
+                "operational-emissions": 1263160
+            },
+            "blue": {
+                "operational-expenditure": 307.523,
+                "capital-expenditure": 2120,
+                "net-present-cost": 6643.61,
+                "operational-emissions": 198402
+            },
+            "green": {
+                "operational-expenditure": 608.432,
+                "capital-expenditure": 2120,
+                "net-present-cost": 11069.9,
+                "operational-emissions": 1314410
+            }
+        },
+        "hydrogen-fuel-cell": {
+            "grey": {
+                "operational-expenditure": 157.018,
+                "capital-expenditure": 25157.8,
+                "net-present-cost": 27467.5,
+                "operational-emissions": 1224100
+            },
+            "blue": {
+                "operational-expenditure": 298.015,
+                "capital-expenditure": 25157.8,
+                "net-present-cost": 29541.6,
+                "operational-emissions": 192267
+            },
+            "green": {
+                "operational-expenditure": 589.62,
+                "capital-expenditure": 25157.8,
+                "net-present-cost": 33831,
+                "operational-emissions": 1273770
+            }
+        },
+        "gas-boiler": {
+            "operational-expenditure": 132.268,
+            "capital-expenditure": 1620,
+            "net-present-cost": 3565.64,
+            "operational-emissions": 605126
+        },
+        "biomass-boiler": {
+            "operational-expenditure": 135.905,
+            "capital-expenditure": 9750,
+            "net-present-cost": 11749.1,
+            "operational-emissions": 297603
+        }
+    }
+}
+load_output();
 
