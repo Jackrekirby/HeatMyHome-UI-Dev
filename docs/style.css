@@ -32,6 +32,10 @@ body {
   align-items: center;
 }
 
+.flex.column {
+  flex-direction: column;
+}
+
 .flex.row {
   flex-direction: row;
 }
