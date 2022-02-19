@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Sora", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 1rem;
+  width: 20rem;
+  height: 20rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.item {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 2px 0rem;
+  width: 100%;
+  text-align: center;
+}
+
+.child {
+  background-color: rgba(0, 0, 128, 0.1);
+}
+
+.hide {
+  display: none;
+}

@@ -356,10 +356,6 @@ input.hide-spinner[type="number"] {
   color: var(--experimental-color);
 }
 
-.hide {
-  display: none !important;
-}
-
 .click-dismiss {
   cursor: pointer;
 }
@@ -438,4 +434,12 @@ input.hide-spinner[type="number"] {
 
 .ticked .checkbox {
   border-color: var(--experimental-color);
+}
+
+.hide {
+  display: none;
+}
+
+.search.hide {
+  display: none;
 }

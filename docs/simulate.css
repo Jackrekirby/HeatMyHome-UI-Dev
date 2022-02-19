@@ -1,4 +1,11 @@
 main {
   min-height: calc(100% - 4rem);
   background-color: white;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 80rem) {
+  main {
+    flex-direction: row;
+  }
 }

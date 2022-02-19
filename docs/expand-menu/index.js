@@ -698,7 +698,6 @@ function plot_data() {
     }
 
     myChart.update();
-
 }
 
 // document.getElementById("myChart").onclick = function (evt) {

@@ -1,0 +1,122 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- https://github.com/CristianDavideConte/universalSmoothScroll/blob/master/docs/FunctionsAbout.md -->
+    <script src="./universalsmoothscroll-min.js"></script>
+    <script src="./universalsmoothscroll-ease-functions-min.js"></script>
+    <link rel="stylesheet" href="index.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="menu">
+      <div class="group">
+        <div class="item"></div>
+        <div class="group hide">
+          <div class="item"></div>
+          <div class="group hide">
+            <div class="item child"></div>
+            <div class="item child"></div>
+          </div>
+          <div class="item"></div>
+          <div class="group hide">
+            <div class="item child"></div>
+            <div class="item child"></div>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        <div class="item"></div>
+        <div class="group hide">
+          <div class="item child"></div>
+          <div class="item child"></div>
+        </div>
+      </div>
+      <div class="group">
+        <div class="item">item</div>
+        <div class="group hide">
+          <div class="item child"></div>
+          <div class="item child"></div>
+        </div>
+      </div>
+      <div class="group">
+        <div class="item"></div>
+        <div class="group hide">
+          <div class="item child"></div>
+          <div class="item child"></div>
+        </div>
+      </div>
+      <div class="group">
+        <div class="item"></div>
+        <div class="group hide">
+          <div class="item child"></div>
+          <div class="item child"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="systems-menu">
+      <div id="electric-boiler" class="heat-technology">
+        <div id="photovoltaic" class="solar-technology"></div>
+      </div>
+    </div>
+
+    <input type="number" id="num" onchange="show_child()" />
+    <script>
+      function label_childs() {
+        let childs = document.getElementsByClassName("child");
+        let i = 0;
+        for (let child of childs) {
+          child.classList.add(`child-${i}`);
+          child.innerHTML = `child-${i}`;
+          i += 1;
+          child.addEventListener("click", () => show_child(child));
+        }
+      }
+
+      function label_element(name) {
+        let elements = document.getElementsByClassName(name);
+        let i = 0;
+        for (let element of elements) {
+          element.classList.add(`${name}-${i}`);
+          element.innerHTML = `${name}-${i}`;
+          i += 1;
+        }
+      }
+
+      function hide_all_menu() {
+        let menu = document.getElementsByClassName("menu")[0];
+        let groups = menu.getElementsByClassName("group");
+        for (let group of groups) {
+          group.classList.add("hide");
+        }
+      }
+
+      function show_child() {
+        hide_all_menu();
+        let id = document.getElementById("num").value;
+        let child = document.getElementsByClassName("child-" + id)[0];
+        console.log("child: ", child);
+        child.classList.remove("hide");
+        let parent = child.parentElement;
+        while (parent.classList.contains("group")) {
+          console.log("parent: ", parent);
+          parent.classList.remove("hide");
+          parent = parent.parentElement;
+        }
+        uss.scrollIntoView(child);
+      }
+
+      label_element("item");
+      label_childs();
+
+      let animationDuration = 500; //duration in ms
+      let myCustomEase = EASE_IN_OUT_QUINT(animationDuration);
+      uss.setYStepLengthCalculator(
+        myCustomEase,
+        document.getElementsByClassName("menu")[0]
+      );
+    </script>
+  </body>
+</html>

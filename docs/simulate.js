@@ -339,6 +339,8 @@ async function submit_simulation_server() {
         if (json['status'] == 200) {
             console.log('simulator-api-json:', json);
             unhide_ids(['submit-complete']);
+            output = json['result'];
+            load_output();
         } else {
             throw new Error(json['error']);
         }
@@ -681,3 +683,641 @@ function update_epc_urls() {
         }
     }
 }
+
+// GRAPHICAL OUTPUT MENU
+
+let output = undefined;
+
+const system_order = [
+    'electric-boiler',
+    'air-source-heat-pump',
+    'ground-source-heat-pump',
+    'biomass-boiler',
+    'gas-boiler',
+    'hydrogen-boiler',
+    'hydrogen-fuel-cell'
+];
+
+const solar_order = [
+    'none',
+    'photovoltaic',
+    'flat-plate',
+    'evacuated-tube',
+    'flat-plate-and-photovoltaic',
+    'evacuated-tube-and-photovoltaic',
+    'photovoltaic-thermal-hybrid',
+]
+
+const h2_order = ['green', 'blue', 'grey'];
+
+const full_order = {
+    'electric-boiler': solar_order,
+    'air-source-heat-pump': solar_order,
+    'ground-source-heat-pump': solar_order,
+    'hydrogen-boiler': h2_order,
+    'hydrogen-fuel-cell': h2_order,
+    'biomass-boiler': undefined,
+    'gas-boiler': undefined,
+}
+
+const system_colors = {
+    'electric-boiler': 'red',
+    'air-source-heat-pump': 'blue',
+    'ground-source-heat-pump': 'green',
+    'hydrogen-boiler': 'cyan',
+    'hydrogen-fuel-cell': 'purple',
+    'biomass-boiler': 'orange',
+    'gas-boiler': 'black',
+};
+
+let colors = {
+    'red': 'red',
+    'orange': 'rgb(255, 106, 0)',
+    'green': 'green',
+    'cyan': 'rgb(0, 148, 255)',
+    'blue': 'blue',
+    'purple': 'rgb(255, 106, 255)',
+    'black': 'black'
+}
+
+const solar_markers = {
+    'none': 'cross',
+    'photovoltaic': 'diamond',
+    'flat-plate': 'circle',
+    'evacuated-tube': 'square',
+    'flat-plate-and-photovoltaic': 'uparrow',
+    'evacuated-tube-and-photovoltaic': 'downarrow',
+    'photovoltaic-thermal-hybrid': 'star',
+};
+
+const h2_markers = {
+    'green': 'circle',
+    'blue': 'square',
+    'grey': 'uparrow',
+};
+
+const system_markers = {
+    'electric-boiler': solar_markers,
+    'air-source-heat-pump': solar_markers,
+    'ground-source-heat-pump': solar_markers,
+    'hydrogen-boiler': h2_markers,
+    'hydrogen-fuel-cell': h2_markers,
+    'biomass-boiler': ['square'],
+    'gas-boiler': ['square'],
+};
+
+const display_names = {
+    'electric-boiler': 'Electric Boiler',
+    'air-source-heat-pump': 'Air Source Heat Pump',
+    'ground-source-heat-pump': 'Ground Source Heat Pump',
+    'hydrogen-boiler': 'Hydrogen Boiler',
+    'hydrogen-fuel-cell': 'Hydrogen Fuel Cell',
+    'biomass-boiler': 'Biomass Boiler',
+    'gas-boiler': 'Gas Boiler',
+    'none': 'None',
+    'photovoltaic': 'Photovoltaic Panels',
+    'flat-plate': 'Flat Plates',
+    'evacuated-tube': 'Evacuated Tubes',
+    'flat-plate-and-photovoltaic': 'Photovoltaic Panels & Evacuated Tubes',
+    'evacuated-tube-and-photovoltaic': 'Photovoltaic Panels & Flat Plates',
+    'photovoltaic-thermal-hybrid': 'Photovoltaic Thermal Hybrid',
+    'green': 'Green-Sourced Hydrogen',
+    'blue': 'Blue-Sourced Hydrogen',
+    'grey': 'Grey-Sourced Hydrogen',
+};
+
+const info_display_names = {
+    'thermal-energy-storage-volume': 'Water Tank Volume',
+    'operational-expenditure': 'Yearly Cost',
+    'capital-expenditure': 'Upfront Cost',
+    'net-present-cost': 'Lifetime Cost',
+    'operational-emissions': 'Yearly Emissions'
+}
+
+const info_display_units = {
+    'pv-size': (value) => { return `${value}m<sup>2</sup>` },
+    'solar-thermal-size': (value) => { return `${value}m<sup>2</sup>` },
+    'thermal-energy-storage-volume': (value) => { return `${value}m<sup>3</sup>` },
+    'operational-expenditure': (value) => { return `${display_sign(value)}£${Math.round(Math.abs(value))}` },
+    'capital-expenditure': (value) => { return `${display_sign(value)}£${Math.round(Math.abs(value))}` },
+    'net-present-cost': (value) => { return `${display_sign(value)}£${Math.round(Math.abs(value))}` },
+    'operational-emissions': (value) => { return `${display_sign(value)}${Math.round(Math.abs(value / 1000))} kgCO<sub>2</sub>eq` }
+}
+
+const system_visible = {
+    'electric-boiler': true,
+    'air-source-heat-pump': true,
+    'ground-source-heat-pump': true,
+    'hydrogen-boiler': false,
+    'hydrogen-fuel-cell': false,
+    'biomass-boiler': true,
+    'gas-boiler': true,
+};
+
+function set_system_visibility() {
+    for (const [system_name, is_visible] of Object.entries(system_visible)) {
+        let parent = document.getElementById('system-' + system_name);
+        if (!is_visible) {
+            parent.getElementsByClassName('header')[0].getElementsByClassName('show')[0].src = './assets/hidden.png';
+            chart.data.datasets[system_order.indexOf(system_name)].hidden = true;
+        }
+    }
+    chart.update();
+}
+
+// MENU
+
+function display_sign(value) {
+    if (value < 0) {
+        return "-";
+    } else {
+        return "";
+    }
+}
+
+function build_parent_header(system_name, color) {
+    let header_div = document.createElement('div');
+    header_div.classList.add('header');
+
+    if (system_name == system_order[system_order.length - 1]) {
+        header_div.classList.add('border-bottom');
+    }
+
+    let marker_div = document.createElement('div');
+    marker_div.style.borderColor = colors[color];
+    marker_div.classList.add('marker');
+
+    let name_div = document.createElement('div');
+    name_div.innerHTML = `<a href="" target="_blank" rel="noopener noreferrer">${display_names[system_name]}</a>`;
+    name_div.classList.add('name');
+
+    let visible_img = document.createElement('img');
+    visible_img.src = "./assets/visible.png";
+    visible_img.classList.add('show');
+    visible_img.addEventListener('click', () => {
+        if (visible_img.src.endsWith("hidden.png")) {
+            visible_img.src = "./assets/visible.png";
+            // console.log("show: ", visible_img.parentElement.parentElement.id);
+
+            let system_name = visible_img.parentElement.parentElement.id.substr(7);
+            console.log(system_name);
+
+            chart.data.datasets[system_order.indexOf(system_name)].hidden = false;
+            chart.update();
+        } else {
+            visible_img.src = "./assets/hidden.png";
+            // console.log("hide: ", visible_img.parentElement.parentElement.id);
+            let system_name = visible_img.parentElement.parentElement.id.substr(7);
+            // console.log(system_name);
+
+            chart.data.datasets[system_order.indexOf(system_name)].hidden = true;
+            chart.update();
+        }
+    });
+
+    let expand_div = document.createElement('div');
+    expand_div.classList.add('expand');
+    expand_div.addEventListener('click', () => toggle_expand_parent(expand_div));
+
+    let expand_inner_div = document.createElement('div');
+    expand_inner_div.classList.add();
+    expand_div.appendChild(expand_inner_div);
+
+    header_div.appendChild(marker_div);
+    header_div.appendChild(name_div);
+    header_div.appendChild(visible_img);
+    header_div.appendChild(expand_div);
+    return header_div;
+}
+
+function build_child_header(subsystem_name, shape, color) {
+    let header_div = document.createElement('div');
+    header_div.classList.add('header');
+
+    let marker_img = document.createElement('img');
+    marker_img.src = `./assets/${shape}-${color}.png`;
+    marker_img.classList.add('marker');
+
+    let name_div = document.createElement('div');
+    name_div.innerHTML = `<a href="" target="_blank" rel="noopener noreferrer">${display_names[subsystem_name]}</a>`;
+    name_div.classList.add('name');
+
+    let expand_div = document.createElement('div');
+    expand_div.classList.add('expand');
+    expand_div.addEventListener('click', () => toggle_expand_child(expand_div));
+
+    let expand_inner_div = document.createElement('div');
+    expand_inner_div.classList.add();
+    expand_div.appendChild(expand_inner_div);
+
+    header_div.appendChild(marker_img);
+    header_div.appendChild(name_div);
+    header_div.appendChild(expand_div);
+    return header_div;
+}
+
+function build_child_info(subsystem_name, system_properties) {
+    function make_namevalue(name, value) {
+        let namevalue_div = document.createElement('div');
+        namevalue_div.classList.add('name-value');
+        let label = document.createElement('label');
+        label.innerHTML = `<a href="" target="_blank" rel="noopener noreferrer">${name}</a>`;
+
+        let p = document.createElement('p');
+        p.innerHTML = value;
+
+        namevalue_div.appendChild(label);
+        namevalue_div.appendChild(p);
+        return namevalue_div;
+    }
+
+    let header_div = document.createElement('div');
+    header_div.classList.add('info');
+
+    for (const [property_name, property_value] of Object.entries(system_properties)) {
+        let united_value = info_display_units[property_name](property_value);
+        if (property_name == 'pv-size') {
+            switch (subsystem_name) {
+                case 'photovoltaic':
+                case 'flat-plate-and-photovoltaic':
+                case 'evacuated-tube-and-photovoltaic':
+                    header_div.appendChild(make_namevalue('Photovolatic Panel Area', united_value));
+                    break;
+            }
+        } else if (property_name == 'solar-thermal-size') {
+            switch (subsystem_name) {
+                case 'flat-plate':
+                case 'flat-plate-and-photovoltaic':
+                    header_div.appendChild(make_namevalue('Flat Plate Area', united_value));
+                    break;
+                case 'evacuated-tube':
+                case 'evacuated-tube-and-photovoltaic':
+                    header_div.appendChild(make_namevalue('Evacuated Tube Area', united_value));
+                    break;
+                case 'photovoltaic-thermal-hybrid':
+                    header_div.appendChild(make_namevalue('Photovoltaic-Thermal-Hybrid Area', united_value));
+                    break;
+            }
+        } else {
+            header_div.appendChild(make_namevalue(info_display_names[property_name], united_value));
+        }
+    }
+
+    return header_div;
+}
+
+function build_system_menu() {
+    let system_menu = document.getElementById('system-menu');
+    system_menu.innerHTML = '';
+    let animation_duration = 500; //duration in ms
+    let menu_scroll_fnc = EASE_IN_OUT_QUINT(animation_duration);
+    uss.setYStepLengthCalculator(
+        menu_scroll_fnc,
+        system_menu
+    );
+
+    for (const system_name of system_order) {
+        sub_systems = output.systems[system_name];
+        // console.log(system_name, sub_systems);
+
+        let color = system_colors[system_name];
+
+        let system_div = document.createElement('div');
+        system_div.id = 'system-' + system_name;
+        system_div.classList.add('parent', 'hide');
+        system_div.appendChild(build_parent_header(system_name, color));
+
+        let markers = system_markers[system_name];
+        let children_div = document.createElement('div');
+        children_div.classList.add('children');
+        // console.log('markers:', markers);
+        if (!Array.isArray(markers)) {
+            for (const [subsystem_name, marker] of Object.entries(markers)) {
+                let system_properties = sub_systems[subsystem_name];
+                // console.log(subsystem_name, system_properties);
+                let subsystem_div = document.createElement('div');
+                subsystem_div.id = 'system-' + system_name + '-' + subsystem_name;
+                subsystem_div.classList.add('child', 'hide');
+
+                subsystem_div.appendChild(build_child_header(subsystem_name, markers[subsystem_name], color));
+                subsystem_div.appendChild(build_child_info(subsystem_name, system_properties));
+                children_div.appendChild(subsystem_div);
+            }
+        } else {
+            // console.log(system_name, sub_systems);
+            children_div.appendChild(build_child_info(system_name, sub_systems));
+        }
+        system_div.appendChild(children_div);
+        system_menu.appendChild(system_div);
+    }
+}
+
+function hide_all_menu_items() {
+    let system_menu = document.getElementById('system-menu');
+    let parents = system_menu.getElementsByClassName('parent');
+    for (let parent of parents) {
+        parent.classList.add('hide');
+    }
+
+    let childs = system_menu.getElementsByClassName('child');
+    for (let child of childs) {
+        child.classList.add('hide');
+    }
+}
+
+function toggle_expand_parent(expand_div) {
+    let parent = expand_div.parentElement.parentElement;
+
+    if (parent.classList.contains('hide')) {
+        hide_all_menu_items();
+        parent.classList.remove('hide');
+    } else {
+        parent.classList.add('hide');
+    }
+}
+
+function toggle_expand_child(expand_div) {
+    let child = expand_div.parentElement.parentElement;
+
+    if (child.classList.contains('hide')) {
+        let children = child.parentElement;
+        let childs = children.getElementsByClassName('child');
+        for (let c of childs) {
+            c.classList.add('hide');
+        }
+
+        child.classList.remove('hide');
+    } else {
+        child.classList.add('hide');
+    }
+}
+
+function open_child(id) {
+    hide_all_menu_items();
+    let child = document.getElementById(id);
+    child.classList.remove('hide');
+    let parent = child.parentElement.parentElement;
+    parent.classList.remove('hide');
+    // uss.scrollIntoView(child);
+    uss.scrollIntoViewIfNeeded(child);
+}
+
+// GRAPH
+
+let marker_names = ['cross', 'diamond', 'circle', 'square', 'uparrow', 'downarrow', 'star'];
+let marker_images = {
+    'red': load_images('red'),
+    'orange': load_images('orange'),
+    'green': load_images('green'),
+    'cyan': load_images('cyan'),
+    'blue': load_images('blue'),
+    'purple': load_images('purple'),
+    'black': load_images('black')
+};
+
+const axes_label_map = {
+    'capital-expenditure': "Upfront Cost (£1000's)",
+    'operational-expenditure': "Yearly Cost (£'s)",
+    'net-present-cost': "Lifetime Cost (£1000's)",
+    'operational-emissions': "Yearly Emissions (tonnesCO2eq)",
+}
+
+const divisor_map = {
+    'capital-expenditure': 1000,
+    'operational-expenditure': 1,
+    'net-present-cost': 1000,
+    'operational-emissions': 1000000,
+}
+
+
+let point_radius = 6;
+function load_images(color) {
+    let marker_images = {};
+    for (let [i, name] of marker_names.entries()) {
+        marker_images[name] = new Image(8, 8);
+        marker_images[name].src = `./assets/${name}-${color}.png`
+    }
+    return marker_images;
+}
+
+function replace_graph_data() {
+    let x_select = document.getElementById("x-param");
+    let x_param = x_select.options[x_select.selectedIndex].value;
+    // console.log("x-param: ", x_param);
+
+    let y_select = document.getElementById("y-param");
+    let y_param = y_select.options[y_select.selectedIndex].value;
+    // console.log("y-param: ", y_param);
+
+    let x_divisor = divisor_map[x_param];
+    let y_divisor = divisor_map[y_param];
+
+    chart.options.scales.x.title.text = axes_label_map[x_param];
+    chart.options.scales.y.title.text = axes_label_map[y_param];
+    let i = 0;
+    for (let system_name of system_order) {
+        let dataset_data = [];
+        switch (system_name) {
+            case 'biomass-boiler':
+            case 'gas-boiler':
+                let values = output.systems[system_name];
+                dataset_data.push({
+                    'x': values[x_param] / x_divisor,
+                    'y': values[y_param] / y_divisor
+                });
+                break;
+            default:
+                for (const subsystem_name of Object.keys(system_markers[system_name])) {
+
+                    let values = output.systems[system_name][subsystem_name];
+                    // console.log(subsystem_name, values);
+                    dataset_data.push({
+                        'x': values[x_param] / x_divisor,
+                        'y': values[y_param] / y_divisor
+                    });
+                }
+        }
+        chart.data.datasets[i].data = dataset_data;
+        i += 1;
+    }
+    chart.update();
+}
+
+function build_graph_data() {
+    function datafill(n) {
+        let data = [];
+        for (let i = 0; i < n; i++) {
+            data.push({ x: i, y: i });
+        }
+        return data;
+    }
+
+    let data = {};
+    data['datasets'] = [];
+    for (let system_name of system_order) {
+
+        let color = system_colors[system_name];
+        let rgb = colors[color];
+        let markers = system_markers[system_name];
+        let marker = undefined;
+
+        let point_styles = [];
+        if (!Array.isArray(markers)) {
+            for (let [subsystem_name, marker] of Object.entries(markers)) {
+                point_styles.push(marker_images[color][marker])
+            }
+        } else {
+            point_styles.push(marker_images[color][markers[0]]);
+            // console.log(point_styles);
+        }
+
+        // console.log(point_styles);
+        data['datasets'].push({
+            data: datafill(point_styles.length),
+            radius: point_radius,
+            label: system_name,
+            backgroundColor: rgb,
+            borderColor: rgb,
+            pointStyle: point_styles,
+        });
+    }
+
+    // console.log(data);
+    return data;
+}
+
+let config = {
+    type: 'scatter',
+    data: build_graph_data(),
+    options: {
+        onClick: (e) => {
+            let activePoints = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false)
+
+            // make sure click was on an actual point
+            if (activePoints.length > 0) {
+                let context = activePoints[0];
+
+
+                let system_id = system_order[context.datasetIndex];
+                if (system_id == 'gas-boiler' || system_id == 'biomass-boiler') {
+                    open_child('system-' + system_id)
+                } else {
+                    let subsystem_id = full_order[system_id][context.index];
+                    open_child('system-' + system_id + '-' + subsystem_id);
+                }
+            }
+
+        },
+        elements: {
+            point: {
+                pointStyle: 'circle',
+            }
+        },
+        scales: {
+            x: {
+                type: 'linear',
+                position: 'bottom',
+                title: {
+                    display: true,
+                    text: 'Upfront Cost (£)',
+                    font: {
+                        size: 14,
+                        family: 'Sora'
+                    }
+                },
+                ticks: {
+                    font: {
+                        size: 12,
+                        family: 'Sora'
+                    }
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Yearly Emissions (kgCO2eq/yr)',
+                    font: {
+                        size: 14,
+                        family: 'Sora'
+                    }
+                },
+                ticks: {
+                    font: {
+                        size: 12,
+                        family: 'Sora'
+                    }
+                }
+            }
+        },
+        aspectRatio: 1,
+        plugins: {
+            legend: {
+                display: false,
+                labels: {
+                    font: {
+                        size: 20
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        // console.log(context);
+
+                        if (context.dataset.data.length == 1) {
+                            return `${display_names[context.dataset.label]}`
+                        } else {
+                            return `${display_names[context.dataset.label]}, ${display_names[Object.keys(output.systems[context.dataset.label])[context.dataIndex]]}`
+                        }
+
+                    }
+                },
+                usePointStyle: true
+            }
+        }
+    }
+};
+
+config.options.animation = {
+    numbers: { duration: 0 },
+    colors: {
+        type: "color",
+        duration: 1000,
+        from: "transparent",
+    }
+}
+
+
+
+// chart.options.onClick = (e) => {
+//     let activePoints = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false)
+
+//     // make sure click was on an actual point
+//     if (activePoints.length > 0) {
+//         let context = activePoints[0];
+
+
+//         let system_id = system_order[context.datasetIndex];
+//         if (system_id == 'gas-boiler' || system_id == 'biomass-boiler') {
+//             open_child('system-' + system_id)
+//         } else {
+//             let subsystem_id = full_order[system_id][context.index];
+//             open_child('system-' + system_id + '-' + subsystem_id);
+//         }
+//     }
+
+// };
+let chart = undefined;
+
+function load_output() {
+    document.getElementsByClassName('output-group')[0].classList.remove('hide');
+    build_system_menu();
+    document.getElementById("y-param").selectedIndex = 1;
+    const ctx = document.getElementById('chart').getContext('2d');
+    if (chart == undefined) {
+        chart = new Chart(ctx, config);
+    }
+    replace_graph_data();
+    set_system_visibility();
+}
+

@@ -1,0 +1,273 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Sora", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+#system-menu {
+  width: 100%;
+  max-height: calc(50% - 2rem);
+  margin: 0rem 0rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* justify-items: center; */
+  /* align-items: center; */
+  /* align-content: flex-start; */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.parent > .header {
+  font-size: 0.9rem;
+  font-weight: bold;
+  width: 100%;
+  border: 1px solid black;
+  border-top: none;
+  padding: 0.5rem 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: rgba(128, 128, 128, 0.24);
+}
+
+.parent > .header.border-bottom {
+  border-bottom: none;
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.child {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.children.hide {
+  display: none;
+}
+
+.child > .header {
+  font-size: 0.8rem;
+  font-weight: normal;
+  width: 100%;
+  border: 1px solid black;
+  border-top: none;
+  padding: 0.5rem 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: rgba(128, 128, 128, 0.07);
+}
+
+.name {
+  flex-grow: 1;
+}
+
+div.marker {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  border: 4px solid black;
+}
+
+img.marker {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.show {
+  height: 1rem;
+  margin: 0rem 0.5rem;
+}
+
+.expand {
+  padding: 0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.expand > div {
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 1px solid black;
+  border-left: none;
+  border-top: none;
+  transform-origin: center;
+  transform: rotate(-45deg) scaleY(-1);
+  transition: all 0.2s ease-in-out;
+}
+
+.parent.hide .expand > div {
+  transform: rotate(45deg);
+}
+
+.child.hide .expand > div {
+  transform: rotate(45deg);
+}
+
+.parent {
+  box-sizing: border-box;
+  font-size: 0.8rem;
+  font-weight: normal;
+  width: 100%;
+  /* border: 1px solid black;
+  border-top: none; */
+  padding: 0rem 0rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.children .info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  border-top: none;
+}
+
+.children .name-value {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
+  margin: 0rem;
+}
+
+.parent.hide > .children {
+  display: none;
+}
+
+.parent.hide > .info {
+  display: none;
+}
+
+.child.hide > .info {
+  display: none;
+}
+
+#system-menu a {
+  color: black;
+  text-decoration: none;
+}
+
+#system-menu a:hover {
+  text-decoration: underline;
+}
+
+/* Graph */
+
+.graph-container {
+  width: 100%;
+  height: fit-content;
+  margin: 0rem;
+  margin-bottom: 1rem;
+  padding: 0rem;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.graph {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+  width: calc(100% - 3rem);
+  /* border: 1px solid black; */
+}
+
+.graph-container .select-row {
+  width: 100%;
+  margin: 0rem 0rem;
+  padding: 0.5rem 1rem;
+  /* border: 1px solid var(--dark-accent); */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.graph-container select {
+  width: 9rem;
+  margin: 0rem 0.5rem;
+  padding: 0.5rem 0.1rem;
+  border: 1px solid var(--dark-accent);
+}
+
+.output-group {
+  width: min(25rem, 100% - 2rem);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 80rem) {
+  .output-group {
+    width: 50rem;
+    flex-direction: row;
+    height: min(35rem, 70%);
+    margin: 1rem;
+  }
+
+  .graph-container {
+    height: 100%;
+    width: 25rem;
+    max-height: 100%;
+    margin-right: 1rem;
+    margin-bottom: 0rem;
+  }
+
+  #system-menu {
+    max-height: 100%;
+    width: 25rem;
+    height: max-content;
+  }
+}

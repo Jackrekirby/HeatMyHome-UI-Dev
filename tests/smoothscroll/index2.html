@@ -1,0 +1,37 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="./universalsmoothscroll-min.js"></script>
+    <script src="./universalsmoothscroll-ease-functions-min.js"></script>
+    <link rel="stylesheet" href="index2.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="output-group">
+      <div class="graph-container">
+        <div class="select-row">
+          <select id="x-param" onchange="replace_graph_data();">
+            <option value="capital-expenditure">Upfront Cost</option>
+            <option value="operational-expenditure">Yearly Cost</option>
+            <option value="net-present-cost">Lifetime Cost</option>
+            <option value="operational-emissions">Yearly Emissions</option>
+          </select>
+          <select id="y-param" onchange="replace_graph_data();">
+            <option value="capital-expenditure">Upfront Cost</option>
+            <option value="operational-expenditure">Yearly Cost</option>
+            <option value="net-present-cost">Lifetime Cost</option>
+            <option value="operational-emissions">Yearly Emissions</option>
+          </select>
+        </div>
+        <div class="graph">
+          <canvas id="chart"></canvas>
+        </div>
+      </div>
+      <div id="system-menu"></div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

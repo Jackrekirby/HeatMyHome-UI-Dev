@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="simulate.css" />
     <link rel="stylesheet" href="inputs.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="./universalsmoothscroll-min.js"></script>
+    <script src="./universalsmoothscroll-ease-functions-min.js"></script>
+    <link rel="stylesheet" href="graphical-output.css" />
     <title>HeatMyHome | Simulate</title>
   </head>
   <body>
@@ -384,8 +388,30 @@
           Simulation complete. Results page coming soon. Click to dismiss.
         </div>
       </div>
-    </main>
 
+      <div class="output-group hide">
+        <div class="graph-container">
+          <div class="select-row">
+            <select id="x-param" onchange="replace_graph_data();">
+              <option value="capital-expenditure">Upfront Cost</option>
+              <option value="operational-expenditure">Yearly Cost</option>
+              <option value="net-present-cost">Lifetime Cost</option>
+              <option value="operational-emissions">Yearly Emissions</option>
+            </select>
+            <select id="y-param" onchange="replace_graph_data();">
+              <option value="capital-expenditure">Upfront Cost</option>
+              <option value="operational-expenditure">Yearly Cost</option>
+              <option value="net-present-cost">Lifetime Cost</option>
+              <option value="operational-emissions">Yearly Emissions</option>
+            </select>
+          </div>
+          <div class="graph">
+            <canvas id="chart"></canvas>
+          </div>
+        </div>
+        <div id="system-menu"></div>
+      </div>
+    </main>
     <footer class="flex">
       <div class="footer-contents flex row wrap">
         <div class="flex box">
