@@ -1295,8 +1295,9 @@ function build_graph_data() {
 
 function resize_markers() {
     let canvas = document.getElementById('chart');
+    let width = Number(canvas.style.width.substring(0, canvas.style.width.length - 2));
 
-    marker_img_size = Math.max(canvas.width / 60, 8);
+    marker_img_size = Math.max(width / 60, 8);
 
     // console.log(canvas.width, marker_img_size);
     for (let dataset of chart.data.datasets) {
@@ -1765,4 +1766,6 @@ function reportWindowSize() {
 }
 
 window.onresize = reportWindowSize;
+resize_markers();
+
 
