@@ -1147,6 +1147,7 @@ function replace_graph_data() {
         i += 1;
     }
 
+    apply_limits();
     chart.update();
 }
 
@@ -1176,21 +1177,34 @@ function apply_limits() {
         }
     }
 
+    const min_padding_map = {
+        'capital-expenditure': 1,
+        'operational-expenditure': 1,
+        'net-present-cost': 1,
+        'operational-emissions': 0.1,
+    }
+
+    let x_select = document.getElementById("x-param");
+    let x_param = x_select.options[x_select.selectedIndex].value;
+    let y_select = document.getElementById("y-param");
+    let y_param = y_select.options[y_select.selectedIndex].value;
+
+    let mindr = { x: min_padding_map[x_param], y: min_padding_map[y_param] };
+
     const dr = 0.1;
     let dx = limits.x.max - limits.x.min;
-    limits.x.max += Math.max(dx * dr, 1);
-    limits.x.min -= Math.max(dx * dr, 1);
+    limits.x.max += Math.max(dx * dr, mindr.x);
+    limits.x.min -= Math.max(dx * dr, mindr.x);
 
     let dy = limits.y.max - limits.y.min;
-    limits.y.max += Math.max(dy * dr, 1);
-    limits.y.min -= Math.max(dy * dr, 1);
+    limits.y.max += Math.max(dy * dr, mindr.y);
+    limits.y.min -= Math.max(dy * dr, mindr.y);
 
-    limits.x.max = Math.ceil(limits.x.max);
-    limits.x.min = Math.floor(limits.x.min);
-    limits.y.max = Math.ceil(limits.y.max);
-    limits.y.min = Math.floor(limits.y.min);
+    limits.x.max = Math.ceil(limits.x.max / mindr.x) * mindr.x;
+    limits.x.min = Math.floor(limits.x.min / mindr.x) * mindr.x;
+    limits.y.max = Math.ceil(limits.y.max / mindr.y) * mindr.y;
+    limits.y.min = Math.floor(limits.y.min / mindr.y) * mindr.y;
 
-    console.log(limits)
     chart.options.plugins.zoom.limits = limits;
 
     chart.options.scales.x.min = limits.x.min;
