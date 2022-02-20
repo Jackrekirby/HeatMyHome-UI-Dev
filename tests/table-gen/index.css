@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Sora", sans-serif;
+}
+
+body {
+  margin: 4px;
+}
+
+td {
+  border: 1px solid black;
+  padding: 0px 2px;
+}
+tr {
+  border: 1px solid black;
+}
+
+th {
+  border: 1px solid black;
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+table {
+  border: 1px solid black;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+  border-collapse: collapse;
+  width: min(60rem, 100%);
+}
+
+.tables {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+@media screen and (max-width: 31rem) {
+  td.heat-tech {
+    position: relative;
+    min-width: 2.5rem;
+    height: 6rem;
+    font-size: 0.9rem;
+  }
+
+  th {
+    position: relative;
+    height: 8rem;
+    min-width: 2.5rem;
+  }
+
+  th > div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: center;
+    transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    width: 8rem;
+    font-size: 0.9rem;
+  }
+
+  .ancillery {
+    font-size: 0.8rem;
+    width: 4rem;
+  }
+
+  td > div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: center;
+    transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    width: 8rem;
+  }
+
+  table {
+    font-size: 0.9rem;
+    width: calc(100%);
+  }
+}
+
+.spacer {
+  height: 1rem;
+}

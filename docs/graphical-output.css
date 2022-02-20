@@ -226,6 +226,59 @@ img.marker {
   border: 1px solid var(--dark-accent);
 }
 
+.guide {
+  margin: 0rem 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #00aeff;
+  color: #00aeff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.guide:hover {
+  background-color: #00aeff;
+  color: white;
+}
+
+.output-info-toggle {
+  position: relative;
+  width: fit-content;
+}
+
+.output-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 2rem);
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #00aeff;
+  padding: 1rem;
+  font-size: 0.8rem;
+  margin: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+}
+
+.output-info.hide {
+  display: none;
+}
+
+.inner-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 35rem;
+  height: fit-content;
+  border: 2px solid #00aeff;
+  padding: 2rem;
+  cursor: pointer;
+}
+
 .output-group {
   width: min(25rem, 100% - 4px);
   height: fit-content;
@@ -261,5 +314,18 @@ img.marker {
     /* max-height: 30rem; */
     width: 25rem;
     height: max-content;
+  }
+}
+
+@media screen and (max-width: 80rem) {
+  .output-info {
+    font-size: 0.8rem;
+    padding: 0rem;
+    justify-content: flex-start;
+    width: min(25rem, 100% - 4px);
+  }
+
+  .inner-info-container {
+    padding: 1rem;
   }
 }

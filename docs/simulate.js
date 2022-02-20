@@ -839,6 +839,8 @@ function build_parent_header(system_name, color) {
     let header_div = document.createElement('div');
     header_div.classList.add('header');
 
+    header_div.addEventListener('click', () => { toggle_expand_parent_direct(header_div) });
+
     if (system_name == system_order[system_order.length - 1]) {
         header_div.classList.add('border-bottom');
     }
@@ -854,7 +856,8 @@ function build_parent_header(system_name, color) {
     let visible_img = document.createElement('img');
     visible_img.src = "./assets/visible.png";
     visible_img.classList.add('show');
-    visible_img.addEventListener('click', () => {
+    visible_img.addEventListener('click', (event) => {
+        event.stopPropagation();
         if (visible_img.src.endsWith("hidden.png")) {
             visible_img.src = "./assets/visible.png";
             // console.log("show: ", visible_img.parentElement.parentElement.id);
@@ -879,7 +882,7 @@ function build_parent_header(system_name, color) {
 
     let expand_div = document.createElement('div');
     expand_div.classList.add('expand');
-    expand_div.addEventListener('click', () => toggle_expand_parent(expand_div));
+    // expand_div.addEventListener('click', () => toggle_expand_parent(expand_div));
 
     let expand_inner_div = document.createElement('div');
     expand_inner_div.classList.add();
@@ -895,6 +898,7 @@ function build_parent_header(system_name, color) {
 function build_child_header(subsystem_name, shape, color) {
     let header_div = document.createElement('div');
     header_div.classList.add('header');
+    header_div.addEventListener('click', (event) => { toggle_expand_child_direct(header_div) });
 
     let marker_img = document.createElement('img');
     marker_img.src = `./assets/${shape}-${color}.png`;
@@ -906,7 +910,7 @@ function build_child_header(subsystem_name, shape, color) {
 
     let expand_div = document.createElement('div');
     expand_div.classList.add('expand');
-    expand_div.addEventListener('click', () => toggle_expand_child(expand_div));
+    // expand_div.addEventListener('click', () => toggle_expand_child(expand_div));
 
     let expand_inner_div = document.createElement('div');
     expand_inner_div.classList.add();
@@ -1027,6 +1031,16 @@ function hide_all_menu_items() {
     }
 }
 
+function toggle_expand_parent_direct(header_div) {
+    let parent = header_div.parentElement;
+    if (parent.classList.contains('hide')) {
+        hide_all_menu_items();
+        parent.classList.remove('hide');
+    } else {
+        parent.classList.add('hide');
+    }
+}
+
 function toggle_expand_parent(expand_div) {
     let parent = expand_div.parentElement.parentElement;
 
@@ -1035,6 +1049,22 @@ function toggle_expand_parent(expand_div) {
         parent.classList.remove('hide');
     } else {
         parent.classList.add('hide');
+    }
+}
+
+function toggle_expand_child_direct(header_div) {
+    let child = header_div.parentElement;
+
+    if (child.classList.contains('hide')) {
+        let children = child.parentElement;
+        let childs = children.getElementsByClassName('child');
+        for (let c of childs) {
+            c.classList.add('hide');
+        }
+
+        child.classList.remove('hide');
+    } else {
+        child.classList.add('hide');
     }
 }
 
@@ -1065,7 +1095,7 @@ function open_child(id) {
 }
 
 // GRAPH
-
+let marker_img_size = 12;
 let marker_names = ['cross', 'diamond', 'circle', 'square', 'uparrow', 'downarrow', 'star'];
 let marker_images = {
     'red': load_images('red'),
@@ -1095,8 +1125,16 @@ const divisor_map = {
 let point_radius = 6;
 function load_images(color) {
     let marker_images = {};
+    //let marker_names = ['cross', 'diamond', 'circle', 'square', 'uparrow', 'downarrow', 'star'];
     for (let [i, name] of marker_names.entries()) {
-        marker_images[name] = new Image(8, 8);
+        if (name == 'cross') {
+            marker_images[name] = new Image(marker_img_size * 1.5, marker_img_size * 1.5);
+        } else if (name == 'star') {
+            marker_images[name] = new Image(marker_img_size * 1.5, marker_img_size * 1.5);
+        } else {
+            marker_images[name] = new Image(marker_img_size, marker_img_size);
+        }
+
         marker_images[name].src = `./assets/${name}-${color}.png`
     }
     return marker_images;
@@ -1229,7 +1267,6 @@ function build_graph_data() {
         let color = system_colors[system_name];
         let rgb = colors[color];
         let markers = system_markers[system_name];
-        let marker = undefined;
 
         let point_styles = [];
         if (!Array.isArray(markers)) {
@@ -1256,7 +1293,40 @@ function build_graph_data() {
     return data;
 }
 
+function resize_markers() {
+    let canvas = document.getElementById('chart');
 
+    marker_img_size = Math.max(canvas.width / 60, 8);
+
+    // console.log(canvas.width, marker_img_size);
+    for (let dataset of chart.data.datasets) {
+        let system_name = dataset.label;
+        let color = system_colors[system_name];
+        let markers = system_markers[system_name];
+
+
+        marker_images = {
+            'red': load_images('red'),
+            'orange': load_images('orange'),
+            'green': load_images('green'),
+            'cyan': load_images('cyan'),
+            'blue': load_images('blue'),
+            'purple': load_images('purple'),
+            'black': load_images('black')
+        };
+
+        let point_styles = [];
+        if (!Array.isArray(markers)) {
+            for (let [subsystem_name, marker] of Object.entries(markers)) {
+                point_styles.push(marker_images[color][marker])
+            }
+        } else {
+            point_styles.push(marker_images[color][markers[0]]);
+        }
+        dataset.pointStyle = point_styles;
+    }
+    chart.update();
+}
 
 let config = {
     type: 'scatter',
@@ -1411,6 +1481,16 @@ function load_output() {
     set_system_visibility();
     apply_limits();
     chart.update();
+}
+
+function guide_state(doHide) {
+    let guide = document.getElementsByClassName('output-info')[0];
+    if (doHide) {
+        guide.classList.add('hide');
+    } else {
+        guide.classList.remove('hide');
+    }
+
 }
 
 output = {
@@ -1679,4 +1759,10 @@ output = {
     }
 }
 load_output();
+
+function reportWindowSize() {
+    resize_markers();
+}
+
+window.onresize = reportWindowSize;
 
