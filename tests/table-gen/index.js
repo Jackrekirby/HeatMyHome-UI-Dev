@@ -275,11 +275,11 @@ const system_order = [
 ];
 
 const system_names = {
-    'electric-boiler': 'Electric Boiler',
-    'air-source-heat-pump': 'Air Source<br>Heat Pump',
-    'ground-source-heat-pump': 'Ground Source<br>Heat Pump',
-    'hydrogen-boiler': 'Hydrogen<br>Boiler',
-    'hydrogen-fuel-cell': 'Hydrogen<br>Fuel Cell',
+    'electric-boiler': 'EB',
+    'air-source-heat-pump': 'ASHP',
+    'ground-source-heat-pump': 'GSHP',
+    'hydrogen-boiler': 'H<sub>2</sub>B',
+    'hydrogen-fuel-cell': 'H<sub>2</sub>FC',
     'biomass-boiler': 'Biomass Boiler',
     'gas-boiler': 'Gas Boiler',
 };
@@ -295,11 +295,19 @@ const solar_order = [
     'photovoltaic-thermal-hybrid',
 ]
 
+function money_fmt(v) {
+    if (v > 1000) {
+        return `${Math.round(v / 1000)}k`
+    } else {
+        return Math.round(v);
+    }
+}
+
 const info_format = {
     'thermal-energy-storage-volume': (v) => { return v },
-    'operational-expenditure': (v) => { return Math.round(v) },
-    'capital-expenditure': (v) => { return Math.round(v) },
-    'net-present-cost': (v) => { return Math.round(v) },
+    'capital-expenditure': (v) => { return money_fmt(v) },
+    'operational-expenditure': (v) => { return money_fmt(v) },
+    'net-present-cost': (v) => { return money_fmt(v) },
     'operational-emissions': (v) => { return Math.round(v / 1000) },
 }
 
@@ -318,14 +326,22 @@ const full_order = {
 
 
 function build_main_table() {
-    const table_headers = [
+    const table_headers2 = [
         "Heating Technology",
-        "Solar<br>Ancilleries",
         "Water Tank<br>Volume (m<sup>3</sup>)",
         "Upfront Cost<br>(£)",
         "Yearly Cost<br>(£)",
         "Lifetime Cost<br>(£)",
         "Yearly Emissions<br>(kgCO<sub>2</sub>eq)",
+    ];
+
+    const table_headers = [
+        "System",
+        "m<sup>3</sup>",
+        "£",
+        "£/yr",
+        "£/life",
+        "CO<sub>2</sub>",
     ];
 
     let table = document.getElementById('output-main-table');
@@ -336,8 +352,8 @@ function build_main_table() {
             console.log(header);
 
             let th = document.createElement('th');
-            if (header == "Solar<br>Ancilleries") {
-                th.colSpan = 2;
+            if (header == table_headers[0]) {
+                th.colSpan = 3;
             }
             let div = document.createElement('div');
             div.innerHTML = header;
@@ -356,81 +372,93 @@ function build_main_table() {
     for (let system_name of system_list) {
         for (let subsystem_name of solar_order) {
             let tr = document.createElement('tr');
-            if (subsystem_name == solar_order[0]) {
+            {
                 let td = document.createElement('td');
-                td.classList.add('heat-tech');
-                td.rowSpan = 7;
-                let div = document.createElement('div');
-                div.innerHTML = system_names[system_name];
-                td.appendChild(div);
+                td.classList.add('border-left');
+                td.rowSpan = 1;
+                // let div = document.createElement('div');
+                td.innerHTML = system_names[system_name];
+                // td.appendChild(div);
                 tr.appendChild(td);
             }
 
             let system_properties = output.systems[system_name][subsystem_name];
             console.log(system_properties);
 
+            function build_dummy_td(tr, anc) {
+                let td = document.createElement('td');
+                if (anc) {
+                    td.classList.add('border-right');
+                }
+
+                tr.appendChild(td);
+            }
+
             let pv_size = system_properties['pv-size'];
             let sts = system_properties['solar-thermal-size'];
             switch (subsystem_name) {
                 case 'none': {
                     let td = document.createElement('td');
-                    td.classList.add('ancillery');
+                    // td.classList.add('ancillery');
                     td.colSpan = 2;
                     td.innerHTML = 'None';
+                    td.classList.add('border-right');
                     tr.appendChild(td);
                 }
                     break;
                 case 'photovoltaic': {
                     let td = document.createElement('td');
-                    td.classList.add('ancillery');
+                    // td.classList.add('ancillery');
+                    td.classList.add('border-right');
                     td.colSpan = 2;
-                    td.innerHTML = `${pv_size}m<sup>2</sup> PV`;
+                    td.innerHTML = `PV<sub>${pv_size}</sub>`;
                     tr.appendChild(td);
                 }
                     break;
                 case 'flat-plate': {
                     let td = document.createElement('td');
-                    td.classList.add('ancillery');
+                    td.classList.add('border-right');
                     td.colSpan = 2;
-                    td.innerHTML = `${sts}m<sup>2</sup> FP`;
+                    td.innerHTML = `FP<sub>${sts}</sub>`;
                     tr.appendChild(td);
                 }
                     break;
                 case 'evacuated-tube': {
                     let td = document.createElement('td');
-                    td.classList.add('ancillery');
+                    td.classList.add('border-right');
                     td.colSpan = 2;
-                    td.innerHTML = `${sts}m<sup>2</sup> ET`;
+                    td.innerHTML = `ET<sub>${sts}</sub>`;
                     tr.appendChild(td);
                 }
                     break;
                 case 'flat-plate-and-photovoltaic': {
                     let td = document.createElement('td');
-                    td.classList.add('ancillery');
-                    td.innerHTML = `${pv_size}m<sup>2</sup> PV`;
+                    // td.classList.add('ancillery');
+                    td.innerHTML = `PV<sub>${pv_size}</sub>`;
                     tr.appendChild(td);
                     td = document.createElement('td');
-                    td.classList.add('ancillery');
-                    td.innerHTML = `${sts}m<sup>2</sup> FP`;
+                    td.classList.add('border-right');
+                    td.innerHTML = `FP<sub>${sts}</sub>`;
                     tr.appendChild(td);
                 }
                     break;
                 case 'evacuated-tube-and-photovoltaic': {
                     let td = document.createElement('td');
-                    td.classList.add('ancillery');
-                    td.innerHTML = `${pv_size}m<sup>2</sup> PV`;
+                    // td.classList.add('ancillery');
+                    td.innerHTML = `PV<sub>${pv_size}</sub>`;
                     tr.appendChild(td);
                     td = document.createElement('td');
-                    td.classList.add('ancillery');
-                    td.innerHTML = `${sts}m<sup>2</sup> ET`;
+                    td.classList.add('border-right');
+                    td.innerHTML = `ET<sub>${sts}</sub>`;
                     tr.appendChild(td);
                 }
                     break;
                 case 'photovoltaic-thermal-hybrid': {
                     let td = document.createElement('td');
-                    td.classList.add('ancillery');
+                    td.classList.add('border-right');
+                    // td.classList.add('ancillery');
                     td.colSpan = 2;
-                    td.innerHTML = `${pv_size}m<sup>2</sup> PVT`;
+                    td.innerHTML = `PVT<sub>${pv_size}</sub>`;
                     tr.appendChild(td);
                 }
                     break;
@@ -460,21 +488,21 @@ function build_hydrogen_table() {
     let table = document.getElementById('output-main-table');
     // table.innerHTML = '';
 
-    {
-        let tr = document.createElement('tr');
-        for (let header of table_headers) {
-            console.log(header);
-            let th = document.createElement('th');
-            if (header == "Hydrogen<br>Source") {
-                th.colSpan = 3;
-            }
-            let div = document.createElement('div');
-            div.innerHTML = header;
-            th.appendChild(div);
-            tr.appendChild(th);
-        }
-        table.appendChild(tr);
-    }
+    // {
+    //     let tr = document.createElement('tr');
+    //     for (let header of table_headers) {
+    //         console.log(header);
+    //         let th = document.createElement('th');
+    //         if (header == "Hydrogen<br>Source") {
+    //             th.colSpan = 2;
+    //         }
+    //         let div = document.createElement('div');
+    //         div.innerHTML = header;
+    //         th.appendChild(div);
+    //         tr.appendChild(th);
+    //     }
+    //     table.appendChild(tr);
+    // }
 
     let system_list = [
         'hydrogen-boiler',
@@ -490,22 +518,22 @@ function build_hydrogen_table() {
     }
 
     const h2_format = {
-        'operational-expenditure': (v) => { return Math.round(v) },
-        'capital-expenditure': (v) => { return Math.round(v) },
-        'net-present-cost': (v) => { return Math.round(v) },
+        'capital-expenditure': (v) => { return money_fmt(v) },
+        'operational-expenditure': (v) => { return money_fmt(v) },
+        'net-present-cost': (v) => { return money_fmt(v) },
         'operational-emissions': (v) => { return Math.round(v / 1000) },
     }
 
     for (let system_name of system_list) {
         for (let subsystem_name of hydrogen_order) {
             let tr = document.createElement('tr');
-            if (subsystem_name == hydrogen_order[0]) {
+            {
                 let td = document.createElement('td');
-                td.classList.add('heat-tech');
-                td.rowSpan = 3;
-                let div = document.createElement('div');
-                div.innerHTML = system_names[system_name];
-                td.appendChild(div);
+                td.classList.add('border-left');
+                td.rowSpan = 1;
+                // let div = document.createElement('div');
+                td.innerHTML = system_names[system_name];
+                // td.appendChild(div);
                 tr.appendChild(td);
             }
 
@@ -514,7 +542,12 @@ function build_hydrogen_table() {
 
             let td = document.createElement('td');
             td.innerHTML = hydrogen_display_names[subsystem_name];
-            td.colSpan = 3;
+            td.classList.add('border-right');
+            td.colSpan = 2;
+            tr.appendChild(td);
+
+            td = document.createElement('td');
+            td.innerHTML = "N/A";
             tr.appendChild(td);
 
 
@@ -539,21 +572,21 @@ function build_other_table() {
     ];
 
     let table = document.getElementById('output-main-table');
-    {
-        let tr = document.createElement('tr');
-        for (let header of table_headers) {
-            console.log(header);
-            let th = document.createElement('th');
-            if (header == table_headers[0]) {
-                th.colSpan = 4;
-            }
-            let div = document.createElement('div');
-            div.innerHTML = header;
-            th.appendChild(div);
-            tr.appendChild(th);
-        }
-        table.appendChild(tr);
-    }
+    // {
+    //     let tr = document.createElement('tr');
+    //     for (let header of table_headers) {
+    //         console.log(header);
+    //         let th = document.createElement('th');
+    //         if (header == table_headers[0]) {
+    //             th.colSpan = 4;
+    //         }
+    //         let div = document.createElement('div');
+    //         div.innerHTML = header;
+    //         th.appendChild(div);
+    //         tr.appendChild(th);
+    //     }
+    //     table.appendChild(tr);
+    // }
 
     let system_list = [
         'biomass-boiler',
@@ -561,20 +594,25 @@ function build_other_table() {
     ];
 
     const value_format = {
-        'operational-expenditure': (v) => { return Math.round(v) },
-        'capital-expenditure': (v) => { return Math.round(v) },
-        'net-present-cost': (v) => { return Math.round(v) },
+        'capital-expenditure': (v) => { return money_fmt(v) },
+        'operational-expenditure': (v) => { return money_fmt(v) },
+        'net-present-cost': (v) => { return money_fmt(v) },
         'operational-emissions': (v) => { return Math.round(v / 1000) },
     }
 
     for (let system_name of system_list) {
         let tr = document.createElement('tr');
-        {
-            let td = document.createElement('td');
-            td.colSpan = 4;
-            td.innerHTML = system_names[system_name];
-            tr.appendChild(td);
-        }
+
+        let td = document.createElement('td');
+        td.colSpan = 3;
+        td.innerHTML = system_names[system_name];
+        td.classList.add('border-right', 'border-left');
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.innerHTML = "N/A";
+        tr.appendChild(td);
+
 
         let system_properties = output.systems[system_name];
         console.log(system_properties);
