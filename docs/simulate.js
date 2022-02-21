@@ -127,6 +127,7 @@ click_dismiss();
 
 // update epc url links
 update_epc_urls();
+update_neighbours_epc_urls();
 
 // reset run-on select, must add delay otherwise autofill fills old value after reset.
 setTimeout(() => {
@@ -309,24 +310,26 @@ async function onchange_neighbours_address() {
     let epc_box_element = document.getElementById("input-box-neighbour-epc-space-heating");
     let floor_area_box_element = document.getElementById("input-box-neighbour-floor-area");
     let searching = document.getElementById("neighbour-epc-searching");
-    let warn_no_data = document.getElementById('warn-neighbour-no-data');
 
     clear_value('neighbour-epc-space-heating');
     clear_value('neighbour-floor-area');
     clear_element_validation(document.getElementById('input-neighbour-epc-space-heating'));
     clear_element_validation(document.getElementById('input-neighbour-floor-area'));
 
+    hide_ids(['warn-neighbour-no-data', 'warn-neighbour-address-unknown', 'warn-neighbour-address-connection']);
+
     switch (address_element.value) {
         case "Select Address":
             clear_element_validation(address_element);
-            hide_elements([epc_box_element, floor_area_box_element, warn_no_data]);
+            hide_elements([epc_box_element, floor_area_box_element]);
             break;
         default:
             validate_element(address_element);
-            hide_elements([epc_box_element, floor_area_box_element, warn_no_data]);
+            hide_elements([epc_box_element, floor_area_box_element]);
             unhide_elements([searching]);
             await get_neighbour_epc_data();
     }
+    update_neighbours_epc_urls();
 }
 
 function fill_neighbour_address() {
@@ -364,7 +367,7 @@ function open_neighbour_menu() {
     fill_neighbour_address();
     document.getElementById("input-postcode").parentElement.getElementsByTagName('p')[0].innerText = 'Your Postcode';
     unhide_ids(['neighbour-container', 'neighbour-title']);
-    hide_ids(['warn-address-not-listed', 'warn-address-missing-data']);
+    // hide_ids(['warn-address-not-listed', 'warn-address-missing-data']);
 }
 
 function submit_simulation() {
@@ -409,6 +412,7 @@ async function submit_simulation_server() {
         if (json['status'] == 200) {
             console.log('simulator-api-json:', json);
             unhide_ids(['submit-complete']);
+            hide_ids(['guide']);
             output = json['result'];
             load_output();
         } else {
@@ -432,9 +436,11 @@ async function submit_simulation_server() {
 function check_submit() {
     let submit = true;
     for (let pid of input_id_list) {
-        let element = document.getElementById('input-' + pid);
-        if (!element.classList.contains("valid")) {
-            submit = false;
+        if (pid != 'neighbour-postcode') {
+            let element = document.getElementById('input-' + pid);
+            if (!element.classList.contains("valid")) {
+                submit = false;
+            }
         }
     }
     if (submit != submit_status) {
@@ -552,23 +558,23 @@ async function get_epc_data() {
                 You may wish to adjust the parameter manually. Click to dismiss.`
 
                 document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
-                does not contain a floor area estimate. Enter it manually
-                or select a <p class="input-button" onclick="open_neighbour_menu();">neighbour's address</p> whose home is similar in size to yours.`;
+                does not contain a floor area estimate. Enter it manually or select a neighbour's address whose home is similar in size to yours.`;
                 unhide_ids(['help-address', 'warn-address-missing-data', 'input-box-epc-space-heating']);
+                open_neighbour_menu();
             } else if (!result['space-heating'] && result['floor-area']) {
                 document.getElementById('help-address').innerHTML = `Your address was used to fill out the floor area parameter
                 from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>. 
                 You may wish to adjust the parameter manually. Click to dismiss.`
 
                 document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
-                does not contain a space heating estimate. Enter it manually
-                or select a <p class="input-button" onclick="open_neighbour_menu();">neighbour's address</p> whose home has similar heating and hot water requirements to yours.`;
+                does not contain a space heating estimate. Enter it manually or select a neighbour's address whose home has similar heating and hot water requirements to yours.`;
                 unhide_ids(['help-address', 'warn-address-missing-data', 'input-box-floor-area']);
+                open_neighbour_menu();
             } else { // neither
                 document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
-                does not contain a space heating or floor area estimate. Enter them manually
-                or select a <p class="input-button" onclick="open_neighbour_menu();">neighbour's address</p> whose home is of similar size and has similar heating and hot water requirements to yours.`;
+                does not contain a space heating or floor area estimate. Enter them manually or select a neighbour's address whose home is of similar size and has similar heating and hot water requirements to yours.`;
                 unhide_ids(['warn-address-missing-data', 'input-box-floor-area']);
+                open_neighbour_menu();
             }
             hide_ids(['epc-searching', 'warn-address-not-listed']);
             unhide_ids(['input-box-epc-space-heating', 'input-box-floor-area']);
@@ -629,15 +635,15 @@ async function get_neighbour_epc_data() {
             }
 
             if (!have_valid_space_heating && !have_valid_floor_area && !result['space-heating'] && !result['floor-area']) {
-                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
                     does not contain a space heating or floor estimate. Select a different neighbour.`;
                 warn_no_data.classList.remove('hide');
             } else if (!have_valid_space_heating && !result['space-heating']) {
-                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
                     does not contain a space heating estimate. Select a different neighbour.`;
                 warn_no_data.classList.remove('hide');
             } else if (!have_valid_floor_area && !result['floor-area']) {
-                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
                     does not contain a floor area estimate. Select a different neighbour.`;
                 warn_no_data.classList.remove('hide');
             }
@@ -706,6 +712,7 @@ function get_check_input_fnc(pid, apply_transform) {
                 } else if (epc_api_error) {
                     unhide_ids(['warn-neighbour-postcode-epc-api']);
                 }
+                update_neighbours_epc_urls();
             };
             break;
         default:
@@ -873,10 +880,6 @@ async function get_neighbours_address_certificates(postcode) {
                 opt1.text = "Select Address";
                 opt1.classList.add("color-neutral");
                 address_element.appendChild(opt1);
-                let opt2 = document.createElement('option');
-                opt2.text = "Address Not Listed";
-                opt2.classList.add("color-warn");
-                address_element.appendChild(opt2);
 
                 for (let [address, certificate] of json.result) {
                     //console.log(address, certificate);
@@ -969,6 +972,30 @@ function update_epc_urls() {
         }
     }
 }
+
+function update_neighbours_epc_urls() {
+    // GOV EPC, postcode-specific EPC, address-specific EPC
+    let epc_urls = document.getElementsByClassName('epc-url-neighbour');
+    let postcode_element = document.getElementById('input-neighbour-postcode');
+    let select = document.getElementById('input-neighbour-address');
+
+    if (select.selectedIndex > 0) {
+        let certificate = select.options[select.selectedIndex].value;
+        // console.log('certificate', certificate);
+        for (let url of epc_urls) {
+            url.href = 'https://find-energy-certificate.service.gov.uk/energy-certificate/' + certificate;
+        }
+    } else if (postcode_element.classList.contains("valid")) {
+        for (let url of epc_urls) {
+            url.href = 'https://find-energy-certificate.service.gov.uk/find-a-certificate/search-by-postcode?postcode=' + postcode_element.value;
+        }
+    } else {
+        for (let url of epc_urls) {
+            url.href = 'https://www.gov.uk/find-energy-certificate';
+        }
+    }
+}
+
 
 // GRAPHICAL OUTPUT MENU
 
@@ -1136,8 +1163,11 @@ function build_parent_header(system_name, color) {
     marker_div.classList.add('marker');
 
     let name_div = document.createElement('div');
-    name_div.innerHTML = `<a href="" target="_blank" rel="noopener noreferrer">${display_names[system_name]}</a>`;
+    name_div.innerHTML = `<a href="education/heating-technologies.html#${system_name}" target="_blank" rel="noopener noreferrer">${display_names[system_name]}</a>`;
     name_div.classList.add('name');
+    name_div.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
 
     let visible_img = document.createElement('img');
     visible_img.src = "./assets/visible.png";
@@ -1757,7 +1787,8 @@ let chart = undefined;
 
 
 function load_output() {
-    document.getElementsByClassName('output-info-toggle')[0].classList.remove('hide');
+    console.log('load_output');
+    unhide_ids(['output-info-toggle', 'output-info']);
     build_system_menu();
     document.getElementById("y-param").selectedIndex = 1;
     const ctx = document.getElementById('chart').getContext('2d');
@@ -1771,26 +1802,23 @@ function load_output() {
 }
 
 function guide_state(doHide) {
-    let guide = document.getElementsByClassName('output-info')[0];
     if (doHide) {
         guide.classList.add('hide');
+        unhide_ids(['guide']);
+        hide_ids(['output-info', 'submit-complete'])
     } else {
-        guide.classList.remove('hide');
+        unhide_ids(['output-info']);
     }
-
 }
 
 function reportWindowSize() {
-    let output_container = document.getElementsByClassName('output-info-toggle')[0];
-    if (!output_container.classList.contains('hide')) {
+    if (!document.getElementById('output-info-toggle').classList.contains('hide')) {
         resize_markers();
     }
 }
 
 window.onresize = reportWindowSize;
-if (!document.getElementsByClassName('output-info-toggle')[0].classList.contains('hide')) {
-    resize_markers();
-}
+reportWindowSize();
 
 // output = {
 //     "demand": {

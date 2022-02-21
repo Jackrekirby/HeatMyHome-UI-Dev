@@ -265,13 +265,13 @@
               class="msg-box warn hide click-dismiss"
             >
               Neighbour's postcode is valid but could not connect to EPC API.
-              Please look up your
+              Please look up your neighbour's
               <a
                 href=""
                 target="_blank"
                 rel="noopener noreferrer"
-                class="epc-url"
-                >neighbour's EPC certificate</a
+                class="epc-url-neighbour"
+                >EPC certificate</a
               >
               manually to find their EPC space heating and floor area
               parameters. Click to dismiss.
@@ -304,13 +304,13 @@
               id="warn-neighbour-address-connection"
               class="msg-box warn hide click-dismiss"
             >
-              Could not connect to EPC API. Please look up your
+              Could not connect to EPC API. Please look up your neighbour's
               <a
                 href=""
                 target="_blank"
                 rel="noopener noreferrer"
-                class="epc-url"
-                >neighbour's EPC certificate</a
+                class="epc-url-neighbour"
+                >EPC certificate</a
               >
               manually to find their EPC space heating and floor area
               parameters, or try again later. Click to dismiss.
@@ -320,12 +320,13 @@
               class="msg-box warn hide click-dismiss"
             >
               Connected to EPC API but response invalid. Please look up your
+              neighbour's
               <a
                 href=""
                 target="_blank"
                 rel="noopener noreferrer"
-                class="epc-url"
-                >neighbour's EPC certificate</a
+                class="epc-url-neighbour"
+                >EPC certificate</a
               >
               manually to find their EPC space heating and floor area
               parameters, select a different neighbour or try again later. Click
@@ -338,7 +339,7 @@
               Neighbour's
               <a
                 href=""
-                class="epc-url"
+                class="epc-url-neighbour"
                 target="_blank"
                 rel="noopener noreferrer"
                 >EPC Certificate</a
@@ -625,15 +626,14 @@
           <a href="">contact us</a>
           to report the problem.
         </div>
-        <div
-          id="submit-complete"
-          class="msg-box info hide"
-          onclick="guide_state(false);"
-        >
-          Simulation complete. Click here to open the guide.
+        <div id="submit-complete" class="msg-box info hide">
+          Simulation complete.
+        </div>
+        <div id="guide" class="msg-box info hide" onclick="guide_state(false);">
+          Results Page Guide
         </div>
       </div>
-      <div class="output-info-toggle hide">
+      <div id="output-info-toggle" class="hide">
         <div class="output-group">
           <div class="graph-container">
             <div class="select-row">
@@ -657,9 +657,15 @@
           </div>
           <div id="system-menu"></div>
         </div>
-        <div class="output-info">
-          <div class="inner-info-container" onclick="guide_state(true);">
-            <h2>Results Page Guide</h2>
+        <div id="output-info">
+          <div class="inner-info-container">
+            <div class="info-row">
+              <h2>Results Page Guide</h2>
+              <div class="checkbox" onclick="guide_state(true);">
+                <div class="crossmark"></div>
+                <div class="crossmark other"></div>
+              </div>
+            </div>
             <div>
               <p>
                 The simulator outputs a lot of data which can be overwhelming.

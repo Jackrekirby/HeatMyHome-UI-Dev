@@ -542,6 +542,18 @@ input.hide-spinner[type="number"] {
   display: none;
 }
 
+#guide {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  transition: 0.2s background-color ease-in-out, 0.2s color ease-in-out;
+}
+
+#guide:hover {
+  background-color: var(--info-color);
+  color: white;
+}
+
 .input-button {
   width: fit-content;
   display: inline-block;
