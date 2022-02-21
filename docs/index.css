@@ -46,11 +46,7 @@ main {
   border-top-right-radius: 1rem;
 }
 
-@media screen and (max-width: 90rem) {
-  .mobile-col {
-    flex-direction: column;
-  }
-
+@media screen and (max-width: 85rem) {
   #home-discover img {
     width: 25rem;
     margin-top: 3rem;
@@ -70,10 +66,17 @@ main {
     max-width: 30rem;
     margin: 0.5rem;
     padding: 0.5rem;
+    padding-right: 1.5rem;
   }
 }
 
-@media screen and (max-width: 50rem) {
+@media screen and (max-width: 60rem) {
+  .mobile-col {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 30rem) {
   #home-discover a {
     font-size: 1rem;
     padding: 0.5rem 1rem;
