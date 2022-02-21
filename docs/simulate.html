@@ -79,7 +79,8 @@
               target="_blank"
               rel="noopener noreferrer"
               >postcode API</a
-            >. Postcode may be invalid or not in the UK.
+            >. Postcode may be invalid or not in the UK. Please try a different
+            postcode.
           </div>
           <div
             id="warn-postcode-epc-api"
@@ -103,7 +104,8 @@
               target="_blank"
               rel="noopener noreferrer"
               >postcode API</a
-            >. Check your internet connection.
+            >. Check your internet connection. The API may be down, try again
+            later.
           </div>
           <div
             id="warn-postcode-epc-connection"
@@ -142,8 +144,11 @@
             Address needed for your home's
             <a href="" class="epc-url" target="_blank" rel="noopener noreferrer"
               >EPC certificate</a
-            >. Enter details manually or select a neighbour's address whose home
-            is similarly sized to yours.
+            >. Enter details manually or select a
+            <div class="input-button" onclick="open_neighbour_menu();">
+              neighbour's address
+            </div>
+            whose home is similar in build and size to yours.
           </div>
           <div
             id="warn-address-connection"
@@ -165,6 +170,229 @@
             <a href="" class="epc-url" target="_blank" rel="noopener noreferrer"
               >EPC certificate</a
             >. You may wish to adjust the parameters manually. Click to dismiss.
+          </div>
+          <div id="warn-address-missing-data" class="msg-box warn hide">
+            Your home's
+            <a href="" class="epc-url" target="_blank" rel="noopener noreferrer"
+              >EPC certificate</a
+            >
+            does not contain a floor area estimate. Enter details
+            <div class="input-button" onclick="enter_epc_manual();">
+              manually
+            </div>
+            or select a
+            <div class="input-button" onclick="open_neighbour_menu();">
+              neighbour's address
+            </div>
+            whose home is similar in build and size to yours.
+          </div>
+        </div>
+
+        <div id="neighbour-title" class="title hide">Neighbour's Details</div>
+        <div id="neighbour-container" class="hide">
+          <div id="input-box-neighbour-postcode" class="input-box">
+            <div class="input-row">
+              <div class="input-field neighbour">
+                <input
+                  type="text"
+                  id="input-neighbour-postcode"
+                  class="hide-spinner"
+                  autocomplete="off"
+                />
+                <p>Postcode</p>
+              </div>
+              <div
+                class="input-side-button"
+                onclick="input_help('postcode', true)"
+              >
+                ?
+              </div>
+            </div>
+            <div id="help-neighbour-postcode" class="msg-box info hide">
+              The postcode of the neighbour's address you wish to use to
+              substitute in space heating and floor area estimates for your own
+              home.
+            </div>
+            <div
+              id="neighbour-postcode-searching"
+              class="msg-box search info hide"
+            >
+              Searching
+              <div><div class="dots"></div></div>
+            </div>
+            <div
+              id="warn-neighbour-postcode-postcodes-io"
+              class="msg-box warn hide"
+            >
+              Postcode not found on
+              <a
+                href="http://postcodes.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                >postcode API</a
+              >. Postcode may be invalid or not in the UK. Please try a
+              different postcode.
+            </div>
+            <div
+              id="warn-neighbour-postcode-epc-api"
+              class="msg-box warn hide click-dismiss"
+            >
+              No properties with a domestic EPC certificate were found for this
+              postcode on
+              <a
+                href="https://www.gov.uk/find-energy-certificate"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GOV.UK</a
+              >. Please enter your home's EPC space heating and floor area
+              values manually or try a neighbour with a different postcode.
+            </div>
+            <div
+              id="warn-neighbour-postcode-io-connection"
+              class="msg-box warn hide"
+            >
+              Could not connect to
+              <a
+                href="http://postcodes.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                >postcode API</a
+              >. Check your internet connection. The API may be down, try again
+              later.
+            </div>
+            <div
+              id="warn-neighbour-postcode-epc-connection"
+              class="msg-box warn hide click-dismiss"
+            >
+              Neighbour's postcode is valid but could not connect to EPC API.
+              Please look up your
+              <a
+                href=""
+                target="_blank"
+                rel="noopener noreferrer"
+                class="epc-url"
+                >neighbour's EPC certificate</a
+              >
+              manually to find their EPC space heating and floor area
+              parameters. Click to dismiss.
+            </div>
+
+            <div
+              id="warn-neighbour-scottish-postcode"
+              class="msg-box warn hide"
+            >
+              The EPC certificate for homes located in Scotland cannot be
+              collected automatically, and so cannot be used to substitute
+              parameters for your own home. Please select an address located in
+              England, Wales or Northern Ireland.
+            </div>
+          </div>
+
+          <div id="input-box-neighbour-address" class="input-box">
+            <select
+              id="input-neighbour-address"
+              class="hide"
+              onchange="onchange_neighbours_address()"
+              autocomplete="off"
+            ></select>
+            <div id="neighbour-epc-searching" class="msg-box search info hide">
+              Searching
+              <div><div class="dots"></div></div>
+            </div>
+
+            <div
+              id="warn-neighbour-address-connection"
+              class="msg-box warn hide click-dismiss"
+            >
+              Could not connect to EPC API. Please look up your
+              <a
+                href=""
+                target="_blank"
+                rel="noopener noreferrer"
+                class="epc-url"
+                >neighbour's EPC certificate</a
+              >
+              manually to find their EPC space heating and floor area
+              parameters, or try again later. Click to dismiss.
+            </div>
+            <div
+              id="warn-neighbour-address-unknown"
+              class="msg-box warn hide click-dismiss"
+            >
+              Connected to EPC API but response invalid. Please look up your
+              <a
+                href=""
+                target="_blank"
+                rel="noopener noreferrer"
+                class="epc-url"
+                >neighbour's EPC certificate</a
+              >
+              manually to find their EPC space heating and floor area
+              parameters, select a different neighbour or try again later. Click
+              to dismiss.
+            </div>
+            <div
+              id="warn-neighbour-no-data"
+              class="msg-box warn click-dismiss hide"
+            >
+              Neighbour's
+              <a
+                href=""
+                class="epc-url"
+                target="_blank"
+                rel="noopener noreferrer"
+                >EPC Certificate</a
+              >
+              does not contain a space heating or floor estimate. Select a
+              different neighbour.
+            </div>
+          </div>
+
+          <div
+            id="input-box-neighbour-epc-space-heating"
+            class="input-box hide"
+          >
+            <div class="input-spacer"></div>
+            <div class="neighbour-input-row">
+              <div class="neighbour-input-field nofocus">
+                <input
+                  readonly
+                  type="number"
+                  id="input-neighbour-epc-space-heating"
+                  class="hide-spinner"
+                  autocomplete="off"
+                />
+                <p>Space Heating (kWh/yr)</p>
+              </div>
+              <div
+                class="input-apply-button"
+                onclick="input_apply('epc-space-heating')"
+              >
+                Apply
+              </div>
+            </div>
+          </div>
+
+          <div id="input-box-neighbour-floor-area" class="input-box hide">
+            <div class="input-spacer"></div>
+            <div class="input-row">
+              <div class="neighbour-input-field nofocus">
+                <input
+                  readonly
+                  type="number"
+                  id="input-neighbour-floor-area"
+                  class="hide-spinner"
+                  autocomplete="off"
+                />
+                <p>Floor Area (m<sup>2</sup>)</p>
+              </div>
+              <div
+                class="input-apply-button"
+                onclick="input_apply('floor-area')"
+              >
+                Apply
+              </div>
+            </div>
           </div>
         </div>
 
@@ -405,8 +633,8 @@
           Simulation complete. Click here to open the guide.
         </div>
       </div>
-      <div class="output-info-toggle">
-        <div class="output-group hide">
+      <div class="output-info-toggle hide">
+        <div class="output-group">
           <div class="graph-container">
             <div class="select-row">
               <select id="x-param" onchange="replace_graph_data();">

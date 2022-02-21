@@ -109,14 +109,14 @@ let scottish_postcode = false;
 let epc_api_connection = true;
 let epc_api_error = false;
 let selected_certificate = undefined;
-const input_id_list = ['postcode', 'epc-space-heating', 'floor-area', 'temperature', 'occupants', 'tes-volume'];
+const input_id_list = ['postcode', 'epc-space-heating', 'floor-area', 'temperature', 'occupants', 'tes-volume', 'neighbour-postcode'];
 
 // ---- INITIALISATION
 // apply validation functions to oninput and onchange events for each input (excluding selections and checkboxes)
 // run validation incase page was reloaded
 for (let input_id of input_id_list) {
     let element = document.getElementById('input-' + input_id);
-    if (input_id != 'postcode') {
+    if (input_id != 'postcode' && input_id != 'neighbour-postcode') {
         element.addEventListener('change', get_check_input_fnc(input_id, true));
     }
     element.addEventListener('input', get_check_input_fnc(input_id, false));
@@ -175,12 +175,14 @@ async function check_input(pid, transform, conditions) {
 
         if (is_valid) {
             validate_element(input_element);
-            if (/[a-z]/i.test(input_element.value)) {
-                input_values[pid] = input_element.value;
-            } else { // if parameter does not contain letters assume number
-                input_values[pid] = Number(input_element.value);
+            if (pid != 'neighbour-postcode') {
+                if (/[a-z]/i.test(input_element.value)) {
+                    input_values[pid] = input_element.value;
+                } else { // if parameter does not contain letters assume number
+                    input_values[pid] = Number(input_element.value);
+                }
+                clear_warnings(pid);
             }
-            clear_warnings(pid);
         } else {
             invalidate_element(input_element);
         }
@@ -188,10 +190,19 @@ async function check_input(pid, transform, conditions) {
     check_submit();
 }
 
-function input_help(pid) {
-    let help_button = document.getElementById("input-box-" + pid).getElementsByClassName("input-side-button")[0];
+function neighbour_text(is_neighbour) {
+    if (is_neighbour) {
+        return "neighbour-";
+    } else {
+        return "";
+    }
+}
 
-    let help_msg = document.getElementById("help-" + pid);
+function input_help(pid, is_neighbour) {
+    console.log(is_neighbour, neighbour_text(is_neighbour));
+    let help_button = document.getElementById("input-box-" + neighbour_text(is_neighbour) + pid).getElementsByClassName("input-side-button")[0];
+
+    let help_msg = document.getElementById("help-" + neighbour_text(is_neighbour) + pid);
     if (help_msg.classList.contains("hide")) {
         help_msg.classList.remove("hide");
         help_button.classList.add("active");
@@ -266,15 +277,13 @@ async function onchange_address() {
     let floor_area_box_element = document.getElementById("input-box-floor-area");
     let searching = document.getElementById("epc-searching");
 
-    let epc_input = document.getElementById("input-epc-space-heating");
-    epc_input.value = "";
-
     clear_value('epc-space-heating');
     get_check_input_fnc('epc-space-heating', false)();
     clear_value('floor-area');
     get_check_input_fnc('floor-area', false)();
     clear_warnings("address");
-    hide_ids(['help-address']);
+    document.getElementById("input-postcode").parentElement.getElementsByTagName('p')[0].innerText = 'Postcode';
+    hide_ids(['help-address', 'neighbour-container', 'neighbour-title']);
 
     selected_certificate = undefined;
     switch (address_element.value) {
@@ -291,10 +300,71 @@ async function onchange_address() {
             hide_elements([warn_element, epc_box_element, floor_area_box_element]);
             unhide_elements([searching]);
             await get_epc_data();
-            unhide_elements([epc_box_element, floor_area_box_element]);
-            hide_elements([searching, warn_element]);
     }
     update_epc_urls();
+}
+
+async function onchange_neighbours_address() {
+    let address_element = document.getElementById("input-neighbour-address");
+    let epc_box_element = document.getElementById("input-box-neighbour-epc-space-heating");
+    let floor_area_box_element = document.getElementById("input-box-neighbour-floor-area");
+    let searching = document.getElementById("neighbour-epc-searching");
+    let warn_no_data = document.getElementById('warn-neighbour-no-data');
+
+    clear_value('neighbour-epc-space-heating');
+    clear_value('neighbour-floor-area');
+    clear_element_validation(document.getElementById('input-neighbour-epc-space-heating'));
+    clear_element_validation(document.getElementById('input-neighbour-floor-area'));
+
+    switch (address_element.value) {
+        case "Select Address":
+            clear_element_validation(address_element);
+            hide_elements([epc_box_element, floor_area_box_element, warn_no_data]);
+            break;
+        default:
+            validate_element(address_element);
+            hide_elements([epc_box_element, floor_area_box_element, warn_no_data]);
+            unhide_elements([searching]);
+            await get_neighbour_epc_data();
+    }
+}
+
+function fill_neighbour_address() {
+    let address_element = document.getElementById('input-neighbour-address');
+    while (address_element.getElementsByTagName('option').length > 0) {
+        address_element.removeChild(address_element.lastChild);
+    }
+    clear_element_validation(address_element);
+
+    let opt1 = document.createElement('option');
+    opt1.text = "Select Address";
+    opt1.classList.add("color-neutral");
+    address_element.appendChild(opt1);
+
+    for (let [address, certificate] of address_certificate_list) {
+        //console.log(address, certificate);
+        let option_element = document.createElement('option');
+        option_element.value = certificate;
+        option_element.classList.add("color-neutral");
+        option_element.text = address;
+        address_element.appendChild(option_element);
+    }
+    unhide_elements([address_element]);
+}
+
+function input_apply(pid) {
+    document.getElementById('input-' + pid).value = document.getElementById('input-neighbour-' + pid).value;
+    get_check_input_fnc(pid, false)();
+}
+
+function open_neighbour_menu() {
+    let n_postcode_element = document.getElementById('input-neighbour-postcode');
+    n_postcode_element.value = input_values.postcode;
+    validate_element(n_postcode_element);
+    fill_neighbour_address();
+    document.getElementById("input-postcode").parentElement.getElementsByTagName('p')[0].innerText = 'Your Postcode';
+    unhide_ids(['neighbour-container', 'neighbour-title']);
+    hide_ids(['warn-address-not-listed', 'warn-address-missing-data']);
 }
 
 function submit_simulation() {
@@ -460,7 +530,7 @@ async function get_epc_data() {
                 get_check_input_fnc('epc-space-heating', false)();
             } else {
                 clear_value('epc-space-heating');
-                unhide_ids(['warn-epc-space-heating-none']);
+                // unhide_ids(['warn-epc-space-heating-none']);
             }
 
             if (result['floor-area']) {
@@ -468,10 +538,40 @@ async function get_epc_data() {
                 get_check_input_fnc('floor-area', false)();
             } else {
                 clear_value('floor-area');
-                unhide_ids(['warn-floor-area-none']);
+                // unhide_ids(['warn-floor-area-none']);
             }
 
-            unhide_ids(['help-address']);
+            if (result['space-heating'] && result['floor-area']) {
+                document.getElementById('help-address').innerHTML = `Your address was used to fill out the space heating estimate and floor
+                area parameters from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>.
+                You may wish to adjust the parameters manually. Click to dismiss.`
+                unhide_ids(['help-address']);
+            } else if (result['space-heating'] && !result['floor-area']) {
+                document.getElementById('help-address').innerHTML = `Your address was used to fill out the space heating estimate
+                from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>. 
+                You may wish to adjust the parameter manually. Click to dismiss.`
+
+                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
+                does not contain a floor area estimate. Enter it manually
+                or select a <p class="input-button" onclick="open_neighbour_menu();">neighbour's address</p> whose home is similar in size to yours.`;
+                unhide_ids(['help-address', 'warn-address-missing-data', 'input-box-epc-space-heating']);
+            } else if (!result['space-heating'] && result['floor-area']) {
+                document.getElementById('help-address').innerHTML = `Your address was used to fill out the floor area parameter
+                from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>. 
+                You may wish to adjust the parameter manually. Click to dismiss.`
+
+                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
+                does not contain a space heating estimate. Enter it manually
+                or select a <p class="input-button" onclick="open_neighbour_menu();">neighbour's address</p> whose home has similar heating and hot water requirements to yours.`;
+                unhide_ids(['help-address', 'warn-address-missing-data', 'input-box-floor-area']);
+            } else { // neither
+                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
+                does not contain a space heating or floor area estimate. Enter them manually
+                or select a <p class="input-button" onclick="open_neighbour_menu();">neighbour's address</p> whose home is of similar size and has similar heating and hot water requirements to yours.`;
+                unhide_ids(['warn-address-missing-data', 'input-box-floor-area']);
+            }
+            hide_ids(['epc-searching', 'warn-address-not-listed']);
+            unhide_ids(['input-box-epc-space-heating', 'input-box-floor-area']);
         } else {
             throw new Error(json['error']);
         }
@@ -483,6 +583,79 @@ async function get_epc_data() {
         } else {
             unhide_elements(['warn-address-unknown']);
         }
+    }
+}
+
+async function get_neighbour_epc_data() {
+    let select = document.getElementById('input-neighbour-address');
+    let certificate = select.options[select.selectedIndex].value;
+    const full_url = `${epc_api_url}?certificate=${certificate}`;
+
+    try {
+        const response = await fetch(full_url);
+        const json = await response.json();
+        if (json['status'] == 200) {
+            console.log('epc-certificate-json: ', json);
+            const result = json['result'];
+
+            let warn_no_data = document.getElementById('warn-neighbour-no-data');
+            let have_valid_space_heating = document.getElementById('input-epc-space-heating').classList.contains('valid');
+            let have_valid_floor_area = document.getElementById('input-floor-area').classList.contains('valid');
+
+            console.log(have_valid_space_heating, have_valid_floor_area);
+            if (result['space-heating']) {
+                set_value('neighbour-epc-space-heating', result['space-heating'].match(/\d+/)[0]);
+                validate_element(document.getElementById('input-neighbour-epc-space-heating'));
+                unhide_ids(['input-box-neighbour-epc-space-heating']);
+            } else {
+                if (have_valid_space_heating) {
+                    clear_value('neighbour-epc-space-heating');
+                    clear_element_validation(document.getElementById('input-neighbour-epc-space-heating'));
+                    hide_ids(['input-box-neighbour-epc-space-heating']);
+                }
+            }
+
+
+            if (result['floor-area']) {
+                set_value('neighbour-floor-area', result['floor-area'].match(/\d+/)[0]);
+                validate_element(document.getElementById('input-neighbour-floor-area'));
+                unhide_ids(['input-box-neighbour-floor-area']);
+            } else {
+                if (have_valid_floor_area) {
+                    clear_value('neighbour-floor-area');
+                    clear_element_validation(document.getElementById('input-neighbour-floor-area'));
+                    hide_ids(['input-box-neighbour-floor-area']);
+                }
+            }
+
+            if (!have_valid_space_heating && !have_valid_floor_area && !result['space-heating'] && !result['floor-area']) {
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                    does not contain a space heating or floor estimate. Select a different neighbour.`;
+                warn_no_data.classList.remove('hide');
+            } else if (!have_valid_space_heating && !result['space-heating']) {
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                    does not contain a space heating estimate. Select a different neighbour.`;
+                warn_no_data.classList.remove('hide');
+            } else if (!have_valid_floor_area && !result['floor-area']) {
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                    does not contain a floor area estimate. Select a different neighbour.`;
+                warn_no_data.classList.remove('hide');
+            }
+
+
+            hide_ids(['neighbour-epc-searching']);
+        } else {
+            throw new Error(json['error']);
+        }
+    }
+    catch (error) {
+        console.error('epc-certificate-json-error: ', error);
+        if (error.message == "Failed to fetch") {
+            unhide_elements([document.getElementById('warn-neighbour-address-connection')]);
+        } else {
+            unhide_elements([document.getElementById('warn-neighbour-address-unknown')]);
+        }
+        hide_ids(['neighbour-epc-searching']);
     }
 }
 
@@ -511,6 +684,30 @@ function get_check_input_fnc(pid, apply_transform) {
                 update_epc_urls();
             };
             break;
+        case 'neighbour-postcode':
+            console.log("NEIGHBOUR POSTCODE VALIDATION");
+            return async () => {
+                console.log("NEIGHBOUR POSTCODE VALIDATION", pid);
+                let searching = document.getElementById("neighbour-postcode-searching");
+                unhide_elements([searching]);
+                await check_input("neighbour-postcode",
+                    (postcode) => { return postcode.toUpperCase().replace(/\s/g, '').substring(0, 7); },
+                    [
+                        hide_neighbours_postcode_related_inputs,
+                        (postcode) => { return check_postcode_format(postcode); },
+                        async (postcode) => { return validate_neighbours_postcode(postcode); },
+                        async (postcode) => { return get_neighbours_address_certificates(postcode); },
+                        show_manual_epc_input,
+                    ]
+                );
+                hide_elements([searching]);
+                if (!epc_api_connection) {
+                    unhide_ids(['warn-neighbour-postcode-epc-connection']);
+                } else if (epc_api_error) {
+                    unhide_ids(['warn-neighbour-postcode-epc-api']);
+                }
+            };
+            break;
         default:
             const [min_input, max_input, multipler] = input_ranges[pid];
             return () =>
@@ -528,12 +725,22 @@ function hide_postcode_related_inputs() {
     epc_api_connection = true;
     epc_api_error = false;
     selected_certificate = undefined;
-    hide_ids(['input-address', 'help-scottish-postcode', 'input-box-epc-space-heating', 'input-box-floor-area', 'epc-searching', 'help-address']);
+    document.getElementById("input-postcode").parentElement.getElementsByTagName('p')[0].innerText = 'Postcode';
+    hide_ids(['input-address', 'help-scottish-postcode', 'input-box-epc-space-heating', 'input-box-floor-area', 'epc-searching', 'help-address', 'neighbour-container', 'neighbour-title']);
     clear_warnings('address');
     clear_value('epc-space-heating');
     get_check_input_fnc('epc-space-heating', false)();
     clear_value('floor-area');
     get_check_input_fnc('floor-area', false)();
+    return "";
+}
+
+function hide_neighbours_postcode_related_inputs() {
+    scottish_postcode = false;
+    epc_api_connection = true;
+    epc_api_error = false;
+    hide_ids(['input-neighbour-address', 'warn-neighbour-scottish-postcode', 'input-box-neighbour-epc-space-heating', 'input-box-neighbour-floor-area', 'neighbour-epc-searching']);
+    clear_warnings('neighbour-address');
     return "";
 }
 
@@ -567,7 +774,33 @@ async function validate_postcode(postcode) {
     }
 }
 
+async function validate_neighbours_postcode(postcode) {
+    const postcode_url = 'https://api.postcodes.io/postcodes/' + postcode;
+    try {
+        const response = await fetch(postcode_url);
+        const json = await response.json();
+        if (json['status'] == 200) {
+            console.log('postcode-api-json:', json);
+            if (json.result.country == "Scotland") {
+                scottish_postcode = true;
+                unhide_ids(['warn-neighbour-scottish-postcode']);
+            }
+            return "";
+        } else {
+            throw new Error(json['error']);
+        }
+    } catch (error) {
+        console.error('postcode-api-error: ', error);
+        if (error.message == 'Failed to fetch' || error.message == 'Load failed') {
+            return 'io-connection';
+        }
+        return 'postcodes-io';
+    }
+}
+
+let address_certificate_list = [];
 async function get_address_certificates(postcode) {
+    address_certificate_list = [];
     if (!scottish_postcode) {
         const full_url = `${epc_api_url}?postcode=${postcode}`;
 
@@ -599,7 +832,60 @@ async function get_address_certificates(postcode) {
 
                     // capitalise each word
                     address = address.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+                    address_certificate_list.push([address, certificate]);
+                    option_element.text = address.substring(0, 45);
+                    address_element.appendChild(option_element);
+                }
+                unhide_elements([address_element]);
+                return "";
+            } else {
+                throw new Error(json['error']);
+            }
+        } catch (error) {
+            console.error('api-address-certificate-error: ', error);
+            if (error.message == 'Failed to fetch' || error.message == 'Load failed') {
+                epc_api_connection = false;
+                return "";
+            }
+            epc_api_error = true;
+            return "";
+        }
+    }
+    return "";
+}
 
+async function get_neighbours_address_certificates(postcode) {
+    if (!scottish_postcode) {
+        const full_url = `${epc_api_url}?postcode=${postcode}`;
+
+        try {
+            const response = await fetch(full_url);
+            const json = await response.json();
+            if (json['status'] == 200) {
+                console.log('api-address-certificate-json: ', json);
+                let address_element = document.getElementById('input-neighbour-address');
+                while (address_element.getElementsByTagName('option').length > 0) {
+                    address_element.removeChild(address_element.lastChild);
+                }
+                clear_element_validation(address_element);
+
+                let opt1 = document.createElement('option');
+                opt1.text = "Select Address";
+                opt1.classList.add("color-neutral");
+                address_element.appendChild(opt1);
+                let opt2 = document.createElement('option');
+                opt2.text = "Address Not Listed";
+                opt2.classList.add("color-warn");
+                address_element.appendChild(opt2);
+
+                for (let [address, certificate] of json.result) {
+                    //console.log(address, certificate);
+                    let option_element = document.createElement('option');
+                    option_element.value = certificate;
+                    option_element.classList.add("color-neutral");
+
+                    // capitalise each word
+                    address = address.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
                     option_element.text = address.substring(0, 45);
                     address_element.appendChild(option_element);
                 }
@@ -1471,7 +1757,7 @@ let chart = undefined;
 
 
 function load_output() {
-    document.getElementsByClassName('output-group')[0].classList.remove('hide');
+    document.getElementsByClassName('output-info-toggle')[0].classList.remove('hide');
     build_system_menu();
     document.getElementById("y-param").selectedIndex = 1;
     const ctx = document.getElementById('chart').getContext('2d');
@@ -1494,278 +1780,285 @@ function guide_state(doHide) {
 
 }
 
-output = {
-    "demand": {
-        "boiler": {
-            "hot-water": 1460.07,
-            "space": 1515.96,
-            "total": 2976.03,
-            "peak-hourly": 8.36874
-        },
-        "heat-pump": {
-            "hot-water": 1460.07,
-            "space": 1552.12,
-            "total": 3012.19,
-            "peak-hourly": 1.56076
-        }
-    },
-    "systems": {
-        "electric-boiler": {
-            "none": {
-                "pv-size": 0,
-                "solar-thermal-size": 0,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 232.091,
-                "capital-expenditure": 678.913,
-                "net-present-cost": 4092.94,
-                "operational-emissions": 644775
-            },
-            "photovoltaic": {
-                "pv-size": 14,
-                "solar-thermal-size": 0,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -35.5481,
-                "capital-expenditure": 3758.91,
-                "net-present-cost": 3236.01,
-                "operational-emissions": 214478
-            },
-            "flat-plate": {
-                "pv-size": 0,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 173.86,
-                "capital-expenditure": 3256.41,
-                "net-present-cost": 5813.87,
-                "operational-emissions": 507729
-            },
-            "evacuated-tube": {
-                "pv-size": 0,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 157.84,
-                "capital-expenditure": 3366.41,
-                "net-present-cost": 5688.21,
-                "operational-emissions": 463252
-            },
-            "flat-plate-and-photovoltaic": {
-                "pv-size": 12,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -39.0105,
-                "capital-expenditure": 5896.41,
-                "net-present-cost": 5322.57,
-                "operational-emissions": 182792
-            },
-            "evacuated-tube-and-photovoltaic": {
-                "pv-size": 12,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -64.4958,
-                "capital-expenditure": 6006.41,
-                "net-present-cost": 5057.69,
-                "operational-emissions": 115537
-            },
-            "photovoltaic-thermal-hybrid": {
-                "pv-size": 4,
-                "solar-thermal-size": 4,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 102.037,
-                "capital-expenditure": 5323.91,
-                "net-present-cost": 6824.87,
-                "operational-emissions": 364656
-            }
-        },
-        "air-source-heat-pump": {
-            "none": {
-                "pv-size": 0,
-                "solar-thermal-size": 0,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 79.5922,
-                "capital-expenditure": 6237.67,
-                "net-present-cost": 7408.46,
-                "operational-emissions": 232146
-            },
-            "photovoltaic": {
-                "pv-size": 14,
-                "solar-thermal-size": 0,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -197.882,
-                "capital-expenditure": 9317.67,
-                "net-present-cost": 6406.86,
-                "operational-emissions": -182272
-            },
-            "flat-plate": {
-                "pv-size": 0,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 58.3877,
-                "capital-expenditure": 8815.17,
-                "net-present-cost": 9674.04,
-                "operational-emissions": 191942
-            },
-            "evacuated-tube": {
-                "pv-size": 0,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 52.8353,
-                "capital-expenditure": 8925.17,
-                "net-present-cost": 9702.37,
-                "operational-emissions": 178927
-            },
-            "flat-plate-and-photovoltaic": {
-                "pv-size": 12,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -171.235,
-                "capital-expenditure": 11455.2,
-                "net-present-cost": 8936.33,
-                "operational-emissions": -153667
-            },
-            "evacuated-tube-and-photovoltaic": {
-                "pv-size": 12,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -186.652,
-                "capital-expenditure": 11565.2,
-                "net-present-cost": 8819.54,
-                "operational-emissions": -177541
-            },
-            "photovoltaic-thermal-hybrid": {
-                "pv-size": 2,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 37.9702,
-                "capital-expenditure": 10245.2,
-                "net-present-cost": 10803.7,
-                "operational-emissions": 158842
-            }
-        },
-        "ground-source-heat-pump": {
-            "none": {
-                "pv-size": 0,
-                "solar-thermal-size": 0,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 53.459,
-                "capital-expenditure": 7937.67,
-                "net-present-cost": 8724.04,
-                "operational-emissions": 154280
-            },
-            "photovoltaic": {
-                "pv-size": 14,
-                "solar-thermal-size": 0,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -247.103,
-                "capital-expenditure": 11017.7,
-                "net-present-cost": 7382.83,
-                "operational-emissions": -260026
-            },
-            "flat-plate": {
-                "pv-size": 0,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 39.7321,
-                "capital-expenditure": 10515.2,
-                "net-present-cost": 11099.6,
-                "operational-emissions": 134456
-            },
-            "evacuated-tube": {
-                "pv-size": 0,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 36.1047,
-                "capital-expenditure": 10625.2,
-                "net-present-cost": 11156.3,
-                "operational-emissions": 128096
-            },
-            "flat-plate-and-photovoltaic": {
-                "pv-size": 12,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -211.235,
-                "capital-expenditure": 13155.2,
-                "net-present-cost": 10047.9,
-                "operational-emissions": -216005
-            },
-            "evacuated-tube-and-photovoltaic": {
-                "pv-size": 12,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": -223.614,
-                "capital-expenditure": 13265.2,
-                "net-present-cost": 9975.85,
-                "operational-emissions": -229065
-            },
-            "photovoltaic-thermal-hybrid": {
-                "pv-size": 2,
-                "solar-thermal-size": 2,
-                "thermal-energy-storage-volume": 0.1,
-                "operational-expenditure": 19.2099,
-                "capital-expenditure": 11945.2,
-                "net-present-cost": 12227.7,
-                "operational-emissions": 101650
-            }
-        },
-        "hydrogen-boiler": {
-            "grey": {
-                "operational-expenditure": 162.028,
-                "capital-expenditure": 2120,
-                "net-present-cost": 4503.41,
-                "operational-emissions": 1263160
-            },
-            "blue": {
-                "operational-expenditure": 307.523,
-                "capital-expenditure": 2120,
-                "net-present-cost": 6643.61,
-                "operational-emissions": 198402
-            },
-            "green": {
-                "operational-expenditure": 608.432,
-                "capital-expenditure": 2120,
-                "net-present-cost": 11069.9,
-                "operational-emissions": 1314410
-            }
-        },
-        "hydrogen-fuel-cell": {
-            "grey": {
-                "operational-expenditure": 157.018,
-                "capital-expenditure": 25157.8,
-                "net-present-cost": 27467.5,
-                "operational-emissions": 1224100
-            },
-            "blue": {
-                "operational-expenditure": 298.015,
-                "capital-expenditure": 25157.8,
-                "net-present-cost": 29541.6,
-                "operational-emissions": 192267
-            },
-            "green": {
-                "operational-expenditure": 589.62,
-                "capital-expenditure": 25157.8,
-                "net-present-cost": 33831,
-                "operational-emissions": 1273770
-            }
-        },
-        "gas-boiler": {
-            "operational-expenditure": 132.268,
-            "capital-expenditure": 1620,
-            "net-present-cost": 3565.64,
-            "operational-emissions": 605126
-        },
-        "biomass-boiler": {
-            "operational-expenditure": 135.905,
-            "capital-expenditure": 9750,
-            "net-present-cost": 11749.1,
-            "operational-emissions": 297603
-        }
-    }
-}
-load_output();
-
 function reportWindowSize() {
-    resize_markers();
+    let output_container = document.getElementsByClassName('output-info-toggle')[0];
+    if (!output_container.classList.contains('hide')) {
+        resize_markers();
+    }
 }
 
 window.onresize = reportWindowSize;
-resize_markers();
+if (!document.getElementsByClassName('output-info-toggle')[0].classList.contains('hide')) {
+    resize_markers();
+}
+
+// output = {
+//     "demand": {
+//         "boiler": {
+//             "hot-water": 1460.07,
+//             "space": 1515.96,
+//             "total": 2976.03,
+//             "peak-hourly": 8.36874
+//         },
+//         "heat-pump": {
+//             "hot-water": 1460.07,
+//             "space": 1552.12,
+//             "total": 3012.19,
+//             "peak-hourly": 1.56076
+//         }
+//     },
+//     "systems": {
+//         "electric-boiler": {
+//             "none": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 0,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 232.091,
+//                 "capital-expenditure": 678.913,
+//                 "net-present-cost": 4092.94,
+//                 "operational-emissions": 644775
+//             },
+//             "photovoltaic": {
+//                 "pv-size": 14,
+//                 "solar-thermal-size": 0,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -35.5481,
+//                 "capital-expenditure": 3758.91,
+//                 "net-present-cost": 3236.01,
+//                 "operational-emissions": 214478
+//             },
+//             "flat-plate": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 173.86,
+//                 "capital-expenditure": 3256.41,
+//                 "net-present-cost": 5813.87,
+//                 "operational-emissions": 507729
+//             },
+//             "evacuated-tube": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 157.84,
+//                 "capital-expenditure": 3366.41,
+//                 "net-present-cost": 5688.21,
+//                 "operational-emissions": 463252
+//             },
+//             "flat-plate-and-photovoltaic": {
+//                 "pv-size": 12,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -39.0105,
+//                 "capital-expenditure": 5896.41,
+//                 "net-present-cost": 5322.57,
+//                 "operational-emissions": 182792
+//             },
+//             "evacuated-tube-and-photovoltaic": {
+//                 "pv-size": 12,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -64.4958,
+//                 "capital-expenditure": 6006.41,
+//                 "net-present-cost": 5057.69,
+//                 "operational-emissions": 115537
+//             },
+//             "photovoltaic-thermal-hybrid": {
+//                 "pv-size": 4,
+//                 "solar-thermal-size": 4,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 102.037,
+//                 "capital-expenditure": 5323.91,
+//                 "net-present-cost": 6824.87,
+//                 "operational-emissions": 364656
+//             }
+//         },
+//         "air-source-heat-pump": {
+//             "none": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 0,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 79.5922,
+//                 "capital-expenditure": 6237.67,
+//                 "net-present-cost": 7408.46,
+//                 "operational-emissions": 232146
+//             },
+//             "photovoltaic": {
+//                 "pv-size": 14,
+//                 "solar-thermal-size": 0,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -197.882,
+//                 "capital-expenditure": 9317.67,
+//                 "net-present-cost": 6406.86,
+//                 "operational-emissions": -182272
+//             },
+//             "flat-plate": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 58.3877,
+//                 "capital-expenditure": 8815.17,
+//                 "net-present-cost": 9674.04,
+//                 "operational-emissions": 191942
+//             },
+//             "evacuated-tube": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 52.8353,
+//                 "capital-expenditure": 8925.17,
+//                 "net-present-cost": 9702.37,
+//                 "operational-emissions": 178927
+//             },
+//             "flat-plate-and-photovoltaic": {
+//                 "pv-size": 12,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -171.235,
+//                 "capital-expenditure": 11455.2,
+//                 "net-present-cost": 8936.33,
+//                 "operational-emissions": -153667
+//             },
+//             "evacuated-tube-and-photovoltaic": {
+//                 "pv-size": 12,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -186.652,
+//                 "capital-expenditure": 11565.2,
+//                 "net-present-cost": 8819.54,
+//                 "operational-emissions": -177541
+//             },
+//             "photovoltaic-thermal-hybrid": {
+//                 "pv-size": 2,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 37.9702,
+//                 "capital-expenditure": 10245.2,
+//                 "net-present-cost": 10803.7,
+//                 "operational-emissions": 158842
+//             }
+//         },
+//         "ground-source-heat-pump": {
+//             "none": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 0,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 53.459,
+//                 "capital-expenditure": 7937.67,
+//                 "net-present-cost": 8724.04,
+//                 "operational-emissions": 154280
+//             },
+//             "photovoltaic": {
+//                 "pv-size": 14,
+//                 "solar-thermal-size": 0,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -247.103,
+//                 "capital-expenditure": 11017.7,
+//                 "net-present-cost": 7382.83,
+//                 "operational-emissions": -260026
+//             },
+//             "flat-plate": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 39.7321,
+//                 "capital-expenditure": 10515.2,
+//                 "net-present-cost": 11099.6,
+//                 "operational-emissions": 134456
+//             },
+//             "evacuated-tube": {
+//                 "pv-size": 0,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 36.1047,
+//                 "capital-expenditure": 10625.2,
+//                 "net-present-cost": 11156.3,
+//                 "operational-emissions": 128096
+//             },
+//             "flat-plate-and-photovoltaic": {
+//                 "pv-size": 12,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -211.235,
+//                 "capital-expenditure": 13155.2,
+//                 "net-present-cost": 10047.9,
+//                 "operational-emissions": -216005
+//             },
+//             "evacuated-tube-and-photovoltaic": {
+//                 "pv-size": 12,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": -223.614,
+//                 "capital-expenditure": 13265.2,
+//                 "net-present-cost": 9975.85,
+//                 "operational-emissions": -229065
+//             },
+//             "photovoltaic-thermal-hybrid": {
+//                 "pv-size": 2,
+//                 "solar-thermal-size": 2,
+//                 "thermal-energy-storage-volume": 0.1,
+//                 "operational-expenditure": 19.2099,
+//                 "capital-expenditure": 11945.2,
+//                 "net-present-cost": 12227.7,
+//                 "operational-emissions": 101650
+//             }
+//         },
+//         "hydrogen-boiler": {
+//             "grey": {
+//                 "operational-expenditure": 162.028,
+//                 "capital-expenditure": 2120,
+//                 "net-present-cost": 4503.41,
+//                 "operational-emissions": 1263160
+//             },
+//             "blue": {
+//                 "operational-expenditure": 307.523,
+//                 "capital-expenditure": 2120,
+//                 "net-present-cost": 6643.61,
+//                 "operational-emissions": 198402
+//             },
+//             "green": {
+//                 "operational-expenditure": 608.432,
+//                 "capital-expenditure": 2120,
+//                 "net-present-cost": 11069.9,
+//                 "operational-emissions": 1314410
+//             }
+//         },
+//         "hydrogen-fuel-cell": {
+//             "grey": {
+//                 "operational-expenditure": 157.018,
+//                 "capital-expenditure": 25157.8,
+//                 "net-present-cost": 27467.5,
+//                 "operational-emissions": 1224100
+//             },
+//             "blue": {
+//                 "operational-expenditure": 298.015,
+//                 "capital-expenditure": 25157.8,
+//                 "net-present-cost": 29541.6,
+//                 "operational-emissions": 192267
+//             },
+//             "green": {
+//                 "operational-expenditure": 589.62,
+//                 "capital-expenditure": 25157.8,
+//                 "net-present-cost": 33831,
+//                 "operational-emissions": 1273770
+//             }
+//         },
+//         "gas-boiler": {
+//             "operational-expenditure": 132.268,
+//             "capital-expenditure": 1620,
+//             "net-present-cost": 3565.64,
+//             "operational-emissions": 605126
+//         },
+//         "biomass-boiler": {
+//             "operational-expenditure": 135.905,
+//             "capital-expenditure": 9750,
+//             "net-present-cost": 11749.1,
+//             "operational-emissions": 297603
+//         }
+//     }
+// }
+// load_output();
+
+
 
 

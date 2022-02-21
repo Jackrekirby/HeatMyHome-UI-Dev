@@ -86,6 +86,81 @@ input.hide-spinner[type="number"] {
   align-content: center;
 }
 
+.neighbour-input-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: flex-end;
+  align-content: center;
+}
+
+.neighbour-input-field {
+  position: relative;
+  margin: 0rem 0rem;
+  padding: 0rem;
+  width: 15rem;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+}
+
+.neighbour-input-field > * {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 12rem;
+  color: var(--valid-color);
+  padding: 0.5rem 0rem;
+  margin: 0rem;
+  font-size: 1rem;
+}
+
+.neighbour-input-field input {
+  border: 0;
+  outline: 0;
+  padding: 0rem 0rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.2rem;
+  border-radius: 0px;
+  box-shadow: none;
+  border-bottom: 2px solid var(--valid-color);
+  background-color: transparent;
+  color: var(--black-color);
+}
+
+.neighbour-input-field p {
+  cursor: text;
+  pointer-events: none;
+  font-size: 0.9rem;
+  bottom: calc(0.9rem + 0.5rem);
+}
+
+.input-apply-button {
+  position: relative;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: fit-content;
+  padding: 0rem 0.5rem;
+  height: 2rem;
+  color: var(--neutral-color);
+  border: 2px solid var(--neutral-color);
+  transition: 0.2s all ease-in-out;
+}
+
+.input-apply-button:hover {
+  color: var(--valid-color);
+  border-color: var(--valid-color);
+}
+
 .input-side-button {
   position: relative;
   bottom: 0;
@@ -118,6 +193,10 @@ input.hide-spinner[type="number"] {
   font-size: 1rem;
 }
 
+.input-field.neighbour > * {
+  width: 14rem;
+}
+
 .input-field input {
   border: 0;
   outline: 0;
@@ -137,7 +216,7 @@ input.hide-spinner[type="number"] {
   pointer-events: none;
 }
 
-.input-field input:focus ~ p {
+.input-field:not(.nofocus) input:focus ~ p {
   font-size: 0.9rem;
   bottom: calc(0.9rem + 0.5rem);
 }
@@ -434,6 +513,46 @@ input.hide-spinner[type="number"] {
 
 .ticked .checkbox {
   border-color: var(--experimental-color);
+}
+
+#neighbour-container {
+  width: 100%;
+  height: fit-content;
+  border: 2px solid var(--neutral-color);
+  padding: 0rem 0.5rem;
+  padding-bottom: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.inputs-box .title {
+  background-color: var(--neutral-color);
+  width: 100%;
+  padding: 0.2rem 0rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  color: white;
+}
+
+#neighbour-container.hide {
+  display: none;
+}
+
+.input-button {
+  width: fit-content;
+  display: inline-block;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  overflow-wrap: break-word;
+}
+
+.input-button:hover {
+  text-decoration: none;
 }
 
 .hide {
