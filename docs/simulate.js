@@ -1821,8 +1821,6 @@ config.options.animation = {
 
 let chart = undefined;
 
-
-
 function load_output() {
     console.log('load_output');
     unhide_ids(['output-info-toggle', 'output-info']);
@@ -1836,6 +1834,9 @@ function load_output() {
     set_system_visibility();
     apply_limits();
     chart.update();
+
+    table_data = rebuild_data();
+    build_table();
 }
 
 function guide_state(doHide) {
@@ -1848,10 +1849,265 @@ function guide_state(doHide) {
     }
 }
 
+// TABLE
+
+const table_system_names = {
+    'electric-boiler': 'EB',
+    'air-source-heat-pump': 'ASHP',
+    'ground-source-heat-pump': 'GSHP',
+    'biomass-boiler': 'Biomass Boiler',
+    'gas-boiler': 'Gas Boiler',
+    'hydrogen-boiler': 'H<sub>2</sub>B',
+    'hydrogen-fuel-cell': 'H<sub>2</sub>FC',
+};
+
+const long_table_system_names = {
+    'electric-boiler': 'Electric Boiler',
+    'air-source-heat-pump': 'Air Source Heat Pump',
+    'ground-source-heat-pump': 'Ground Source Heat Pump',
+    'biomass-boiler': 'Biomass Boiler',
+    'gas-boiler': 'Gas Boiler',
+    'hydrogen-boiler': 'Hydrogen Boiler',
+    'hydrogen-fuel-cell': 'Hydrogen Fuel Cell',
+};
+
+
+const table_subsystem_names = {
+    'none': () => { return 'None' },
+    'photovoltaic': (properties) => { return [`PV<sub>${properties['pv-size']}</sub>`]; },
+    'flat-plate': (properties) => { return [`FP<sub>${properties['solar-thermal-size']}</sub>`]; },
+    'evacuated-tube': (properties) => { return [`ET<sub>${properties['solar-thermal-size']}</sub>`]; },
+    'flat-plate-and-photovoltaic': (properties) => {
+        return [`PV<sub>${properties['pv-size']}</sub>`, `FP<sub>${properties['solar-thermal-size']}</sub>`];
+    },
+    'evacuated-tube-and-photovoltaic': (properties) => {
+        return [`PV<sub>${properties['pv-size']}</sub>`, `ET<sub>${properties['solar-thermal-size']}</sub>`];
+    },
+    'photovoltaic-thermal-hybrid': (properties) => { return [`PVT<sub>${properties['pv-size']}</sub>`]; },
+    'green': () => { return 'Green' },
+    'blue': () => { return 'Blue' },
+    'grey': () => { return 'Grey' },
+};
+
+
+const long_table_subsystem_names = {
+    'none': () => { return 'None' },
+    'photovoltaic': (properties) => { return [`${properties['pv-size']}m<sup>2</sup> PV`]; },
+    'flat-plate': (properties) => { return [`${properties['solar-thermal-size']}m<sup>2</sup> FP`]; },
+    'evacuated-tube': (properties) => { return [`${properties['solar-thermal-size']}m<sup>2</sup> ET`]; },
+    'flat-plate-and-photovoltaic': (properties) => {
+        return [`${properties['pv-size']}m<sup>2</sup> PV`, `${properties['solar-thermal-size']}m<sup>2</sup> FP`];
+    },
+    'evacuated-tube-and-photovoltaic': (properties) => {
+        return [`${properties['pv-size']}m<sup>2</sup> PV`, `${properties['solar-thermal-size']}m<sup>2</sup> ET`];
+    },
+    'photovoltaic-thermal-hybrid': (properties) => { return [`${properties['pv-size']}m<sup>2</sup> PVT`]; },
+    'green': () => { return 'Green' },
+    'blue': () => { return 'Blue' },
+    'grey': () => { return 'Grey' },
+};
+
+let table_data = undefined;
+
+
+function rebuild_data() {
+    let data = {
+        'name': [],
+        'long-name': [],
+        'thermal-energy-storage-volume': [],
+        'capital-expenditure': [],
+        'operational-expenditure': [],
+        'net-present-cost': [],
+        'operational-emissions': [],
+    };
+
+    for (let system_name of Object.keys(table_system_names)) {
+        switch (system_name) {
+            case 'electric-boiler':
+            case 'air-source-heat-pump':
+            case 'ground-source-heat-pump':
+            case 'hydrogen-boiler':
+            case 'hydrogen-fuel-cell':
+                for (let [subsystem_name, properties] of Object.entries(output.systems[system_name])) {
+                    for (let property_name of Object.keys(data)) {
+                        if (property_name == 'name') {
+                            data[property_name].push([table_system_names[system_name]].concat(table_subsystem_names[subsystem_name](properties)));
+
+                        } else if (property_name == 'long-name') {
+                            data['long-name'].push([table_system_names[system_name]].concat(long_table_subsystem_names[subsystem_name](properties)));
+                        } else {
+                            data[property_name].push(properties[property_name]);
+                        }
+                    }
+                }
+                break;
+            case 'biomass-boiler':
+            case 'gas-boiler':
+                for (let property_name of Object.keys(data)) {
+                    if (property_name == 'name' || property_name == 'long-name') {
+                        data[property_name].push([table_system_names[system_name]]);
+                    } else {
+                        data[property_name].push(output.systems[system_name][property_name]);
+                    }
+                }
+                break;
+        }
+    }
+    // console.log(data);
+    return data;
+}
+
+function sort_indices(array, sortfnc) {
+    let index_value_array = [];
+    let i = 0;
+    // console.log(array);
+    for (let item of array) {
+        index_value_array.push([item, i]);
+        i += 1;
+    }
+
+    index_value_array.sort(sortfnc);
+    let indices = [];
+    for (let item of index_value_array) {
+        indices.push(item[1]);
+    }
+
+    let index_value_array2 = [];
+    i = 0;
+    // console.log(indices);
+    for (let item of indices) {
+        index_value_array2.push([item, i]);
+        i += 1;
+    }
+
+    index_value_array2.sort(sortfnc);
+    let indices2 = [];
+    for (let item of index_value_array2) {
+        indices2.push(item[1]);
+    }
+
+    // console.log(index_value_array, indices2);
+    return indices2;
+}
+
+function build_table() {
+    const table_headers = {
+        'name': 'System',
+        'thermal-energy-storage-volume': '<div>m<sup>3</sup></div>',
+        'capital-expenditure': '£',
+        'operational-expenditure': '£/yr',
+        'net-present-cost': '£/life',
+        'operational-emissions': '<div>CO<sub>2</sub></div>',
+    };
+
+    const long_table_headers = {
+        'name': 'System',
+        'thermal-energy-storage-volume': 'Water Tank Volume (m<sup>3</sup>)',
+        'capital-expenditure': 'Upfront Cost (£)',
+        'operational-expenditure': 'Yearly Cost (£)',
+        'net-present-cost': 'Lifetime Cost (£)',
+        'operational-emissions': 'Yearly Emissions <div>(kgCO<sub>2</sub>Eq)</div>',
+    };
+
+    function money_fmt(v) {
+        if (v > 1000 && window.innerWidth < 500) {
+            return `${Math.round(v / 1000)}k`
+        } else {
+            return numberWithCommas(Math.round(v));
+        }
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    const info_format = {
+        'thermal-energy-storage-volume': (v) => {
+            if (v == undefined) {
+                return 'N/A';
+            } else {
+                return v;
+            }
+        },
+        'capital-expenditure': (v) => { return money_fmt(v) },
+        'operational-expenditure': (v) => { return money_fmt(v) },
+        'net-present-cost': (v) => { return money_fmt(v) },
+        'operational-emissions': (v) => { return Math.round(v / 1000) },
+    }
+
+    let table = document.getElementById('table');
+    table.innerHTML = '';
+    for (let [column_name, column_values] of Object.entries(table_data)) {
+        if (column_name == 'long-name') { continue; }
+        let column = document.createElement('div');
+        column.classList.add('column');
+        let h1 = document.createElement('h1');
+        let h1p = document.createElement('p');
+        if (window.innerWidth > 700) {
+            h1p.innerHTML = long_table_headers[column_name];
+        } else {
+            h1p.innerHTML = table_headers[column_name];
+        }
+
+        h1.appendChild(h1p);
+        h1.addEventListener('click', () => sort_table(column_name));
+        column.appendChild(h1);
+        if (column_name == 'name') {
+            let names = window.innerWidth < 700 ? table_data.name : table_data['long-name'];
+            // console.log(names);
+            for (let name of Object.values(names)) {
+                let name_div = document.createElement('div');
+                name_div.classList.add('name', 'data');
+                for (let part of name) {
+                    let subname = document.createElement('p');
+                    subname.innerHTML = part;
+                    if (name.length == 1) {
+                        subname.classList.add('only-child')
+                    }
+                    name_div.appendChild(subname);
+                }
+                column.appendChild(name_div);
+            }
+        } else {
+            for (let item of column_values) {
+                let p = document.createElement('p');
+                p.classList.add('data');
+                p.innerHTML = info_format[column_name](item);
+                column.appendChild(p);
+            }
+        }
+        table.appendChild(column);
+    }
+
+
+}
+
+function sort_table(name) {
+    // console.log('name', name);
+    let order = name == 'name' ? Array.from(Array(29).keys()) : sort_indices([...table_data[name]], (a, b) => {
+        return a[0] < b[0] ? -1 : 1;
+    });
+
+    let table = document.getElementById('table');
+    let columns = table.getElementsByClassName('column');
+    for (let column of columns) {
+        let i = 0;
+        for (let t of column.getElementsByClassName('data')) {
+            t.style.order = order[i];
+            i += 1;
+        }
+    }
+}
+
+let on_resize_end = undefined;
 function reportWindowSize() {
     if (!document.getElementById('output-info-toggle').classList.contains('hide')) {
         resize_markers();
     }
+    if (on_resize_end) {
+        clearTimeout(on_resize_end);
+    }
+    on_resize_end = setTimeout(() => build_table(), 100);
 }
 
 window.onresize = reportWindowSize;
