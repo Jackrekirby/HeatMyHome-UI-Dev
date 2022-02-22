@@ -1,0 +1,110 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Sora", sans-serif;
+}
+
+#table {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.9rem;
+  text-align: center;
+  width: min(50rem, calc(100% - 1rem));
+  margin: min(1rem, 1%);
+}
+
+#table .column {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-bottom: 0.5rem;
+  border-bottom: 4px solid black;
+}
+
+#table .column p {
+  height: 1.1rem;
+}
+
+#table .name {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#table .name > p:first-child {
+  padding: 0rem 0.2rem;
+  min-width: 4rem;
+}
+
+#table .only-child {
+  width: 100%;
+  text-align: right;
+}
+
+#table h1 {
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+  width: 100%;
+  padding: min(1.2%, 1rem);
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 2rem;
+}
+
+#table .column:nth-of-type(1) {
+  border-left: 2px solid #00aeff;
+  border-bottom-color: #00aeff;
+}
+
+#table .column:nth-of-type(1) > h1 {
+  background-color: #00aeff;
+  border-color: #00aeff;
+}
+
+#table .column:nth-of-type(2) > h1 {
+  background-color: yellowgreen;
+  border-color: yellowgreen;
+}
+
+#table .column:nth-of-type(3) > h1 {
+  background-color: orangered;
+  border-color: orangered;
+}
+
+#table .column:nth-of-type(4) > h1 {
+  background-color: plum;
+  border-color: plum;
+}
+
+#table .column:nth-of-type(5) > h1 {
+  background-color: lightseagreen;
+  border-color: lightseagreen;
+}
+
+#table .column:nth-of-type(6) > h1 {
+  background-color: lightslategray;
+  border-color: lightslategray;
+}
+
+#table .column:nth-of-type(2) {
+  border-bottom-color: yellowgreen;
+}
+#table .column:nth-of-type(3) {
+  border-bottom-color: orangered;
+}
+#table .column:nth-of-type(4) {
+  border-bottom-color: plum;
+}
+#table .column:nth-of-type(5) {
+  border-bottom-color: lightseagreen;
+}
+
+#table .column:nth-of-type(6) {
+  border-bottom-color: lightslategray;
+  border-right: 2px solid lightslategray;
+}
