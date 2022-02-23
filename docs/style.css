@@ -748,3 +748,16 @@ section.education-options {
   background-size: 72px 72px;
   background-position: 0 0, 36px 36px;
 }
+
+/* #houses {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+} */
+
+#houses {
+  width: 100%;
+}
