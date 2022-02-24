@@ -652,6 +652,49 @@
         <div id="submit-complete" class="msg-box info hide">
           Simulation complete.
         </div>
+
+        <div id="input-box-load-results" class="action-row">
+          <label for="load-results">Upload Results</label>
+          <input
+            type="file"
+            id="load-results"
+            type="file"
+            class="hide"
+            accept=".json"
+          />
+          <div class="input-side-button" onclick="input_help('load-results')">
+            ?
+          </div>
+        </div>
+        <div id="help-load-results" class="msg-box info hide">
+          Once you have run a simulation, you can download your results and
+          reupload them to make use of the result exploration page.
+        </div>
+
+        <div id="input-box-save-url" class="action-row hide">
+          <button id="save-url" onclick="copy_input_url_to_clipboard();">
+            Copy Inputs as Link
+          </button>
+          <div class="input-side-button" onclick="input_help('save-url')">
+            ?
+          </div>
+        </div>
+        <div id="help-save-url" class="msg-box info hide">
+          Copy the input parameters as a link to allow you to load them back up
+          for later.
+        </div>
+
+        <div id="input-box-download-link" class="action-row hide">
+          <a id="download-link" href="">Download Results</a>
+          <div class="input-side-button" onclick="input_help('download-link')">
+            ?
+          </div>
+        </div>
+        <div id="help-download-link" class="msg-box info hide">
+          By downloading your results you can re-upload them at a later date to
+          explore.
+        </div>
+
         <div id="guide" class="msg-box info hide" onclick="guide_state(false);">
           Results Page Guide
         </div>
@@ -737,6 +780,7 @@
         </div>
       </div>
     </main>
+
     <div id="table-area" class="hide">
       <select id="sortby">
         <option value="name">System</option>

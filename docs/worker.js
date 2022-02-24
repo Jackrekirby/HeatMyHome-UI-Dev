@@ -32,10 +32,10 @@ async function submit_simulation(postcode, latitude, longitude, num_occupants, h
         const agile_tariff = await read_array(agile_tariff_file_path);
         const outside_temps = await read_array(outside_temps_file_path);
         const solar_irradiances = await read_array(solar_irradiances_file_path);
-        console.log("agile_tariff: ", agile_tariff);
+        // console.log("agile_tariff: ", agile_tariff);
         const result = run_simulation(thermostat_temperature, latitude, longitude, num_occupants,
             house_size, postcode, epc_space_heating, tes_volume_max, agile_tariff, outside_temps, solar_irradiances, enable_optimisation);
-        console.log(result);
+        // console.log(result);
         postMessage(result);
     } catch (error) {
         console.error('Rust-Sim-Error: ', error);

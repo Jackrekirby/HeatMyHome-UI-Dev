@@ -392,21 +392,21 @@ function submit_simulation() {
     }
 }
 
-setTimeout(() => {
-    input_values = {
-        'postcode': 'HP160LU',
-        'longitude': -1.5833,
-        'latitude': 52.3833,
-        'epc-space-heating': 3000.0,
-        'floor-area': 60.0,
-        'temperature': 20.0,
-        'occupants': 2,
-        'tes-volume': 0.5,
-        'run-on': 'client-rust',
-        'enable-optimisation': true,
-    }
-    submit_simulation_rust();
-}, 1000);
+// setTimeout(() => {
+//     input_values = {
+//         'postcode': 'HP160LU',
+//         'longitude': -1.5833,
+//         'latitude': 52.3833,
+//         'epc-space-heating': 3000.0,
+//         'floor-area': 60.0,
+//         'temperature': 20.0,
+//         'occupants': 2,
+//         'tes-volume': 0.5,
+//         'run-on': 'client-rust',
+//         'enable-optimisation': true,
+//     }
+//     submit_simulation_rust();
+// }, 1000);
 
 function submit_simulation_rust() {
     console.log('submit_simulation_rust');
@@ -444,14 +444,34 @@ function submit_simulation_rust() {
 
 }
 
-async function submit_simulation_server() {
-    let submit_input = document.getElementById("input-submit");
-    unhide_ids(['submit-waiting']);
-    hide_ids(['submit-complete']);
-    let input_names = {
+let input_url_names = {
+    'postcode': 'postcode',
+    'epc-space-heating': 'space_heating',
+    'floor-area': 'floor_area',
+    'temperature': 'temperature',
+    'occupants': 'occupants',
+    'tes-volume': 'tes_max',
+}
+
+let simulator_input_url = undefined;
+function generate_input_url() {
+    search = Array();
+    for (const [key, value] of Object.entries(input_url_names)) {
+        // console.log(key, value, input_values[key]);
+        search.push(`${value}=${input_values[key]}`);
+    }
+
+    simulator_input_url = location.protocol + '//' + location.host + location.pathname + `?${search.join('&')}`;
+    console.log('created-simulator-input-url: ', simulator_input_url);
+}
+
+let simulator_api_full_url = undefined;
+function generate_sim_api_url() {
+    search = Array();
+    let api_url_names = {
         'postcode': 'postcode',
-        'longitude': 'longitude',
         'latitude': 'latitude',
+        'longitude': 'longitude',
         'epc-space-heating': 'space_heating',
         'floor-area': 'floor_area',
         'temperature': 'temperature',
@@ -459,17 +479,98 @@ async function submit_simulation_server() {
         'tes-volume': 'tes_max',
     }
 
-    search = Array();
-    for (const [key, value] of Object.entries(input_names)) {
-        console.log(key, value, input_values[key]);
+    for (const [key, value] of Object.entries(api_url_names)) {
+        // console.log(key, value, input_values[key]);
         search.push(`${value}=${input_values[key]}`);
     }
 
-    const simulator_url = simulate_api_url + `?${search.join('&')}`;
-    console.log('simulator-api-url: ', simulator_url);
+    simulator_api_full_url = simulate_api_url + `?${search.join('&')}`;
+    console.log('created-simulator-api-url: ', simulator_api_full_url);
+}
+
+function copy_input_url_to_clipboard() {
+    console.log('copied-simulator-url: ', simulator_input_url);
+    navigator.clipboard.writeText(simulator_input_url);
+}
+
+let loading_inputs_from_url = false;
+load_inputs_from_url();
+function load_inputs_from_url() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (Array.from(urlParams.keys()).length > 0) {
+        let url_values = {
+            'postcode': undefined,
+            'epc-space-heating': undefined,
+            'floor-area': undefined,
+            'temperature': undefined,
+            'occupants': undefined,
+            'tes-volume': undefined,
+        }
+
+        for (const [form_name, url_name] of Object.entries(input_url_names)) {
+            const value = urlParams.get(url_name);
+            if (value) {
+                url_values[form_name] = value;
+            } else {
+                console.error("Not all parameters contained in url: ", url_name, value);
+                return;
+            }
+        }
+
+        loading_inputs_from_url = true;
+        for (let [key, value] of Object.entries(url_values)) {
+            let element = document.getElementById('input-' + key);
+            element.value = value;
+            get_check_input_fnc(key, true)();
+        }
+        unhide_pids(['box-epc-space-heating', 'box-floor-area']);
+
+        const url = location.protocol + '//' + location.host + location.pathname;
+        console.log('loaded url with parameters:', window.location.href)
+        window.history.replaceState({}, '', url);
+    }
+}
+
+function load_inputs_from_file(file_inputs) {
+    let file_values = {
+        'postcode': undefined,
+        'epc-space-heating': undefined,
+        'floor-area': undefined,
+        'temperature': undefined,
+        'occupants': undefined,
+        'tes-volume': undefined,
+    }
+
+    for (const name of Object.keys(file_values)) {
+        const value = file_inputs[name];
+        if (value) {
+            file_values[name] = value;
+        } else {
+            console.error("Not all parameters contained in file: ", name, value);
+            return;
+        }
+    }
+
+    loading_inputs_from_url = true;
+    for (let [key, value] of Object.entries(file_values)) {
+        let element = document.getElementById('input-' + key);
+        element.value = value;
+        get_check_input_fnc(key, true)();
+    }
+    unhide_pids(['box-epc-space-heating', 'box-floor-area']);
+
+    const url = location.protocol + '//' + location.host + location.pathname;
+    console.log('loaded url with parameters:', window.location.href)
+    window.history.replaceState({}, '', url);
+}
+
+async function submit_simulation_server() {
+    let submit_input = document.getElementById("input-submit");
+    unhide_ids(['submit-waiting']);
+    hide_ids(['submit-complete']);
 
     try {
-        const response = await fetch(simulator_url);
+        const response = await fetch(simulator_api_full_url);
         const json = await response.json();
         if (json['status'] == 200) {
             console.log('simulator-api-json:', json);
@@ -495,6 +596,35 @@ async function submit_simulation_server() {
     submit_input.classList.remove('active');
 }
 
+function create_simulation_output_file_download() {
+    let data = {
+        'inputs': input_values,
+        'outputs': output,
+    }
+    let txt = JSON.stringify(data, null, 2);
+    let blob = new Blob([txt], { type: "text/plain" });
+
+    let dlink = document.getElementById("download-link");
+    let url = window.URL.createObjectURL(blob);
+    dlink.href = url;
+    dlink.download = "heatninja.json";
+}
+
+function upload_results() {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        file_data = JSON.parse(this.result);
+        load_inputs_from_file(file_data.inputs);
+        output = file_data.outputs
+        console.log("Loaded data from file: ", file_data);
+        load_output();
+    }
+    reader.readAsText(this.files[0]);
+    this.value = null;
+}
+document.getElementById("load-results").addEventListener('change', upload_results, false);
+
+
 function check_submit() {
     let submit = true;
     for (let pid of input_id_list) {
@@ -505,6 +635,14 @@ function check_submit() {
             }
         }
     }
+    if (submit) {
+        generate_sim_api_url();
+        generate_input_url();
+        unhide_ids(['input-box-save-url']);
+    } else {
+        hide_ids(['input-box-save-url']);
+    }
+
     if (submit != submit_status) {
         submit_status = submit;
         // let submit_element = document.getElementById('submit-group');
@@ -733,6 +871,7 @@ function get_check_input_fnc(pid, apply_transform) {
             return async () => {
                 let searching = document.getElementById("postcode-searching");
                 unhide_elements([searching]);
+                invalidate_element(document.getElementById('input-postcode'));
                 await check_input("postcode",
                     (postcode) => { return postcode.toUpperCase().replace(/\s/g, '').substring(0, 7); },
                     [
@@ -749,13 +888,12 @@ function get_check_input_fnc(pid, apply_transform) {
                 } else if (epc_api_error) {
                     unhide_ids(['warn-postcode-epc-api']);
                 }
+                loading_inputs_from_url = false;
                 update_epc_urls();
             };
             break;
         case 'neighbour-postcode':
-            console.log("NEIGHBOUR POSTCODE VALIDATION");
             return async () => {
-                console.log("NEIGHBOUR POSTCODE VALIDATION", pid);
                 let searching = document.getElementById("neighbour-postcode-searching");
                 unhide_elements([searching]);
                 await check_input("neighbour-postcode",
@@ -870,7 +1008,7 @@ async function validate_neighbours_postcode(postcode) {
 let address_certificate_list = [];
 async function get_address_certificates(postcode) {
     address_certificate_list = [];
-    if (!scottish_postcode) {
+    if (!scottish_postcode && !loading_inputs_from_url) {
         const full_url = `${epc_api_url}?postcode=${postcode}`;
 
         try {
@@ -1885,7 +2023,8 @@ let chart = undefined;
 
 function load_output() {
     console.log('load_output');
-    unhide_ids(['output-info-toggle', 'output-info', 'table-area']);
+    create_simulation_output_file_download();
+    unhide_ids(['output-info-toggle', 'output-info', 'table-area', 'input-box-download-link']);
     build_system_menu();
     document.getElementById("y-param").selectedIndex = 1;
     const ctx = document.getElementById('chart').getContext('2d');

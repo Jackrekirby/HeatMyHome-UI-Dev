@@ -567,6 +567,43 @@ input.hide-spinner[type="number"] {
   text-decoration: none;
 }
 
+.action-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: flex-end;
+  align-content: center;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.action-row button,
+.action-row a,
+.action-row label {
+  border: 0;
+  outline: 0;
+  width: 15rem;
+  padding: 0.2rem 0rem;
+  border-radius: 0px;
+  box-shadow: none;
+  border: 2px solid var(--info-color);
+  background-color: transparent;
+  color: var(--info-color);
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.action-row button:hover,
+.action-row a:hover,
+.action-row label:hover {
+  background-color: var(--info-color);
+  border-color: var(--info-color);
+  color: white;
+}
+
 .hide {
   display: none;
 }
