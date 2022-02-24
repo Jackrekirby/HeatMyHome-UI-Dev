@@ -398,10 +398,10 @@ setTimeout(() => {
         'longitude': -1.5833,
         'latitude': 52.3833,
         'epc-space-heating': 3000.0,
-        'floor-area': 360.0,
+        'floor-area': 60.0,
         'temperature': 20.0,
         'occupants': 2,
-        'tes-volume': 3.0,
+        'tes-volume': 0.5,
         'run-on': 'client-rust',
         'enable-optimisation': true,
     }
