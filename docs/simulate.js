@@ -413,7 +413,8 @@ function submit_simulation_rust() {
     unhide_ids(['submit-waiting']);
     hide_ids(['submit-complete']);
     if (window.Worker) {
-        var worker = new Worker('./rust-simulator/worker.js', { type: "module" });
+        var worker = new Worker('./worker.js', { type: "module" });
+
         worker.onmessage = function (e) {
             if (!e.data) {
                 console.error("Rust simulator failed: ", e.data);

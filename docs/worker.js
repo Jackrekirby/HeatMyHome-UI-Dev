@@ -22,7 +22,7 @@ async function submit_simulation(postcode, latitude, longitude, num_occupants, h
     try {
         await init();
         console.log(postcode, latitude, longitude, num_occupants, house_size, thermostat_temperature, epc_space_heating, tes_volume_max);
-        const ASSETS_DIR = "./assets/";
+        const ASSETS_DIR = "./rust-assets/";
         const agile_tariff_file_path = ASSETS_DIR + "agile_tariff.csv";
         const outside_temps_file_path = ASSETS_DIR + "outside_temps/" + build_file_path(latitude, longitude);
         const solar_irradiances_file_path = ASSETS_DIR + "solar_irradiances/" + build_file_path(latitude, longitude);
