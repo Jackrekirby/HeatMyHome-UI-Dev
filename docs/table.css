@@ -139,3 +139,7 @@
   align-items: center;
   height: max-content;
 }
+
+#table-area.hide {
+  display: none;
+}
