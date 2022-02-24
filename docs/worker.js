@@ -1,5 +1,5 @@
 // import init, { run_simulation } from "../../rust_simulator/assets";
-import init, { run_simulation } from "./pkg/sim_lib.js";
+// import init, { run_simulation } from "./pkg/sim_lib.js";
 // import init, { run_simulation } from "../../../wasm_website/rust_simulator/pkg/sim_lib.js";
 // ..//rust_simulator/pkg/rust_simulator.js
 
@@ -20,7 +20,7 @@ async function read_array(filepath) {
 
 async function submit_simulation(postcode, latitude, longitude, num_occupants, house_size, thermostat_temperature, epc_space_heating, tes_volume_max, enable_optimisation) {
     try {
-        await init();
+        // await init();
         console.log(postcode, latitude, longitude, num_occupants, house_size, thermostat_temperature, epc_space_heating, tes_volume_max);
         const ASSETS_DIR = "./rust-assets/";
         const agile_tariff_file_path = ASSETS_DIR + "agile_tariff.csv";
@@ -32,8 +32,8 @@ async function submit_simulation(postcode, latitude, longitude, num_occupants, h
         const agile_tariff = await read_array(agile_tariff_file_path);
         const outside_temps = await read_array(outside_temps_file_path);
         const solar_irradiances = await read_array(solar_irradiances_file_path);
-        const result = run_simulation(thermostat_temperature, latitude, longitude, num_occupants,
-            house_size, postcode, epc_space_heating, tes_volume_max, agile_tariff, outside_temps, solar_irradiances, enable_optimisation);
+        // const result = run_simulation(thermostat_temperature, latitude, longitude, num_occupants,
+        //     house_size, postcode, epc_space_heating, tes_volume_max, agile_tariff, outside_temps, solar_irradiances, enable_optimisation);
         console.log(result);
         postMessage(result);
     } catch (error) {
