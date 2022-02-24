@@ -607,7 +607,7 @@ function create_simulation_output_file_download() {
     let dlink = document.getElementById("download-link");
     let url = window.URL.createObjectURL(blob);
     dlink.href = url;
-    dlink.download = "heatninja.json";
+    dlink.download = "HeatMyHome.txt";
 }
 
 function upload_results() {
