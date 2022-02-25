@@ -1,3 +1,13 @@
+// GUIDE
+// This file contains the js code for the simulator page, of which there are 4 parts:
+// UI
+// Input Form
+// Graphical Results Elements
+// Tabular Results Elements
+
+console.log('simulate.js loaded');
+
+// UI 
 function toggle_nav_menu() {
     console.log("toggle nav menu");
     let menu = document.getElementById("nav-menu");
@@ -21,7 +31,6 @@ function toggle_nav_menu() {
     }
 }
 
-console.log('index.js loaded');
 // ---- SIMULATION INPUTS
 // -- this section includes the code for the functionality of the simulation inputs
 
@@ -1196,7 +1205,6 @@ function update_neighbours_epc_urls() {
     }
 }
 
-
 // GRAPHICAL OUTPUT MENU
 
 let output = undefined;
@@ -1266,10 +1274,10 @@ const solar_markers = {
 const subsystem_help_links = {
     'none': `None`,
     'photovoltaic': `<a href="education/solar-technologies.html#pv-panels" target="_blank" rel="noopener noreferrer">Photovoltaic Panels</a>`,
-    'flat-plate': `<a href="education/solar-technologies.html#flat-plate" target="_blank" rel="noopener noreferrer">Flat Plate</a>`,
-    'evacuated-tube': `<a href="education/solar-technologies.html#evacuated-tube" target="_blank" rel="noopener noreferrer">Evacuate Tube</a>`,
-    'flat-plate-and-photovoltaic': `<a href="education/solar-technologies.html#pv-panels" target="_blank" rel="noopener noreferrer">Photovoltaic Panels</a> & <a href="education/solar-technologies.html#flat-plate" target="_blank" rel="noopener noreferrer">Flat Plate</a>`,
-    'evacuated-tube-and-photovoltaic': '<a href="education/solar-technologies.html#pv-panels" target="_blank" rel="noopener noreferrer">Photovoltaic Panels</a> & <a href="education/solar-technologies.html#evacuated-tube" target="_blank" rel="noopener noreferrer">Evacuate Tube</a>',
+    'flat-plate': `<a href="education/solar-technologies.html#flat-plate" target="_blank" rel="noopener noreferrer">Flat Plate Solar Thermal Collectors</a>`,
+    'evacuated-tube': `<a href="education/solar-technologies.html#evacuated-tube" target="_blank" rel="noopener noreferrer">Evacuated Tube Solar Thermal Collectors</a>`,
+    'flat-plate-and-photovoltaic': `<a href="education/solar-technologies.html#pv-panels" target="_blank" rel="noopener noreferrer">Photovoltaic Panels</a> & <a href="education/solar-technologies.html#flat-plate" target="_blank" rel="noopener noreferrer">Flat Plate  Solar Thermal Collectors</a>`,
+    'evacuated-tube-and-photovoltaic': '<a href="education/solar-technologies.html#pv-panels" target="_blank" rel="noopener noreferrer">Photovoltaic Panels</a> & <a href="education/solar-technologies.html#evacuated-tube" target="_blank" rel="noopener noreferrer">Evacuated Tube  Solar Thermal Collectors</a>',
     'photovoltaic-thermal-hybrid': `<a href="education/solar-technologies.html#pvt" target="_blank" rel="noopener noreferrer">Photovoltaic-Thermal-Hybrid</a>`,
     'green': 'Green',
     'blue': 'Blue',
@@ -1999,7 +2007,10 @@ let config = {
                         if (context.dataset.data.length == 1) {
                             return `${display_names[context.dataset.label]}`
                         } else {
-                            return `${display_names[context.dataset.label]}, ${display_names[Object.keys(output.systems[context.dataset.label])[context.dataIndex]]}`
+                            //console.log(display_names, output.systems, context.dataset.label, context.dataIndex);
+                            //console.log(full_order[context.dataset.label][context.dataIndex], display_names[full_order[context.dataset.label][context.dataIndex]]);
+                            //return `${display_names[context.dataset.label]}, ${display_names[Object.keys(output.systems[context.dataset.label])[context.dataIndex]]}`
+                            return `${display_names[context.dataset.label]}, ${display_names[full_order[context.dataset.label][context.dataIndex]]}`
                         }
 
                     }
