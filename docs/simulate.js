@@ -394,6 +394,7 @@ function submit_simulation() {
                 submit_simulation_rust();
                 break;
             case 'client-cpp':
+                submit_simulation_cpp();
                 break;
         }
     } else {
@@ -416,6 +417,41 @@ function submit_simulation() {
 //     }
 //     submit_simulation_rust();
 // }, 1000);
+
+function submit_simulation_cpp() {
+    console.log('submit_simulation_cpp');
+    unhide_ids(['submit-waiting']);
+    hide_ids(['submit-complete']);
+    if (window.Worker) {
+        var worker_cpp = new Worker('./worker_cpp.js');
+
+        worker_cpp.onmessage = function (e) {
+            if (!e.data) {
+                console.error("Cpp simulator failed: ", e.data);
+                unhide_ids(['warn-sim-cpp-error']);
+            } else {
+                worker_cpp.terminate();
+                clearTimeout(simulation_timeout);
+                console.log('simulator-cpp-json:', JSON.parse(e.data));
+                unhide_ids(['submit-complete']);
+                hide_ids(['guide']);
+                output = JSON.parse(e.data);
+                load_output();
+            }
+            hide_ids(['submit-waiting']);
+            document.getElementById("input-submit").classList.remove('active');
+        }
+        let simulation_timeout = setTimeout(() => {
+            console.error("Rust simulator exceeded time limit");
+            hide_ids(['submit-waiting', 'warn-sim-client-timeout']);
+            document.getElementById("input-submit").classList.remove('active');
+        }, 120000);
+        worker_cpp.postMessage(input_values);
+    } else {
+        console.error("Rust-Sim-Worker-Unsupported");
+        unhide_ids(['warn-sim-client-worker']);
+    }
+}
 
 function submit_simulation_rust() {
     console.log('submit_simulation_rust');
@@ -442,15 +478,14 @@ function submit_simulation_rust() {
         }
         let simulation_timeout = setTimeout(() => {
             console.error("Rust simulator exceeded time limit");
-            hide_ids(['submit-waiting', 'warn-sim-rust-timeout']);
+            hide_ids(['submit-waiting', 'warn-sim-client-timeout']);
             document.getElementById("input-submit").classList.remove('active');
         }, 120000);
         worker.postMessage(input_values);
     } else {
         console.error("Rust-Sim-Worker-Unsupported");
-        unhide_ids(['warn-sim-rust-worker']);
+        unhide_ids(['warn-sim-client-worker']);
     }
-
 }
 
 let input_url_names = {

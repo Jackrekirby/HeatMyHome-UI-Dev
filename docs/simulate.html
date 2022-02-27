@@ -628,18 +628,29 @@
           to report the problem.
         </div>
 
+        <div id="warn-sim-cpp-error" class="msg-box warn hide click-dismiss">
+          An unexpected error occured running the simulator using client side
+          C++. If the problem persists please <a href="">contact us</a> to
+          report the problem.
+        </div>
         <div id="warn-sim-rust-error" class="msg-box warn hide click-dismiss">
           An unexpected error occured running the simulator using client side
           Rust. If the problem persists please <a href="">contact us</a> to
           report the problem.
         </div>
-        <div id="warn-sim-rust-timeout" class="msg-box warn hide click-dismiss">
+        <div
+          id="warn-sim-client-timeout"
+          class="msg-box warn hide click-dismiss"
+        >
           The simulation exceeded the maximum allotted runtime of 2 minutes.
           This could be due to device performance and compatitibility, or not
           using surface optimisation for simulations with a large floor area and
           maximum water tank volume.
         </div>
-        <div id="warn-sim-rust-worker" class="msg-box warn hide click-dismiss">
+        <div
+          id="warn-sim-client-worker"
+          class="msg-box warn hide click-dismiss"
+        >
           Your browser does not seem to support JavaScript WebWorkers. Please
           switch to a
           <a

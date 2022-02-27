@@ -37,30 +37,30 @@
         </div>
       </section>
       <section class="education-options flex row wrap">
-        <div class="heat-option grow" onclick="show_education_slide(0);" >
+        <div class="heat-option grow" onclick="show_education_slide(0);">
           <div class="img">postcode</div>
           <h2>Postcode</h2>
         </div>
-        <div class="heat-option" onclick="show_education_slide(1);" >
+        <div class="heat-option" onclick="show_education_slide(1);">
           <div class="img">address</div>
           <h2>Address</h2>
         </div>
-        <div class="heat-option" onclick="show_education_slide(2);" >
+        <div class="heat-option" onclick="show_education_slide(2);">
           <div class="img">temp</div>
           <h2>Thermostat<br />Temperature</h2>
         </div>
-        <div class="heat-option" onclick="show_education_slide(3);" >
+        <div class="heat-option" onclick="show_education_slide(3);">
           <div class="img">floor area</div>
           <h2>Floor<br />Area</h2>
         </div>
-        <div class="heat-option" onclick="show_education_slide(4);" >
+        <div class="heat-option" onclick="show_education_slide(4);">
           <div class="img">epc</div>
           <h2>
             EPC Space<br />
             Heating
           </h2>
         </div>
-        <div class="heat-option" onclick="show_education_slide(5);" >
+        <div class="heat-option" onclick="show_education_slide(5);">
           <div class="img">tes</div>
           <h2>
             Thermal <br />
@@ -79,31 +79,39 @@
             </p>
             <p>
               If you are located in an area with below UK average yearly
-              temperatures and solar irradiance (sunlight) the heating appliances
-              will require more energy to heat your home, and the photovoltaic
-              panels will generate less energy per unit area.
+              temperatures and solar irradiance (sunlight) the heating
+              appliances will require more energy to heat your home, and the
+              photovoltaic panels will generate less energy per unit area.
             </p>
           </div>
           <div class="hide">
             <h1>Address</h1>
             <p>
-              Your address is needed to allow us to automatically find your homes
-              floor area and Energy Performance Certificate (EPC).
+              Your address is needed to allow us to automatically find your
+              home's floor area and yearly space heating energy usage, which can
+              be found on your home's Energy Performance Certificate (EPC).
             </p>
             <p>
-              This can be found automatically only if you live in England or
-              Wales. To find your Energy Performance Certificate manually
-              (required for addresses located in Scotland) check out the
+              This can be found automatically only if you live in England, Wales
+              or Northern Ireland. To find your Energy Performance Certificate
+              manually (required for addresses located in Scotland) check out
+              the
               <a href="https://www.gov.uk/find-energy-certificate"
                 >UK government website</a
               >.
+            </p>
+            <p>
+              In the case your home's EPC certificate does not contain either a
+              floor area or space heating estimate you can either enter it
+              manually or select a neighbour's address whose home is of similar
+              size to your and has similar heating requirements.
             </p>
           </div>
           <div class="hide">
             <h1>Thermostat Temperature</h1>
             <p>
-              The temperature which you like your home at, in degrees Celcius, is
-              used when simulating heating technologies for your home.
+              The temperature which you like your home at, in degrees Celcius,
+              is used when simulating heating technologies for your home.
             </p>
             <p>
               Setting a higher thermostat temperature will require more energy,
@@ -113,38 +121,79 @@
           </div>
           <div class="hide">
             <h1>Floor Area</h1>
-            <p>
-              Your floor area, in units of meters squared, is used to estimate several factors about your home including:
+            <section>
+              Your floor area, in units of meters squared, is used to estimate
+              several factors about your home including:
               <ol>
-                <li>The maximum number of solar panels your roof could support.</li>
-                <li>The number of windows your home has, which affect your homes heating requirements.</li>
-                <li>The amount of air in your home which has to be heating to your desired thermostat temperature.</li>
-                </ol>
-              </p>
-            <p>Don't worry if you don't know your homes floor area, we automatically find it for you when you enter your address.</p>
+                <li>
+                  The maximum number of solar panels and/or solar thermal
+                  collectors your roof could support.
+                </li>
+                <li>
+                  The amount of air in your home which has to be heating to your
+                  desired thermostat temperature.
+                </li>
+              </ol>
+            </section>
+            <p>
+              Don't worry if you don't know your homes floor area, we
+              automatically find it for you when you enter your address.
+            </p>
           </div>
           <div class="hide">
             <h1>EPC Space Heating</h1>
             <p>
-              An Energy Performance Certificate tells you on a scale of A-G, the energy efficiency of your home. 
-              They were introduced in 2007 as a legal requirement for any building sold, letted or constructed and are valid for 10 years. 
+              An Energy Performance Certificate tells you on a scale of A-G, the
+              energy efficiency of your home. They were introduced in 2007 as a
+              legal requirement for any building sold, let or constructed and
+              are valid for 10 years. To find your home's Energy Performance
+              Certificate check out the
+              <a href="https://www.gov.uk/find-energy-certificate"
+                >UK government website</a
+              >. The most efficient homes are in band A, but the average UK home
+              is between band D-E. Find out more information
+              <a
+                href="https://www.elmhurstenergy.co.uk/help-support/what-is-an-epc"
+                >here</a
+              >.
             </p>
-            <p>The most efficient homes are in band A, but the average UK home is between band D-E. Find out more information <a href="https://www.elmhurstenergy.co.uk/help-support/what-is-an-epc">here</a>.</p>
-            <p>An Energy Performance Certificate provides a Space Heating value, which is an estimate of how much energy is requires to heat your home. We use this value to simulate heating your home.</p>
+            <p>
+              An Energy Performance Certificate provides a Space Heating value,
+              which is an estimate of how much energy is requires to heat your
+              home. We use this value to simulate heating your home.
+            </p>
+
+            <p>
+              If your home has a low efficiency, below rating D, it is strongly
+              recommended to improve this before considering changing to a
+              low-carbon heating technology. Your Energy Performance Certificate
+              even provides specific recommendations on how you can improve your
+              home's energy efficiency, the cost of those improvements and how
+              much it could save you on your energy bill.
+            </p>
           </div>
           <div class="hide">
             <h1>Thermal Energy Storage Size</h1>
             <p>
-              Thermal Energy Storage (TES) simply refers to your hot water tank. Other methods of storing thermal energy do exist, but a hot water tank is the most commmon option and is the one used for simulations.
+              Thermal Energy Storage (TES) simply refers to your hot water tank.
+              Other methods of storing thermal energy do exist, but a hot water
+              tank is the most common option and is the one used for
+              simulations.
             </p>
             <p>
-              A larger TES volume, in units of meters cubed, allows your heating system to prepare hot water in advance. 
-              This is beneficial as it allows your heating system to heat the hot water tank at off-peak electricity times (often overnight), 
-              rather than heat water on demand, which is often at peak times, when electricity costs are highest. 
+              A larger TES volume, in units of meters cubed, allows your heating
+              system to prepare hot water in advance. This is beneficial as it
+              allows your heating system to heat the hot water tank at off-peak
+              electricity times (often overnight), rather than heat water on
+              demand, which is often at peak times, when electricity costs are
+              highest.
             </p>
-            <p>The cost of electricity 
-              during peak and off-peak times depends on the type of tariff you have. This is why we simute 5 different electricity tariffs 
-              and tell you the best tariff for each heating system.</p>
+            <p>
+              The cost of electricity during peak and off-peak times depends on
+              the type of tariff you have. This is why we simute 5 different
+              electricity tariffs and tell you the best tariff for each heating
+              system.
+            </p>
           </div>
         </section>
       </div>

@@ -1,6 +1,6 @@
 main {
   min-height: calc(100% - 4rem);
-  justify-content: space-between;
+  justify-content: center;
 }
 
 section {
