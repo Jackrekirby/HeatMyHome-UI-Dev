@@ -793,14 +793,70 @@
     </main>
 
     <div id="table-area" class="hide">
-      <select id="sortby" class="hide">
-        <option value="name">System</option>
-        <option value="thermal-energy-storage-volume">Water Tank Volume</option>
-        <option value="capital-expenditure">Upfront Cost</option>
-        <option value="operational-expenditure">Yearly Cost</option>
-        <option value="net-present-cost">Lifetime Cost</option>
-        <option value="operational-emissions">Yearly Emissions</option>
-      </select>
+      <div id="table-key">
+        <h1 id="key-header">Table Key</h1>
+        <div id="key-inner">
+          <div>
+            <h1>Heat Technologies</h1>
+            <div class="key-row">
+              <label>EB</label>
+              <p>Electric Boiler</p>
+            </div>
+            <div class="key-row">
+              <label>ASHP</label>
+              <p>Air Source Heat Pump</p>
+            </div>
+            <div class="key-row">
+              <label>GSHP</label>
+              <p>Ground Source Heat Pump</p>
+            </div>
+            <div class="key-row">
+              <label>H<sub>2</sub>B</label>
+              <p>Hydrogen Boiler</p>
+            </div>
+            <div class="key-row">
+              <label>H<sub>2</sub>FC</label>
+              <p>Hydrogen Fuel Cell</p>
+            </div>
+          </div>
+          <div>
+            <h1>Solar Ancilleries</h1>
+            <div class="key-row hide-mobile">
+              <label>PV</label>
+              <p>Photovolatic Panels</p>
+            </div>
+            <div class="key-row show-mobile">
+              <label>PV<sub>2</sub></label>
+              <p>2 m<sup>2</sup> of Photovolatic Panels</p>
+            </div>
+            <div class="key-row">
+              <label>ET</label>
+              <p>Evacuated Tube Collectors</p>
+            </div>
+            <div class="key-row">
+              <label>FP</label>
+              <p>Flat Plate Collectors</p>
+            </div>
+            <div class="key-row">
+              <label>PVT</label>
+              <p>Photovolatic-Thermal Hybrid</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="sortby-row">
+        <label>Sort By</label>
+        <select id="sortby" class="" onclick="onchange_sortby();">
+          <option value="name">System</option>
+          <option value="thermal-energy-storage-volume">
+            Water Tank Volume
+          </option>
+          <option value="capital-expenditure">Upfront Cost</option>
+          <option value="operational-expenditure">Yearly Cost</option>
+          <option value="net-present-cost">Lifetime Cost</option>
+          <option value="operational-emissions">Yearly Emissions</option>
+        </select>
+      </div>
       <div id="table"></div>
     </div>
     <footer class="flex">
