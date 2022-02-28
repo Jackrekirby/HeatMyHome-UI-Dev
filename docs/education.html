@@ -30,6 +30,7 @@
     </nav>
     <div class="nav-buffer"></div>
     <main class="flex education-main">
+      <img id="edu-bg-img" src="./images/education3.svg" alt="" />
       <div class="max-width flex row wrap">
         <div class="card flex column">
           <div class="img">heat tech</div>
@@ -118,6 +119,37 @@
         .getElementById("nav-menu")
         .getElementsByTagName("a")[2]
         .classList.add("showing");
+
+      // let element = document.getElementsByClassName("education-main")[0];
+      // let bg_img = document.getElementById("edu-bg-img");
+      // let main_height = element.offsetHeight;
+      // function reportWindowSize() {
+      //   if (element.offsetHeight != main_height) {
+      //     main_height = element.offsetHeight;
+      //     console.log(element.offsetHeight);
+      //     bg_img.style.height = main_height;
+      //   }
+      // }
+      // window.onresize = reportWindowSize;
+
+      // let offset = element.getBoundingClientRect().top;
+      // window.addEventListener("scroll", () => {
+      //   let aa = `translateX(${Math.min(
+      //     -40,
+      //     Math.max(
+      //       -60,
+      //       Math.abs(element.getBoundingClientRect().top - offset) / 5 - 60
+      //     )
+      //   )}%)`;
+      //   console.log(
+      //     window.scrollY,
+      //     document.body.offsetHeight,
+      //     element.getBoundingClientRect().top,
+      //     element.getBoundingClientRect().bottom,
+      //     aa
+      //   );
+      //   bg_img.style.transform = aa;
+      // });
     </script>
   </body>
 </html>
