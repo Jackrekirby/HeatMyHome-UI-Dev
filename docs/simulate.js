@@ -443,9 +443,10 @@ function submit_simulation_cpp() {
         }
         let simulation_timeout = setTimeout(() => {
             console.error("Rust simulator exceeded time limit");
-            hide_ids(['submit-waiting', 'warn-sim-client-timeout']);
+            hide_ids(['submit-waiting']);
+            unhide_ids(['warn-sim-client-timeout']);
             document.getElementById("input-submit").classList.remove('active');
-        }, 120000);
+        }, 600000);
         worker_cpp.postMessage(input_values);
     } else {
         console.error("Rust-Sim-Worker-Unsupported");
@@ -478,9 +479,10 @@ function submit_simulation_rust() {
         }
         let simulation_timeout = setTimeout(() => {
             console.error("Rust simulator exceeded time limit");
-            hide_ids(['submit-waiting', 'warn-sim-client-timeout']);
+            hide_ids(['submit-waiting']);
+            unhide_ids(['warn-sim-client-timeout']);
             document.getElementById("input-submit").classList.remove('active');
-        }, 120000);
+        }, 600000);
         worker.postMessage(input_values);
     } else {
         console.error("Rust-Sim-Worker-Unsupported");
