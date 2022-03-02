@@ -770,9 +770,14 @@ section.education-options {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 50%;
   opacity: 0.8;
   z-index: -1;
   overflow: hidden;
+}
+
+#edu-bg-img.left {
+  object-position: 0% 50%;
 }
 
 .education-main {
