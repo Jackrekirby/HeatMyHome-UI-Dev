@@ -20,6 +20,7 @@ async function read_array(filepath) {
 
 async function submit_simulation(postcode, latitude, longitude, num_occupants, house_size, thermostat_temperature, epc_space_heating, tes_volume_max, enable_optimisation) {
     try {
+        const t0 = performance.now();
         await init();
         console.log(postcode, latitude, longitude, num_occupants, house_size, thermostat_temperature, epc_space_heating, tes_volume_max);
         const ASSETS_DIR = "./rust-assets/";
@@ -36,6 +37,8 @@ async function submit_simulation(postcode, latitude, longitude, num_occupants, h
         const result = run_simulation(thermostat_temperature, latitude, longitude, num_occupants,
             house_size, postcode, epc_space_heating, tes_volume_max, agile_tariff, outside_temps, solar_irradiances, enable_optimisation);
         // console.log(result);
+        const t1 = performance.now();
+        console.log(`Rust-Sim-Runtime: ${t1 - t0} ms`);
         postMessage(result);
     } catch (error) {
         console.error('Rust-Sim-Error: ', error);

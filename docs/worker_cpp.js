@@ -9,11 +9,14 @@ function submit_simulation(inputs) {
 
     // inputs = ["CV47AL", 52.3833, -1.5833, 2, 60, 20, 3000, 0.5, true];
     try {
+        const t0 = performance.now();
         Module.onRuntimeInitialized = () => {
             let result = Module.ccall('run_simulation', // name of C function
                 'string', // return type
                 ['string', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'bool'], // argument types
                 inputs); // arguments
+            const t1 = performance.now();
+            console.log(`Cpp-Sim-Runtime: ${t1 - t0} ms`);
             postMessage(result);
         };
     }
