@@ -1389,7 +1389,7 @@ function set_system_visibility() {
     for (const [system_name, is_visible] of Object.entries(system_visible)) {
         let parent = document.getElementById('system-' + system_name);
         if (!is_visible) {
-            parent.getElementsByClassName('header')[0].getElementsByClassName('show')[0].src = './assets/hidden.png';
+            parent.getElementsByClassName('header')[0].getElementsByClassName('show')[0].src = './images/hidden.png';
             chart.data.datasets[system_order.indexOf(system_name)].hidden = true;
         }
     }
@@ -1432,12 +1432,12 @@ function build_parent_header(system_name, color) {
     }
 
     let visible_img = document.createElement('img');
-    visible_img.src = "./assets/visible.png";
+    visible_img.src = "./images/visible.png";
     visible_img.classList.add('show');
     visible_img.addEventListener('click', (event) => {
         event.stopPropagation();
         if (visible_img.src.endsWith("hidden.png")) {
-            visible_img.src = "./assets/visible.png";
+            visible_img.src = "./images/visible.png";
             // console.log("show: ", visible_img.parentElement.parentElement.id);
 
             let system_name = visible_img.parentElement.parentElement.id.substr(7);
@@ -1447,7 +1447,7 @@ function build_parent_header(system_name, color) {
             apply_limits();
             chart.update();
         } else {
-            visible_img.src = "./assets/hidden.png";
+            visible_img.src = "./images/hidden.png";
             // console.log("hide: ", visible_img.parentElement.parentElement.id);
             let system_name = visible_img.parentElement.parentElement.id.substr(7);
             // console.log(system_name);
@@ -1479,7 +1479,7 @@ function build_child_header(subsystem_name, shape, color) {
     header_div.addEventListener('click', (event) => { toggle_expand_child_direct(header_div) });
 
     let marker_img = document.createElement('img');
-    marker_img.src = `./assets/${shape}-${color}.png`;
+    marker_img.src = `./images/${shape}-${color}.png`;
     marker_img.classList.add('marker');
 
     let name_div = document.createElement('div');
@@ -1733,7 +1733,7 @@ function load_images(color) {
             marker_images[name] = new Image(marker_img_size, marker_img_size);
         }
 
-        marker_images[name].src = `./assets/${name}-${color}.png`
+        marker_images[name].src = `./images/${name}-${color}.png`
     }
     return marker_images;
 }
