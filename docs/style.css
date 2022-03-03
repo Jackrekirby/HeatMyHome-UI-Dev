@@ -324,6 +324,11 @@ nav a:hover,
   margin-left: 3rem;
 }
 
+#home-img {
+  width: 40rem;
+  margin-left: 3rem;
+}
+
 /* home-our-cards */
 
 #home-our-cards {

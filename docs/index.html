@@ -3,6 +3,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="index.css" />
     <title>HeatMyHome</title>
@@ -13,7 +14,7 @@
         <div>
           <img src="./images/logo.svg" alt="HeatMyHome" />
         </div>
-        <div class="title">HeatMyHome | 0.47</div>
+        <div class="title">HeatMyHome | 0.48</div>
         <div class="mobile title">HeatMyHome</div>
         <div id="nav-menu" class="flex row">
           <a href="./">Home</a>
@@ -45,7 +46,8 @@
             </p>
             <a href="./simulate.html" class="button"> Find your solution </a>
           </div>
-          <img id="home-img" src="./images/homepage_house.svg" />
+          <img id="home-img2" src="./images/homepage_house.svg" />
+          <div id="home-img"></div>
         </div>
         <h3>Take-A-Tour</h3>
       </section>
@@ -129,6 +131,16 @@
         .getElementById("nav-menu")
         .getElementsByTagName("a")[0]
         .classList.add("showing");
+
+      let animation = bodymovin.loadAnimation({
+        // animationData: { /* ... */ },
+        container: document.getElementById("home-img"), // required
+        path: "./images/house_animation.json", // required
+        renderer: "svg", // required
+        loop: true, // optional
+        autoplay: true, // optional
+        name: "Demo Animation", // optional
+      });
     </script>
   </body>
 </html>

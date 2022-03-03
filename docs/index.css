@@ -87,6 +87,11 @@ main {
     width: 20rem;
   }
 
+  #home-img {
+    margin-top: 1rem;
+    width: 20rem;
+  }
+
   #home-discover h3 {
     font-size: 1.5rem;
   }
