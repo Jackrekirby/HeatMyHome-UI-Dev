@@ -332,6 +332,10 @@ nav a:hover,
 /* home-our-cards */
 
 #home-our-cards {
+  width: 100%;
+  height: fit-content;
+}
+#home-our-cards .card-group {
   justify-content: space-evenly;
   padding: 1rem 0rem;
   max-width: 80rem;
@@ -784,6 +788,20 @@ section.education-options {
   opacity: 1;
   z-index: -1;
   overflow: hidden;
+}
+
+#card-bg-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) scaleY(-1);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  z-index: -1;
+  overflow: hidden;
+  object-position: 50% 100%;
 }
 
 #edu-bg-img.left {

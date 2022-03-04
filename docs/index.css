@@ -9,10 +9,12 @@
 }
 
 #home-our-cards {
+  position: relative;
   background: transparent;
 }
 
 main {
+  position: relative;
   background-color: transparent;
 }
 
@@ -28,8 +30,20 @@ main {
   max-width: 35rem;
 }
 
-.divider {
+.divider-group {
   width: min(80%, 100rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider-group h3 {
+  text-align: center;
+}
+
+.divider {
+  width: 100%;
   height: 1px;
   background-color: #024557;
 }
