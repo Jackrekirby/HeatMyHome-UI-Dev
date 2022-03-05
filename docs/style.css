@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700;800&display=swap");
 
+/* @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Sora:wght@100;200;300;400;500;600;700;800&display=swap"); */
+
 /* sections
     globals
     nav
@@ -325,8 +327,14 @@ nav a:hover,
 }
 
 #home-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 40rem;
   margin-left: 3rem;
+  margin: 0;
+  padding: 0;
 }
 
 /* home-our-cards */
