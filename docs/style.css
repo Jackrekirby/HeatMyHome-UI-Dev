@@ -843,3 +843,40 @@ section.education-options {
   opacity: 1;
   z-index: -1;
 } */
+
+.nav-group {
+  margin: 1rem 0rem;
+  width: min(50rem, 80%);
+  justify-content: space-evenly;
+  min-height: 10rem;
+}
+
+.nav-group a {
+  text-decoration: none;
+  color: black;
+}
+
+.mini-card {
+  width: 6rem;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0rem 1rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.mini-card:hover {
+  transform: scale(1.1);
+}
+
+.mini-card img {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
