@@ -682,14 +682,24 @@ section.education-options {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
+.card.a96 {
+  background-color: rgba(255, 255, 255, 0.96);
+}
+
 .card .img {
   width: 8rem;
   height: 8rem;
 }
+
 .card img {
   width: 12rem;
   height: 12rem;
   border: 2px solid lightgray;
+}
+
+.card img.med {
+  width: 10rem;
+  height: 10rem;
 }
 
 .card h2 {
