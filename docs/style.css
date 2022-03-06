@@ -66,8 +66,13 @@ body {
 }
 
 main {
+  position: relative;
   width: 100%;
   justify-content: space-evenly;
+}
+
+main.hfull {
+  min-height: calc(100% - 4rem);
 }
 
 section {
@@ -110,7 +115,7 @@ button:hover {
 }
 
 .max-width {
-  width: min(80rem, 100%);
+  width: min(100rem, 100%);
   justify-content: space-between;
 }
 
@@ -516,11 +521,11 @@ footer .box {
 
 section.education-introduction {
   justify-content: center;
-  background-color: var(--white);
+  /* background-color: var(--white); */
 }
 
 section.education-introduction > div {
-  max-width: 50rem;
+  max-width: 60rem;
   min-width: 20rem;
   padding: 0.5rem 1.5rem;
   text-align: center;
@@ -528,13 +533,14 @@ section.education-introduction > div {
 
 section.education-options {
   justify-content: center;
-  background-color: var(--white);
+  /* background-color: var(--white); */
   padding: 1rem 0rem;
 }
 
 .heat-option {
   width: 9rem;
-  border: 1px solid var(--dark-accent);
+  border: 2px solid var(--dark-accent);
+  background-color: rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -543,6 +549,11 @@ section.education-options {
   margin: 0.5rem 0.5rem;
   padding: 0.5rem 0rem;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.heat-option.grow {
+  transform: scale(1.1);
 }
 
 .heat-option img {
@@ -569,18 +580,19 @@ section.education-options {
   border: 2px solid #024557;
   margin: 1rem;
   padding: 1rem;
-  width: min(50rem, 80%);
+  width: 100%;
   min-height: 20rem;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 #education-slides > * {
   padding: 0.5rem;
 }
 
-.education-options .grow {
+/* .education-options .grow {
   animation: grow 0.5s;
   animation-fill-mode: forwards;
-}
+} */
 
 .education-options .img {
   width: 6.5rem;
