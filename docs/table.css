@@ -5,13 +5,19 @@
   font-family: "Sora", sans-serif;
 }
 
+:root {
+  --translucent-color: rgba(255, 255, 255, 0.7);
+}
+
 #table {
   display: flex;
   flex-direction: row;
   font-size: 0.9rem;
   text-align: center;
   width: min(50rem, calc(100% - 1rem));
-  margin: min(1rem, 1%);
+  margin: 0rem min(1rem, 1%);
+  margin-bottom: 1rem;
+  background-color: var(--translucent-color);
 }
 
 #table .column {
@@ -94,7 +100,12 @@
   font-size: 0.8rem;
 }
 
+#ghost-key {
+  width: min(21.5rem, calc(100% - 1rem));
+}
+
 #key-inner {
+  background-color: var(--translucent-color);
   padding: 0.5rem 1rem;
 }
 
@@ -142,9 +153,10 @@
   outline: 0px;
   border: 2px solid var(--neutral-color);
   color: black;
-  background: transparent;
+  background: var(--translucent-color);
   border-radius: 0px;
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 #table .column:nth-of-type(1) {
@@ -203,9 +215,8 @@
 #table-area {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
-  padding: 1rem 0rem;
   align-items: center;
   height: max-content;
 }

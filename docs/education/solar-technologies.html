@@ -30,66 +30,88 @@
     </nav>
     <div class="nav-buffer"></div>
     <main class="flex column full-height">
-      <section class="education-introduction flex">
-        <div class="flex column">
-          <h1>Solar Technology Options</h1>
-          <p>
-            There are many renewable solar options available. Click on one of
-            the technologies below to learn more about it.
-          </p>
-        </div>
-      </section>
-      <section class="education-options flex row wrap">
-        <div class="heat-option grow" onclick="show_education_slide(0);">
-          <!-- <div class="img">pv panels</div> -->
-          <img src="../images/PVImage.svg" alt="" />
-          <h2>Photovoltaic<br />Panels</h2>
-        </div>
-        <div class="heat-option" onclick="show_education_slide(1);">
-          <!-- <div class="img">ev tube</div> -->
-          <img src="../images/EvacuatedTubesImage.svg" alt="" />
-          <h2>
-            Evacuated<br />
-            Tube
-          </h2>
-        </div>
-        <div class="heat-option" onclick="show_education_slide(2);">
-          <!-- <div class="img">flat plate</div> -->
-          <img src="../images/FlatePlatesImage.svg" alt="" />
-          <h2>
-            Flat<br />
-            Plate
-          </h2>
-        </div>
-        <div class="heat-option" onclick="show_education_slide(3);">
-          <!-- <div class="img">pvt</div> -->
-          <img src="../images/PVThermalImage.svg" alt="" />
-          <h2>Photovoltaic<br />Thermal Hybrid</h2>
-        </div>
-      </section>
+      <img
+        id="edu-bg-img"
+        class="left"
+        src="../images/blob-scene-haikei (2).svg"
+        alt=""
+      />
+      <div class="max-width flex column">
+        <section class="education-introduction flex">
+          <div class="flex column">
+            <h1>Solar Technology Options</h1>
+            <p>
+              There are many renewable solar options available. Click on one of
+              the technologies below to learn more about it.
+            </p>
+          </div>
+        </section>
+        <section class="education-options flex row wrap">
+          <div class="heat-option grow" onclick="show_education_slide(0);">
+            <!-- <div class="img">pv panels</div> -->
+            <img src="../images/PVImage.svg" alt="" />
+            <h2>Photovoltaic<br />Panels</h2>
+          </div>
+          <div class="heat-option" onclick="show_education_slide(1);">
+            <!-- <div class="img">ev tube</div> -->
+            <img src="../images/EvacuatedTubesImage.svg" alt="" />
+            <h2>
+              Evacuated<br />
+              Tube
+            </h2>
+          </div>
+          <div class="heat-option" onclick="show_education_slide(2);">
+            <!-- <div class="img">flat plate</div> -->
+            <img src="../images/FlatePlatesImage.svg" alt="" />
+            <h2>
+              Flat<br />
+              Plate
+            </h2>
+          </div>
+          <div class="heat-option" onclick="show_education_slide(3);">
+            <!-- <div class="img">pvt</div> -->
+            <img src="../images/PVThermalImage.svg" alt="" />
+            <h2>Photovoltaic<br />Thermal Hybrid</h2>
+          </div>
+        </section>
 
-      <section id="education-slides">
-        <div class="">
-          <h1>Photovoltaic panels</h1>
-          <p>This is stuff about an Photovoltaic panels.</p>
-          <p>And another paragraph...</p>
+        <section id="education-slides">
+          <div class="">
+            <h1>Photovoltaic panels</h1>
+            <p>This is stuff about an Photovoltaic panels.</p>
+            <p>And another paragraph...</p>
+          </div>
+          <div class="hide">
+            <h1>Evacuated Tubes</h1>
+            <p>This is stuff about Evacuated Tube Solar Collectors.</p>
+            <p>And another paragraph...</p>
+          </div>
+          <div class="hide">
+            <h1>Flat Plate</h1>
+            <p>This is stuff about Flat Plate Solar Collectors.</p>
+            <p>And another paragraph...</p>
+          </div>
+          <div class="hide">
+            <h1>Photovoltaic Thermal Hybrid</h1>
+            <p>This is stuff about Photovoltaic Thermal Hybrid Collectors.</p>
+            <p>And another paragraph...</p>
+          </div>
+        </section>
+        <div class="nav-group flex row wrap">
+          <a href="../education/heating-technologies.html">
+            <div class="mini-card">
+              <img src="../images/HeatTech1.svg" alt="" />
+              <p>Heating Technologies</p>
+            </div>
+          </a>
+          <a href="../education/why-switch.html">
+            <div class="mini-card">
+              <img src="../images/WhySwitch1.svg" alt="" />
+              <p>Why Switch</p>
+            </div>
+          </a>
         </div>
-        <div class="hide">
-          <h1>Evacuated Tubes</h1>
-          <p>This is stuff about Evacuated Tube Solar Collectors.</p>
-          <p>And another paragraph...</p>
-        </div>
-        <div class="hide">
-          <h1>Flat Plate</h1>
-          <p>This is stuff about Flat Plate Solar Collectors.</p>
-          <p>And another paragraph...</p>
-        </div>
-        <div class="hide">
-          <h1>Photovoltaic Thermal Hybrid</h1>
-          <p>This is stuff about Photovoltaic Thermal Hybrid Collectors.</p>
-          <p>And another paragraph...</p>
-        </div>
-      </section>
+      </div>
     </main>
 
     <footer class="flex">

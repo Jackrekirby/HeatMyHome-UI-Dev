@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background-color: var(--translucent-color);
   /* justify-items: center; */
   /* align-items: center; */
   /* align-content: flex-start; */
@@ -214,7 +215,8 @@ img.marker {
   align-content: center;
 
   width: calc(100% - 4px);
-  /* border: 1px solid black; */
+  background-color: var(--translucent-color);
+  border: 1px solid black;
 }
 
 .graph-container .select-row {
@@ -234,6 +236,7 @@ img.marker {
   margin: 0rem 0.5rem;
   padding: 0.5rem 0.1rem;
   border: 1px solid var(--dark-accent);
+  background-color: var(--translucent-color);
 }
 
 .guide {
@@ -262,6 +265,7 @@ img.marker {
   width: 100%;
   height: calc(100% - 2rem);
   background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid #00aeff;
   color: #00aeff;
   padding: 1rem;
   font-size: 0.8rem;
@@ -284,7 +288,7 @@ img.marker {
   align-items: center;
   max-width: 35rem;
   height: fit-content;
-  border: 2px solid #00aeff;
+  /* border: 2px solid #00aeff; */
   padding: 2rem;
 }
 
@@ -308,7 +312,7 @@ img.marker {
     /* width: 50rem; */
     width: fit-content;
     flex-direction: row;
-    height: 60rem;
+    height: fit-content;
   }
 
   .graph-container {
@@ -336,23 +340,24 @@ img.marker {
 }
 
 .info-row .checkbox {
-  border-color: var(--neutral-color);
+  border-color: var(--warn-color);
   cursor: pointer;
   transform: translateX(0.5rem) translateY(-0.5rem);
   transition: border-color 0.2s ease-in-out;
 }
 
 .info-row .checkbox > * {
-  background-color: var(--neutral-color);
+  background-color: var(--warn-color);
   transition: background-color 0.2s ease-in-out;
 }
 
 .info-row .checkbox:hover {
   border-color: var(--warn-color);
+  background-color: var(--warn-color);
 }
 
 .info-row .checkbox:hover > * {
-  background-color: var(--warn-color);
+  background-color: white;
 }
 
 @media screen and (max-width: 80rem) {

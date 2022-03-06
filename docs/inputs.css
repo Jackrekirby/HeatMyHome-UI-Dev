@@ -6,6 +6,7 @@
   --white-color: white;
   --black-color: black;
   --experimental-color: #2f00ff;
+  --translucent-color: rgba(255, 255, 255, 0.7);
 }
 
 * {
@@ -24,10 +25,11 @@
 }
 
 .inputs-box {
-  border: 2px solid var(--neutral-color);
+  border: 1px solid black;
   padding: 1rem;
   margin: 1rem;
   width: 20rem;
+  background-color: var(--translucent-color);
 
   display: flex;
   flex-direction: column;
@@ -171,15 +173,16 @@ input.hide-spinner[type="number"] {
   text-align: center;
   width: 2rem;
   height: 2rem;
-  color: var(--neutral-color);
-  border: 2px solid var(--neutral-color);
+  color: var(--info-color);
+  border: 1px solid var(--info-color);
   transition: 0.2s all ease-in-out;
 }
 
 .input-side-button:hover,
 .input-side-button.active {
-  color: var(--info-color);
+  background-color: var(--info-color);
   border-color: var(--info-color);
+  color: white;
 }
 
 .input-field > * {
@@ -187,7 +190,7 @@ input.hide-spinner[type="number"] {
   bottom: 0;
   left: 0;
   width: 15rem;
-  color: var(--neutral-color);
+  color: var(--black-color);
   padding: 0.5rem 0rem;
   margin: 0rem;
   font-size: 1rem;
@@ -205,7 +208,7 @@ input.hide-spinner[type="number"] {
   padding-bottom: 0.2rem;
   border-radius: 0px;
   box-shadow: none;
-  border-bottom: 2px solid var(--neutral-color);
+  border-bottom: 1px solid var(--black-color);
   background-color: transparent;
   color: var(--black-color);
 }
@@ -248,7 +251,7 @@ input.hide-spinner[type="number"] {
   width: 100%;
   border: 0px;
   outline: 0px;
-  border: 2px solid var(--neutral-color);
+  border: 1px solid var(--neutral-color);
   color: var(--neutral-color);
   margin-bottom: 0rem;
   font-size: 0.8rem;
@@ -298,7 +301,7 @@ input.hide-spinner[type="number"] {
   height: 3rem;
   border: 0px;
   outline: 0px;
-  border: 2px solid var(--neutral-color);
+  border: 1px solid var(--neutral-color);
   color: var(--neutral-color);
   font-size: 1rem;
   background: transparent;
@@ -328,16 +331,23 @@ input.hide-spinner[type="number"] {
 }
 
 .inputs-box button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 0rem;
   border: 0px;
   outline: 0px;
-  border: 2px solid var(--neutral-color);
+  border: 1px solid var(--neutral-color);
   color: var(--valid-color);
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
   font-size: 1rem;
   background: transparent;
   border-radius: 0px;
   transition: 0.2s all ease-in-out;
+  border: 0;
+  outline: 0;
+  width: 15rem;
+  height: 2rem;
   /* animation: fadeIn 0.2s; */
   /* animation-fill-mode: forwards; */
   /* transform-origin: top; */
@@ -345,11 +355,12 @@ input.hide-spinner[type="number"] {
 
 .inputs-box button.invalid {
   color: var(--warn-color);
-  /* border-color: var(--warn-color); */
+  border-color: var(--warn-color);
 }
 
 .inputs-box button:hover {
   border-color: var(--valid-color);
+  background-color: var(--valid-color);
 }
 
 .inputs-box button.active {
@@ -359,6 +370,8 @@ input.hide-spinner[type="number"] {
 
 .inputs-box button.invalid:hover {
   border-color: var(--warn-color);
+  background-color: var(--warn-color);
+  color: white;
 }
 
 .input-spacer {
@@ -427,12 +440,40 @@ input.hide-spinner[type="number"] {
   }
 }
 
-#submit-group .input-side-button:hover,
-#submit-group .input-side-button.active,
+#input-submit {
+  border: 1px solid var(--valid-color);
+  color: var(--valid-color);
+  align-items: center;
+}
+
+#input-submit:hover {
+  background-color: var(--valid-color);
+  border-color: var(--valid-color);
+  color: white;
+}
+
+#input-submit.invalid {
+  border: 1px solid var(--warn-color);
+  color: var(--warn-color);
+}
+
+#input-submit.invalid:hover {
+  background-color: var(--warn-color);
+  border-color: var(--warn-color);
+  color: white;
+}
+
+#submit-group .input-side-button,
 #help-advanced,
 #run-location {
   border-color: var(--experimental-color);
   color: var(--experimental-color);
+  background-color: transparent;
+}
+#submit-group .input-side-button:hover,
+#submit-group .input-side-button.active {
+  background-color: var(--experimental-color);
+  color: white;
 }
 
 .click-dismiss {
@@ -447,11 +488,11 @@ input.hide-spinner[type="number"] {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  justify-items: center;
+  align-items: flex-end;
   align-content: center;
-  text-align: center;
-  padding: 0.5rem 0rem;
-  padding-bottom: 0rem;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .check-row {
@@ -476,7 +517,7 @@ input.hide-spinner[type="number"] {
   width: 2rem;
   height: 2rem;
 
-  border: 2px solid var(--experimental-color);
+  border: 1px solid var(--experimental-color);
   /* transition: 0.2s all ease-in-out; */
 
   display: flex;
@@ -544,7 +585,7 @@ input.hide-spinner[type="number"] {
 
 #guide {
   font-size: 1rem;
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
   transition: 0.2s background-color ease-in-out, 0.2s color ease-in-out;
 }
@@ -581,16 +622,20 @@ input.hide-spinner[type="number"] {
 .action-row button,
 .action-row a,
 .action-row label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: 0;
   outline: 0;
   width: 15rem;
+  height: 2rem;
   padding: 0.2rem 0rem;
   border-radius: 0px;
   box-shadow: none;
-  border: 2px solid var(--info-color);
+  border: 1px solid var(--info-color);
   background-color: transparent;
   color: var(--info-color);
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
   text-decoration: none;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;

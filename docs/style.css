@@ -42,6 +42,10 @@ body {
   flex-direction: row;
 }
 
+.flex.jcentre {
+  justify-content: center;
+}
+
 .flex.wrap {
   flex-wrap: wrap;
 }

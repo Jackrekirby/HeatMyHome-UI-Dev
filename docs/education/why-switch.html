@@ -30,107 +30,130 @@
     </nav>
     <div class="nav-buffer"></div>
     <main class="flex column full-height">
-      <section class="education-introduction flex">
-        <div class="flex column">
-          <h1>Why Switch?</h1>
-          <p>
-            Gas boilers reside in 85% of UK homes, so why should you switch to
-            an alternative? Click on the options below to learn why you should
-            make the switch to a low-carbon heating solution.
-          </p>
-        </div>
-      </section>
-      <section class="education-options flex row wrap">
-        <div class="heat-option grow" onclick="show_education_slide(0);">
-          <div class="img">climate change</div>
-          <h2>Climate<br />Change</h2>
-        </div>
-        <div class="heat-option" onclick="show_education_slide(1);">
-          <div class="img">incentives</div>
-          <h2>Incentives</h2>
-        </div>
-        <div class="heat-option" onclick="show_education_slide(2);">
-          <div class="img">save money</div>
-          <h2>Save<br />Money</h2>
-        </div>
-        <div class="heat-option" onclick="show_education_slide(3);">
-          <div class="img">legislation</div>
-          <h2>Legislation</h2>
-        </div>
-      </section>
-
-      <div class="flex">
-        <section id="education-slides" class="foreground">
-          <div class="">
-            <h1>Climate Change</h1>
+      <img
+        id="edu-bg-img"
+        class="left"
+        src="../images/blob-scene-haikei (2).svg"
+        alt=""
+      />
+      <div class="max-width flex column">
+        <section class="education-introduction flex">
+          <div class="flex column">
+            <h1>Why Switch?</h1>
             <p>
-              Climate change is having devasting consequences to our planet,
-              from increasing frequency of weather extremes, to migration and
-              extinction of species. Green house gases emitting by us have
-              resulted in global warming, and its why 193 countries agreed to
-              try and limit global warming to within 1.5<sup>o</sup>C of
-              pre-industrial average temperatures. In 2020 average temperatures
-              had already risen to 1.2<sup>o</sup>C above pre-industrial levels.
-              To meet this goal we need to cut our carbon emissions
-              substantially.
-            </p>
-            <p>
-              One of the most significant ways you can cut your emissions is by
-              changing how you heat your home.
-            </p>
-            <p>
-              In the UK, the largest source of annual CO2 emissions is heating
-              (37%), of which gas boilers are the primary contributor, providing
-              space and water heating for 85% of homes.
-            </p>
-          </div>
-          <div class="hide">
-            <h1>Incentives</h1>
-            <p>
-              As low-carbon heating technologies, being in their infancy, are
-              currently more expensive than traditional gas boilers, the UK
-              government has a
-              <a href="https://www.gov.uk/domestic-renewable-heat-incentive"
-                >domestic renewable heat incentives</a
-              >
-              which offers money towards renewable heating costs for biomass
-              boilers, solar water heating and certain heat pumps. Payments are
-              made for 7 years and are based on the amount of renewable heat
-              made by your heating system. For more information, including
-              eligability, a payment calculator along with how to apply visit
-              the government website.
-            </p>
-          </div>
-          <div class="hide">
-            <h1>Save Money</h1>
-            <p>
-              While low-carbon heating technologies are typically far more
-              expensive to install, they can be cheaper to run. If you install
-              solar panels to power the heating technology, and use excess
-              generation to power your home or sell the electricity to the grid,
-              over the lifetime of the system its
-              <a href="../documentation/simulator-outputs.html#net-present-cost"
-                >net present cost</a
-              >
-              can be less than that of a gas boiler, and may even generate
-              income.
-            </p>
-          </div>
-          <div class="hide">
-            <h1>Legislation</h1>
-            <p>
-              As part of the UK government’s commitment to achieving net-zero
-              emissions by 2050, the installation of gas boilers in new homes
-              will be banned from 2025.
-            </p>
-            <p>
-              Furthermore, the government expects to phase out gas boilers in
-              existing homes by 2035, through the offering of grants and
-              incentives to homeowners for switching to low-carbon heating
-              appliances.
+              Gas boilers reside in 85% of UK homes, so why should you switch to
+              an alternative? Click on the options below to learn why you should
+              make the switch to a low-carbon heating solution.
             </p>
           </div>
         </section>
+        <section class="education-options flex row wrap">
+          <div class="heat-option grow" onclick="show_education_slide(0);">
+            <div class="img">climate change</div>
+            <h2>Climate<br />Change</h2>
+          </div>
+          <div class="heat-option" onclick="show_education_slide(1);">
+            <div class="img">incentives</div>
+            <h2>Incentives</h2>
+          </div>
+          <div class="heat-option" onclick="show_education_slide(2);">
+            <div class="img">save money</div>
+            <h2>Save<br />Money</h2>
+          </div>
+          <div class="heat-option" onclick="show_education_slide(3);">
+            <div class="img">legislation</div>
+            <h2>Legislation</h2>
+          </div>
+        </section>
+
+        <div class="flex">
+          <section id="education-slides" class="foreground">
+            <div class="">
+              <h1>Climate Change</h1>
+              <p>
+                Climate change is having devasting consequences to our planet,
+                from increasing frequency of weather extremes, to migration and
+                extinction of species. Green house gases emitting by us have
+                resulted in global warming, and its why 193 countries agreed to
+                try and limit global warming to within 1.5<sup>o</sup>C of
+                pre-industrial average temperatures. In 2020 average
+                temperatures had already risen to 1.2<sup>o</sup>C above
+                pre-industrial levels. To meet this goal we need to cut our
+                carbon emissions substantially.
+              </p>
+              <p>
+                One of the most significant ways you can cut your emissions is
+                by changing how you heat your home.
+              </p>
+              <p>
+                In the UK, the largest source of annual CO2 emissions is heating
+                (37%), of which gas boilers are the primary contributor,
+                providing space and water heating for 85% of homes.
+              </p>
+            </div>
+            <div class="hide">
+              <h1>Incentives</h1>
+              <p>
+                As low-carbon heating technologies, being in their infancy, are
+                currently more expensive than traditional gas boilers, the UK
+                government has a
+                <a href="https://www.gov.uk/domestic-renewable-heat-incentive"
+                  >domestic renewable heat incentives</a
+                >
+                which offers money towards renewable heating costs for biomass
+                boilers, solar water heating and certain heat pumps. Payments
+                are made for 7 years and are based on the amount of renewable
+                heat made by your heating system. For more information,
+                including eligability, a payment calculator along with how to
+                apply visit the government website.
+              </p>
+            </div>
+            <div class="hide">
+              <h1>Save Money</h1>
+              <p>
+                While low-carbon heating technologies are typically far more
+                expensive to install, they can be cheaper to run. If you install
+                solar panels to power the heating technology, and use excess
+                generation to power your home or sell the electricity to the
+                grid, over the lifetime of the system its
+                <a
+                  href="../documentation/simulator-outputs.html#net-present-cost"
+                  >net present cost</a
+                >
+                can be less than that of a gas boiler, and may even generate
+                income.
+              </p>
+            </div>
+            <div class="hide">
+              <h1>Legislation</h1>
+              <p>
+                As part of the UK government’s commitment to achieving net-zero
+                emissions by 2050, the installation of gas boilers in new homes
+                will be banned from 2025.
+              </p>
+              <p>
+                Furthermore, the government expects to phase out gas boilers in
+                existing homes by 2035, through the offering of grants and
+                incentives to homeowners for switching to low-carbon heating
+                appliances.
+              </p>
+            </div>
+          </section>
+        </div>
+        <div class="nav-group flex row wrap">
+          <a href="../education/solar-technologies.html">
+            <div class="mini-card">
+              <img src="../images/SolarTech1.svg" alt="" />
+              <p>Solar Technologies</p>
+            </div>
+          </a>
+          <a href="../education/heating-technologies.html">
+            <div class="mini-card">
+              <img src="../images/HeatTech1.svg" alt="" />
+              <p>Heating Technologies</p>
+            </div>
+          </a>
+        </div>
       </div>
     </main>
 
