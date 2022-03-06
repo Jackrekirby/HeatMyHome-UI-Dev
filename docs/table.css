@@ -254,3 +254,9 @@
     display: flex;
   }
 }
+
+@media screen and (min-width: 70rem) {
+  #key-sort {
+    flex-direction: column-reverse;
+  }
+}

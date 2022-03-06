@@ -568,6 +568,10 @@ section.education-options {
 .heat-option > h2 {
   font-size: 1rem;
   padding: 0.5rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #education-slides {
@@ -577,8 +581,17 @@ section.education-options {
   align-items: center;
   justify-content: space-evenly;
   padding: 1rem;
+  text-align: justify;
 }
 
+#scroll-location {
+  width: 100%;
+  height: 1px;
+}
+
+#education-slides h1 {
+  text-align: center;
+}
 #education-slides > div {
   box-sizing: border-box;
   border: 2px solid #024557;
@@ -591,6 +604,12 @@ section.education-options {
 
 #education-slides > * {
   padding: 0.5rem;
+}
+
+@media screen and (max-width: 60rem) {
+  #education-slides {
+    font-size: 0.8rem;
+  }
 }
 
 /* .education-options .grow {
@@ -895,4 +914,53 @@ section.education-options {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+ul.fmt {
+  list-style: none;
+  padding: 0;
+}
+
+ul.fmt > li {
+  margin: 0.5rem 0rem;
+}
+ul.fmt > li:before {
+  content: "·";
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  background-color: #00aeff;
+  margin-right: 4px;
+  padding: 0rem 0.3rem;
+  border-radius: 2px;
+}
+
+ol.fmt {
+  list-style: none;
+  padding: 0;
+}
+
+ol.fmt > li {
+  counter-increment: ol-counter;
+  margin: 0.5rem 0rem;
+}
+ol.fmt > li:before {
+  content: counter(ol-counter);
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  background-color: #00aeff;
+  margin-right: 4px;
+  padding: 0rem 0.3rem;
+  border-radius: 2px;
+}
+
+ul.plus > li:before {
+  content: "+";
+  background-color: #00dd22;
+}
+
+ul.minus > li:before {
+  content: "-";
+  background-color: #ff2300;
 }
