@@ -81,7 +81,8 @@
                 </div>
               </div>
               <div id="help-postcode" class="msg-box info hide">
-                The postcode of the address you wish to simulate.
+                The postcode of the address you wish to simulate. UK residents
+                only.
               </div>
               <div id="postcode-searching" class="msg-box search info hide">
                 Searching
@@ -243,7 +244,7 @@
                 <div id="help-neighbour-postcode" class="msg-box info hide">
                   The postcode of the neighbour's address you wish to use to
                   substitute in space heating and floor area estimates for your
-                  own home.
+                  own home. UK residents only.
                 </div>
                 <div
                   id="neighbour-postcode-searching"
@@ -460,10 +461,10 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   >EPC certificate</a
-                >. Must be in range 0-999999 kWh/yr.
+                >. Must be in the range 0-999999 kWh/yr.
               </div>
               <div id="warn-epc-space-heating-range" class="msg-box warn hide">
-                Must be in range 0-999999 kWh/yr.
+                Must be in the range 0-999999 kWh/yr.
               </div>
               <div id="warn-epc-space-heating-none" class="msg-box warn hide">
                 Your
@@ -507,10 +508,10 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   >EPC certificate</a
-                >. Must be in range 25-1500 m<sup>2</sup>.
+                >. Must be in the range 25-1500 m<sup>2</sup>.
               </div>
               <div id="warn-floor-area-range" class="msg-box warn hide">
-                Must be in range 25-1500 m<sup>2</sup>.
+                Must be in the range 25-1500 m<sup>2</sup>.
               </div>
               <div id="warn-floor-area-none" class="msg-box warn hide">
                 Your
@@ -547,11 +548,11 @@
                 </div>
               </div>
               <div id="help-temperature" class="msg-box info hide">
-                The temperature you like your home at. Must be in the range 0.0
-                to 35.0°C.
+                The temperature you set your home's heating to. Must be in the
+                range 0.0-35.0°C.
               </div>
               <div id="warn-temperature-range" class="msg-box warn hide">
-                Must be in range 0.0-35.0°C
+                Must be in the range 0.0-35.0°C
               </div>
             </div>
 
@@ -565,7 +566,7 @@
                     class="hide-spinner"
                     autocomplete="off"
                   />
-                  <p>No. Occupants</p>
+                  <p>Number of Occupants</p>
                 </div>
                 <div
                   class="input-side-button"
@@ -575,11 +576,11 @@
                 </div>
               </div>
               <div id="help-occupants" class="msg-box info hide">
-                The number of people who live in your home. Must be in range
+                The number of people who live in your home. Must be in the range
                 1-20 people.
               </div>
               <div id="warn-occupants-range" class="msg-box warn hide">
-                Must be in range 1-20 people
+                Must be in the range 1-20 people
               </div>
             </div>
 
@@ -603,12 +604,12 @@
                 </div>
               </div>
               <div id="help-tes-volume" class="msg-box info">
-                The maximum volume of hot water tank you could install in your
-                home. Must be in range 0.1-3.0 m<sup>3</sup>. Typical value 0.5
+                The maximum volume of hot water tank you could install. Must be
+                in the range 0.1-3.0 m<sup>3</sup>. A typical value is 0.5
                 m<sup>3</sup>.
               </div>
               <div id="warn-tes-volume-range" class="msg-box warn hide">
-                Must be in range 0.1-3.0 m<sup>3</sup>
+                Must be in the range 0.1-3.0 m<sup>3</sup>
               </div>
             </div>
 
@@ -799,7 +800,7 @@
             </div>
           </div>
         </div>
-        <div id="results-guide">
+        <div id="results-guide" class="hide">
           <div class="info-row">
             <h2>Results Page Guide</h2>
             <div class="checkbox" onclick="guide_state(true);">

@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --warn-color: #ff2300;
   --valid-color: #00dd22;
   --info-color: #00aeff;
@@ -6,7 +6,7 @@
   --white-color: white;
   --black-color: black;
   --experimental-color: #2f00ff;
-}
+} */
 
 * {
   box-sizing: border-box;
@@ -237,6 +237,7 @@ img.marker {
   padding: 0.5rem 0.1rem;
   border: 1px solid var(--dark-accent);
   background-color: var(--translucent-color);
+  border-radius: 0px;
 }
 
 .guide {

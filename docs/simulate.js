@@ -305,6 +305,7 @@ async function onchange_address() {
         case "Address Not Listed":
             invalidate_element(address_element);
             unhide_elements([warn_element, epc_box_element, floor_area_box_element]);
+            open_neighbour_menu();
             break;
         default:
             validate_element(address_element);
@@ -1196,13 +1197,15 @@ function check_postcode_format(postcode) {
 
 function update_epc_urls() {
     // GOV EPC, scotland EPC, postcode-specific EPC, address-specific EPC
+    // console.log("update_epc_urls: ", scottish_postcode);
+    let epc_urls = document.getElementsByClassName('epc-url');
     if (scottish_postcode) {
         for (let url of epc_urls) {
             // url.href = 'https://www.gov.uk/find-energy-certificate';
+            // console.log("URL: ", url)
             url.href = 'https://www.scottishepcregister.org.uk';
         }
     } else {
-        let epc_urls = document.getElementsByClassName('epc-url');
         let postcode_element = document.getElementById('input-postcode');
         if (selected_certificate != undefined) {
             for (let url of epc_urls) {
@@ -2647,7 +2650,7 @@ output = {
         }
     }
 }
-load_output();
+// load_output();
 
 
 

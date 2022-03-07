@@ -3,7 +3,7 @@
   --valid-color: #00dd22;
   --info-color: #00aeff;
   /* --neutral-color: #d3d3d3; */
-  --neutral-color: #888888;
+  --neutral-color: #949494;
   --white-color: white;
   --black-color: black;
   --experimental-color: #2f00ff;
@@ -229,11 +229,10 @@ input.hide-spinner[type="number"] {
   position: absolute;
   bottom: 0;
   left: 0rem;
-  width: 15.5rem;
+  width: 15rem;
   color: var(--neutral-color);
   padding: 0rem 0rem;
   padding-bottom: 0.25rem;
-  padding-left: 0.3rem;
   margin: 0rem;
   font-size: 1rem;
 }
@@ -251,8 +250,8 @@ input.hide-spinner[type="number"] {
   padding-bottom: 0.25rem;
   border-radius: 0px;
   box-shadow: none;
-  border: 1px solid var(--neutral-color);
-  background-color: var(--translucent-color);
+  border-bottom: 1px solid var(--neutral-color);
+  background-color: transparent;
   color: var(--black-color);
 }
 
