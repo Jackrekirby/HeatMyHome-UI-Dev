@@ -649,6 +649,14 @@ input.hide-spinner[type="number"] {
   color: white;
 }
 
+#save-url {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .hide {
   display: none;
 }
