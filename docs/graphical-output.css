@@ -342,7 +342,7 @@ img.marker {
 .info-row .checkbox {
   border-color: var(--warn-color);
   cursor: pointer;
-  transform: translateX(0.5rem) translateY(-0.5rem);
+  transform: translateX(0rem) translateY(0rem);
   transition: border-color 0.2s ease-in-out;
 }
 

@@ -57,7 +57,7 @@
         alt=""
       />
       <div class="flex row wrap jcentre">
-        <div class="inputs-box">
+        <div id="input-form" class="inputs-box">
           <div id="input-box-postcode" class="input-box">
             <div class="input-row">
               <div class="input-field">
@@ -778,6 +778,54 @@
             Results Page Guide
           </div>
         </div>
+        <div id="results-guide">
+          <div class="info-row">
+            <h2>Results Page Guide</h2>
+            <div class="checkbox" onclick="guide_state(true);">
+              <div class="crossmark"></div>
+              <div class="crossmark other"></div>
+            </div>
+          </div>
+          <div>
+            <p>
+              The simulator outputs a lot of data which can be overwhelming. To
+              help you visualise the performance of the simulated systems, the
+              results can be explored in either graphical or tabula form. A list
+              of the page's functionality is given below.
+            </p>
+            <br />
+            <ol class="fmt">
+              <li>
+                Select two metrics to plot, from Upfront/Yearly/Lifetime Cost
+                and Yearly Emissions.
+              </li>
+              <li>Click on a graph marker to explore a system's details.</li>
+              <li>
+                Pan and zoom the graph to seperate systems with similar
+                performance.
+              </li>
+              <li>
+                Menu items with an arrow can be expanded to explore further
+                details.
+              </li>
+              <li>
+                Toggle the visibility of heating technologies on the graph by
+                clicking the eye icons.
+              </li>
+              <li>
+                Click on any technology or performance metric from the menu to
+                learn more.
+              </li>
+            </ol>
+            <br />
+            <p>
+              To start exploring your results click the cross at the top of this
+              card to dismiss it. You can return to this guide at anytime by
+              clicking the Results Page Guide button below the submit button.
+            </p>
+          </div>
+          <div></div>
+        </div>
         <div id="output-info-toggle" class="hide">
           <div class="output-group">
             <div class="graph-container">
@@ -806,7 +854,7 @@
             </div>
             <div id="system-menu"></div>
           </div>
-          <div id="output-info">
+          <!-- <div id="output-info" class="">
             <div class="inner-info-container">
               <div class="info-row">
                 <h2>Results Page Guide</h2>
@@ -862,7 +910,7 @@
               </div>
               <div></div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div id="table-area" class="flex row wrap hide">
