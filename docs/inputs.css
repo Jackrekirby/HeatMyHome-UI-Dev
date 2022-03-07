@@ -2,11 +2,12 @@
   --warn-color: #ff2300;
   --valid-color: #00dd22;
   --info-color: #00aeff;
-  --neutral-color: #d3d3d3;
+  /* --neutral-color: #d3d3d3; */
+  --neutral-color: #888888;
   --white-color: white;
   --black-color: black;
   --experimental-color: #2f00ff;
-  --translucent-color: rgba(255, 255, 255, 0.7);
+  --translucent-color: rgba(255, 255, 255, 0.9);
 }
 
 * {
@@ -49,11 +50,38 @@
   width: 20rem;
   height: fit-content;
   border: 1px solid black;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: var(--translucent-color);
   font-size: 0.8rem;
   padding: 1rem;
   margin: 1rem;
   text-align: justify;
+}
+
+#notification-box {
+  position: relative;
+  width: 20rem;
+  height: fit-content;
+  border: 1px solid var(--warn-color);
+  background-color: var(--translucent-color);
+  font-size: 0.8rem;
+  padding: 1rem;
+  padding-top: 2rem;
+  margin: 1rem;
+  margin-bottom: 0rem;
+  text-align: justify;
+}
+
+#notification-box h1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: var(--warn-color);
+  color: white;
+  padding: 0rem;
+  margin: 0rem;
+  font-size: 1rem;
+  text-align: center;
 }
 
 input:-webkit-autofill,
@@ -200,10 +228,12 @@ input.hide-spinner[type="number"] {
 .input-field > * {
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 15rem;
-  color: var(--black-color);
-  padding: 0.5rem 0rem;
+  left: 0rem;
+  width: 15.5rem;
+  color: var(--neutral-color);
+  padding: 0rem 0rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.3rem;
   margin: 0rem;
   font-size: 1rem;
 }
@@ -216,12 +246,13 @@ input.hide-spinner[type="number"] {
   border: 0;
   outline: 0;
   padding: 0rem 0rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.2rem;
+
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   border-radius: 0px;
   box-shadow: none;
-  border-bottom: 1px solid var(--black-color);
-  background-color: transparent;
+  border: 1px solid var(--neutral-color);
+  background-color: var(--translucent-color);
   color: var(--black-color);
 }
 
@@ -233,7 +264,7 @@ input.hide-spinner[type="number"] {
 
 .input-field:not(.nofocus) input:focus ~ p {
   font-size: 0.9rem;
-  bottom: calc(0.9rem + 0.5rem);
+  bottom: calc(0.9rem + 0.7rem);
 }
 
 .input-field input.invalid {
@@ -243,7 +274,7 @@ input.hide-spinner[type="number"] {
 .input-field input.invalid ~ p {
   color: var(--warn-color);
   font-size: 0.9rem;
-  bottom: calc(0.9rem + 0.5rem);
+  bottom: calc(0.9rem + 0.7rem);
 }
 
 .input-field input.valid {
@@ -253,7 +284,7 @@ input.hide-spinner[type="number"] {
 .input-field input.valid ~ p {
   color: var(--valid-color);
   font-size: 0.9rem;
-  bottom: calc(0.9rem + 0.5rem);
+  bottom: calc(0.9rem + 0.7rem);
 }
 
 .inputs-box .msg-box {

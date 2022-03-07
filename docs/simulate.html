@@ -53,207 +53,41 @@
       <img
         id="edu-bg-img"
         class="left"
-        src="./images/background_clip_double2.png"
+        src="./images/background_clip_double2_low_res.png"
         alt=""
       />
       <div class="flex row wrap jcentre">
-        <div id="input-form" class="inputs-box">
-          <div id="input-box-postcode" class="input-box">
-            <div class="input-row">
-              <div class="input-field">
-                <input
-                  type="text"
-                  id="input-postcode"
-                  class="hide-spinner"
-                  autocomplete="off"
-                />
-                <p>Postcode</p>
-              </div>
-              <div class="input-side-button" onclick="input_help('postcode')">
-                ?
-              </div>
-            </div>
-            <div id="help-postcode" class="msg-box info hide">
-              The postcode of the address you wish to simulate.
-            </div>
-            <div id="postcode-searching" class="msg-box search info hide">
-              Searching
-              <div><div class="dots"></div></div>
-            </div>
-            <div id="warn-postcode-postcodes-io" class="msg-box warn hide">
-              Postcode not found on
-              <a
-                href="http://postcodes.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                >postcode API</a
-              >. Postcode may be invalid or not in the UK. Please try a
-              different postcode.
-            </div>
-            <div
-              id="warn-postcode-epc-api"
-              class="msg-box warn hide click-dismiss"
-            >
-              No properties with a domestic EPC certificate were found for this
-              postcode on
-              <a
-                href="https://www.gov.uk/find-energy-certificate"
-                target="_blank"
-                rel="noopener noreferrer"
-                >GOV.UK</a
-              >. Please enter your home's EPC space heating and floor area
-              values manually, or try searching for another property that is
-              similar to yours. Click to dismiss.
-            </div>
-            <div id="warn-postcode-io-connection" class="msg-box warn hide">
-              Could not connect to
-              <a
-                href="http://postcodes.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                >postcode API</a
-              >. Check your internet connection. The API may be down, try again
-              later.
-            </div>
-            <div
-              id="warn-postcode-epc-connection"
-              class="msg-box warn hide click-dismiss"
-            >
-              Postcode is valid but could not connect to EPC API. Please enter
-              EPC space heating and floor area parameters manually. These can be
-              found at
-              <a
-                href=""
-                target="_blank"
-                rel="noopener noreferrer"
-                class="epc-url"
-                >GOV.UK</a
-              >. Click to dismiss.
-            </div>
-
-            <div id="help-scottish-postcode" class="msg-box info hide">
-              For homes located in Scotland, the EPC space heating and floor
-              area parameters cannot be filled out automatically. Please visit
-              the
-              <a
-                href=""
-                target="_blank"
-                rel="noopener noreferrer"
-                class="epc-url"
-                >Scottish EPC Register</a
-              >
-              to find out the parameters for your home.
-            </div>
+        <div id="input-form" class="flex column">
+          <div id="notification-box">
+            <h1>Important Notification</h1>
+            An Energy Performance Certificate (EPC) is a public document related
+            to your address that is used by our simulator to estimate your
+            yearly heating usage and floor area.
           </div>
-
-          <div id="input-box-address" class="input-box">
-            <select
-              id="input-address"
-              class="hide"
-              onchange="onchange_address();"
-              autocomplete="off"
-            ></select>
-            <div id="epc-searching" class="msg-box search info hide">
-              Searching
-              <div><div class="dots"></div></div>
-            </div>
-            <div id="warn-address-not-listed" class="msg-box warn hide">
-              Address needed for your home's
-              <a
-                href=""
-                class="epc-url"
-                target="_blank"
-                rel="noopener noreferrer"
-                >EPC certificate</a
-              >. Enter details manually or select a
-              <div class="input-button" onclick="open_neighbour_menu();">
-                neighbour's address
-              </div>
-              whose home is similar in build and size to yours.
-            </div>
-            <div
-              id="warn-address-connection"
-              class="msg-box warn hide click-dismiss"
-            >
-              Could not connect to EPC API. Please enter details manually. Click
-              to dismiss.
-            </div>
-            <div
-              id="warn-address-unknown"
-              class="msg-box warn hide click-dismiss"
-            >
-              Connected to EPC API but response invalid. Please enter details
-              manually. Click to dismiss.
-            </div>
-            <div id="help-address" class="msg-box info hide click-dismiss">
-              Your address was used to fill the space heating estimate and floor
-              area parameters from your home's
-              <a
-                href=""
-                class="epc-url"
-                target="_blank"
-                rel="noopener noreferrer"
-                >EPC certificate</a
-              >. You may wish to adjust the parameters manually. Click to
-              dismiss.
-            </div>
-            <div id="warn-address-missing-data" class="msg-box warn hide">
-              Your home's
-              <a
-                href=""
-                class="epc-url"
-                target="_blank"
-                rel="noopener noreferrer"
-                >EPC certificate</a
-              >
-              does not contain a floor area estimate. Enter details
-              <div class="input-button" onclick="enter_epc_manual();">
-                manually
-              </div>
-              or select a
-              <div class="input-button" onclick="open_neighbour_menu();">
-                neighbour's address
-              </div>
-              whose home is similar in build and size to yours.
-            </div>
-          </div>
-
-          <div id="neighbour-title" class="title hide">Neighbour's Details</div>
-          <div id="neighbour-container" class="hide">
-            <div id="input-box-neighbour-postcode" class="input-box">
+          <div class="inputs-box">
+            <div id="input-box-postcode" class="input-box">
               <div class="input-row">
-                <div class="input-field neighbour">
+                <div class="input-field">
                   <input
                     type="text"
-                    id="input-neighbour-postcode"
+                    id="input-postcode"
                     class="hide-spinner"
                     autocomplete="off"
                   />
                   <p>Postcode</p>
                 </div>
-                <div
-                  class="input-side-button"
-                  onclick="input_help('postcode', true)"
-                >
+                <div class="input-side-button" onclick="input_help('postcode')">
                   ?
                 </div>
               </div>
-              <div id="help-neighbour-postcode" class="msg-box info hide">
-                The postcode of the neighbour's address you wish to use to
-                substitute in space heating and floor area estimates for your
-                own home.
+              <div id="help-postcode" class="msg-box info hide">
+                The postcode of the address you wish to simulate.
               </div>
-              <div
-                id="neighbour-postcode-searching"
-                class="msg-box search info hide"
-              >
+              <div id="postcode-searching" class="msg-box search info hide">
                 Searching
                 <div><div class="dots"></div></div>
               </div>
-              <div
-                id="warn-neighbour-postcode-postcodes-io"
-                class="msg-box warn hide"
-              >
+              <div id="warn-postcode-postcodes-io" class="msg-box warn hide">
                 Postcode not found on
                 <a
                   href="http://postcodes.io"
@@ -263,10 +97,7 @@
                 >. Postcode may be invalid or not in the UK. Please try a
                 different postcode.
               </div>
-              <div
-                id="warn-neighbour-postcode-epc-api"
-                class="msg-box warn hide click-dismiss"
-              >
+              <div id="warn-postcode-epc-api" class="msg-box warn hide">
                 No properties with a domestic EPC certificate were found for
                 this postcode on
                 <a
@@ -275,12 +106,10 @@
                   rel="noopener noreferrer"
                   >GOV.UK</a
                 >. Please enter your home's EPC space heating and floor area
-                values manually or try a neighbour with a different postcode.
+                values manually, or try searching for another property that is
+                similar to yours.
               </div>
-              <div
-                id="warn-neighbour-postcode-io-connection"
-                class="msg-box warn hide"
-              >
+              <div id="warn-postcode-io-connection" class="msg-box warn hide">
                 Could not connect to
                 <a
                   href="http://postcodes.io"
@@ -291,360 +120,539 @@
                 again later.
               </div>
               <div
-                id="warn-neighbour-postcode-epc-connection"
+                id="warn-postcode-epc-connection"
                 class="msg-box warn hide click-dismiss"
               >
-                Neighbour's postcode is valid but could not connect to EPC API.
-                Please look up your neighbour's
+                Postcode is valid but could not connect to EPC API. Please enter
+                EPC space heating and floor area parameters manually. These can
+                be found at
                 <a
                   href=""
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="epc-url-neighbour"
-                  >EPC certificate</a
-                >
-                manually to find their EPC space heating and floor area
-                parameters. Click to dismiss.
+                  class="epc-url"
+                  >GOV.UK</a
+                >. Click to dismiss.
               </div>
 
-              <div
-                id="warn-neighbour-scottish-postcode"
-                class="msg-box warn hide"
-              >
-                The EPC certificate for homes located in Scotland cannot be
-                collected automatically, and so cannot be used to substitute
-                parameters for your own home. Please select an address located
-                in England, Wales or Northern Ireland.
+              <div id="help-scottish-postcode" class="msg-box info hide">
+                For homes located in Scotland, the EPC space heating and floor
+                area parameters cannot be filled out automatically. Please visit
+                the
+                <a
+                  href=""
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="epc-url"
+                  >Scottish EPC Register</a
+                >
+                to find out the parameters for your home.
               </div>
             </div>
 
-            <div id="input-box-neighbour-address" class="input-box">
+            <div id="input-box-address" class="input-box">
               <select
-                id="input-neighbour-address"
+                id="input-address"
                 class="hide"
-                onchange="onchange_neighbours_address()"
+                onchange="onchange_address();"
                 autocomplete="off"
               ></select>
-              <div
-                id="neighbour-epc-searching"
-                class="msg-box search info hide"
-              >
+              <div id="epc-searching" class="msg-box search info hide">
                 Searching
                 <div><div class="dots"></div></div>
               </div>
-
-              <div
-                id="warn-neighbour-address-connection"
-                class="msg-box warn hide click-dismiss"
-              >
-                Could not connect to EPC API. Please look up your neighbour's
+              <div id="warn-address-not-listed" class="msg-box warn hide">
+                Address needed for your home's
                 <a
                   href=""
+                  class="epc-url"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="epc-url-neighbour"
                   >EPC certificate</a
-                >
-                manually to find their EPC space heating and floor area
-                parameters, or try again later. Click to dismiss.
+                >. Enter details manually or select a neighbour's address whose
+                home is similar in build and size to yours.
               </div>
               <div
-                id="warn-neighbour-address-unknown"
+                id="warn-address-connection"
                 class="msg-box warn hide click-dismiss"
               >
-                Connected to EPC API but response invalid. Please look up your
-                neighbour's
-                <a
-                  href=""
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="epc-url-neighbour"
-                  >EPC certificate</a
-                >
-                manually to find their EPC space heating and floor area
-                parameters, select a different neighbour or try again later.
+                Could not connect to EPC API. Please enter details manually.
                 Click to dismiss.
               </div>
               <div
-                id="warn-neighbour-no-data"
-                class="msg-box warn click-dismiss hide"
+                id="warn-address-unknown"
+                class="msg-box warn hide click-dismiss"
               >
-                Neighbour's
+                Connected to EPC API but response invalid. Please enter details
+                manually. Click to dismiss.
+              </div>
+              <div id="help-address" class="msg-box info hide">
+                Your address was used to fill the space heating estimate and
+                floor area parameters from your home's
                 <a
                   href=""
-                  class="epc-url-neighbour"
+                  class="epc-url"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >EPC Certificate</a
+                  >EPC certificate</a
+                >. You may wish to adjust the parameters manually.
+              </div>
+              <div id="warn-address-missing-data" class="msg-box warn hide">
+                Your home's
+                <a
+                  href=""
+                  class="epc-url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >EPC certificate</a
                 >
-                does not contain a space heating or floor estimate. Select a
-                different neighbour.
+                does not contain a floor area estimate. Enter details
+                <div class="input-button" onclick="enter_epc_manual();">
+                  manually
+                </div>
+                or select a
+                <div class="input-button" onclick="open_neighbour_menu();">
+                  neighbour's address
+                </div>
+                whose home is similar in build and size to yours.
               </div>
             </div>
 
-            <div
-              id="input-box-neighbour-epc-space-heating"
-              class="input-box hide"
-            >
+            <div id="neighbour-title" class="title hide">
+              Neighbour's Details
+            </div>
+            <div id="neighbour-container" class="hide">
+              <div id="input-box-neighbour-postcode" class="input-box">
+                <div class="input-row">
+                  <div class="input-field neighbour">
+                    <input
+                      type="text"
+                      id="input-neighbour-postcode"
+                      class="hide-spinner"
+                      autocomplete="off"
+                    />
+                    <p>Postcode</p>
+                  </div>
+                  <div
+                    class="input-side-button"
+                    onclick="input_help('postcode', true)"
+                  >
+                    ?
+                  </div>
+                </div>
+                <div id="help-neighbour-postcode" class="msg-box info hide">
+                  The postcode of the neighbour's address you wish to use to
+                  substitute in space heating and floor area estimates for your
+                  own home.
+                </div>
+                <div
+                  id="neighbour-postcode-searching"
+                  class="msg-box search info hide"
+                >
+                  Searching
+                  <div><div class="dots"></div></div>
+                </div>
+                <div
+                  id="warn-neighbour-postcode-postcodes-io"
+                  class="msg-box warn hide"
+                >
+                  Postcode not found on
+                  <a
+                    href="http://postcodes.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >postcode API</a
+                  >. Postcode may be invalid or not in the UK. Please try a
+                  different postcode.
+                </div>
+                <div
+                  id="warn-neighbour-postcode-epc-api"
+                  class="msg-box warn hide click-dismiss"
+                >
+                  No properties with a domestic EPC certificate were found for
+                  this postcode on
+                  <a
+                    href="https://www.gov.uk/find-energy-certificate"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GOV.UK</a
+                  >. Please enter your home's EPC space heating and floor area
+                  values manually or try a neighbour with a different postcode.
+                </div>
+                <div
+                  id="warn-neighbour-postcode-io-connection"
+                  class="msg-box warn hide"
+                >
+                  Could not connect to
+                  <a
+                    href="http://postcodes.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >postcode API</a
+                  >. Check your internet connection. The API may be down, try
+                  again later.
+                </div>
+                <div
+                  id="warn-neighbour-postcode-epc-connection"
+                  class="msg-box warn hide click-dismiss"
+                >
+                  Neighbour's postcode is valid but could not connect to EPC
+                  API. Please look up your neighbour's
+                  <a
+                    href=""
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="epc-url-neighbour"
+                    >EPC certificate</a
+                  >
+                  manually to find their EPC space heating and floor area
+                  parameters. Click to dismiss.
+                </div>
+
+                <div
+                  id="warn-neighbour-scottish-postcode"
+                  class="msg-box warn hide"
+                >
+                  The EPC certificate for homes located in Scotland cannot be
+                  collected automatically, and so cannot be used to substitute
+                  parameters for your own home. Please select an address located
+                  in England, Wales or Northern Ireland.
+                </div>
+              </div>
+
+              <div id="input-box-neighbour-address" class="input-box">
+                <select
+                  id="input-neighbour-address"
+                  class="hide"
+                  onchange="onchange_neighbours_address()"
+                  autocomplete="off"
+                ></select>
+                <div
+                  id="neighbour-epc-searching"
+                  class="msg-box search info hide"
+                >
+                  Searching
+                  <div><div class="dots"></div></div>
+                </div>
+
+                <div
+                  id="warn-neighbour-address-connection"
+                  class="msg-box warn hide click-dismiss"
+                >
+                  Could not connect to EPC API. Please look up your neighbour's
+                  <a
+                    href=""
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="epc-url-neighbour"
+                    >EPC certificate</a
+                  >
+                  manually to find their EPC space heating and floor area
+                  parameters, or try again later. Click to dismiss.
+                </div>
+                <div
+                  id="warn-neighbour-address-unknown"
+                  class="msg-box warn hide click-dismiss"
+                >
+                  Connected to EPC API but response invalid. Please look up your
+                  neighbour's
+                  <a
+                    href=""
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="epc-url-neighbour"
+                    >EPC certificate</a
+                  >
+                  manually to find their EPC space heating and floor area
+                  parameters, select a different neighbour or try again later.
+                  Click to dismiss.
+                </div>
+                <div
+                  id="warn-neighbour-no-data"
+                  class="msg-box warn click-dismiss hide"
+                >
+                  Neighbour's
+                  <a
+                    href=""
+                    class="epc-url-neighbour"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >EPC Certificate</a
+                  >
+                  does not contain a space heating or floor estimate. Select a
+                  different neighbour.
+                </div>
+              </div>
+
+              <div
+                id="input-box-neighbour-epc-space-heating"
+                class="input-box hide"
+              >
+                <div class="input-spacer"></div>
+                <div class="neighbour-input-row">
+                  <div class="neighbour-input-field nofocus">
+                    <input
+                      readonly
+                      type="number"
+                      id="input-neighbour-epc-space-heating"
+                      class="hide-spinner"
+                      autocomplete="off"
+                    />
+                    <p>Space Heating (kWh/yr)</p>
+                  </div>
+                  <div
+                    class="input-apply-button"
+                    onclick="input_apply('epc-space-heating')"
+                  >
+                    Apply
+                  </div>
+                </div>
+              </div>
+
+              <div id="input-box-neighbour-floor-area" class="input-box hide">
+                <div class="input-spacer"></div>
+                <div class="input-row">
+                  <div class="neighbour-input-field nofocus">
+                    <input
+                      readonly
+                      type="number"
+                      id="input-neighbour-floor-area"
+                      class="hide-spinner"
+                      autocomplete="off"
+                    />
+                    <p>Floor Area (m<sup>2</sup>)</p>
+                  </div>
+                  <div
+                    class="input-apply-button"
+                    onclick="input_apply('floor-area')"
+                  >
+                    Apply
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="input-box-epc-space-heating" class="input-box hide">
               <div class="input-spacer"></div>
-              <div class="neighbour-input-row">
-                <div class="neighbour-input-field nofocus">
+              <div class="input-row">
+                <div class="input-field">
                   <input
-                    readonly
                     type="number"
-                    id="input-neighbour-epc-space-heating"
+                    id="input-epc-space-heating"
                     class="hide-spinner"
                     autocomplete="off"
                   />
-                  <p>Space Heating (kWh/yr)</p>
+                  <p>EPC Space Heating (kWh/yr)</p>
                 </div>
                 <div
-                  class="input-apply-button"
-                  onclick="input_apply('epc-space-heating')"
+                  class="input-side-button"
+                  onclick="input_help('epc-space-heating')"
                 >
-                  Apply
+                  ?
                 </div>
+              </div>
+              <div id="help-epc-space-heating" class="msg-box info hide">
+                The amount of energy required to heat your home per year. This
+                can be found on your home's
+                <a
+                  href=""
+                  class="epc-url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >EPC certificate</a
+                >. Must be in range 0-999999 kWh/yr.
+              </div>
+              <div id="warn-epc-space-heating-range" class="msg-box warn hide">
+                Must be in range 0-999999 kWh/yr.
+              </div>
+              <div id="warn-epc-space-heating-none" class="msg-box warn hide">
+                Your
+                <a
+                  href=""
+                  class="epc-url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  EPC Certificate</a
+                >
+                does not contain a space heating estimate. Either enter it
+                manually or select a neighbour's address who does.
               </div>
             </div>
 
-            <div id="input-box-neighbour-floor-area" class="input-box hide">
+            <div id="input-box-floor-area" class="input-box hide">
               <div class="input-spacer"></div>
               <div class="input-row">
-                <div class="neighbour-input-field nofocus">
+                <div class="input-field">
                   <input
-                    readonly
                     type="number"
-                    id="input-neighbour-floor-area"
+                    id="input-floor-area"
                     class="hide-spinner"
                     autocomplete="off"
                   />
                   <p>Floor Area (m<sup>2</sup>)</p>
                 </div>
                 <div
-                  class="input-apply-button"
-                  onclick="input_apply('floor-area')"
+                  class="input-side-button"
+                  onclick="input_help('floor-area')"
                 >
-                  Apply
+                  ?
                 </div>
               </div>
+              <div id="help-floor-area" class="msg-box info hide">
+                Your home's floor area. This can be found on your home's
+                <a
+                  href=""
+                  class="epc-url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >EPC certificate</a
+                >. Must be in range 25-1500 m<sup>2</sup>.
+              </div>
+              <div id="warn-floor-area-range" class="msg-box warn hide">
+                Must be in range 25-1500 m<sup>2</sup>.
+              </div>
+              <div id="warn-floor-area-none" class="msg-box warn hide">
+                Your
+                <a
+                  href=""
+                  class="epc-url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  EPC Certificate</a
+                >
+                does not contain a floor area estimate. Either enter it manually
+                or select a neighbour's address who does.
+              </div>
             </div>
-          </div>
 
-          <div id="input-box-epc-space-heating" class="input-box hide">
-            <div class="input-spacer"></div>
-            <div class="input-row">
-              <div class="input-field">
-                <input
-                  type="number"
-                  id="input-epc-space-heating"
-                  class="hide-spinner"
-                  autocomplete="off"
-                />
-                <p>EPC Space Heating (kWh/yr)</p>
+            <div id="input-box-temperature" class="input-box">
+              <div class="input-spacer"></div>
+              <div class="input-row">
+                <div class="input-field">
+                  <input
+                    type="number"
+                    id="input-temperature"
+                    class="hide-spinner"
+                    autocomplete="off"
+                  />
+                  <p>Thermostat Temperature (°C)</p>
+                </div>
+                <div
+                  class="input-side-button"
+                  onclick="input_help('temperature')"
+                >
+                  ?
+                </div>
               </div>
-              <div
-                class="input-side-button"
-                onclick="input_help('epc-space-heating')"
-              >
-                ?
+              <div id="help-temperature" class="msg-box info hide">
+                The temperature you like your home at. Must be in the range 0.0
+                to 35.0°C.
+              </div>
+              <div id="warn-temperature-range" class="msg-box warn hide">
+                Must be in range 0.0-35.0°C
               </div>
             </div>
-            <div id="help-epc-space-heating" class="msg-box info hide">
-              The amount of energy required to heat your home per year. This can
-              be found on your home's
-              <a
-                href=""
-                class="epc-url"
-                target="_blank"
-                rel="noopener noreferrer"
-                >EPC certificate</a
-              >. Must be in range 0-999999 kWh/yr.
-            </div>
-            <div id="warn-epc-space-heating-range" class="msg-box warn hide">
-              Must be in range 0-999999 kWh/yr.
-            </div>
-            <div id="warn-epc-space-heating-none" class="msg-box warn hide">
-              Your
-              <a
-                href=""
-                class="epc-url"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                EPC Certificate</a
-              >
-              does not contain a space heating estimate. Either enter it
-              manually or select a neighbour's address who does.
-            </div>
-          </div>
 
-          <div id="input-box-floor-area" class="input-box hide">
-            <div class="input-spacer"></div>
-            <div class="input-row">
-              <div class="input-field">
-                <input
-                  type="number"
-                  id="input-floor-area"
-                  class="hide-spinner"
-                  autocomplete="off"
-                />
-                <p>Floor Area (m<sup>2</sup>)</p>
+            <div id="input-box-occupants" class="input-box">
+              <div class="input-spacer"></div>
+              <div class="input-row">
+                <div class="input-field">
+                  <input
+                    type="number"
+                    id="input-occupants"
+                    class="hide-spinner"
+                    autocomplete="off"
+                  />
+                  <p>No. Occupants</p>
+                </div>
+                <div
+                  class="input-side-button"
+                  onclick="input_help('occupants')"
+                >
+                  ?
+                </div>
               </div>
-              <div class="input-side-button" onclick="input_help('floor-area')">
-                ?
+              <div id="help-occupants" class="msg-box info hide">
+                The number of people who live in your home. Must be in range
+                1-20 people.
+              </div>
+              <div id="warn-occupants-range" class="msg-box warn hide">
+                Must be in range 1-20 people
               </div>
             </div>
-            <div id="help-floor-area" class="msg-box info hide">
-              Your home's floor area. This can be found on your home's
-              <a
-                href=""
-                class="epc-url"
-                target="_blank"
-                rel="noopener noreferrer"
-                >EPC certificate</a
-              >. Must be in range 25-1500 m<sup>2</sup>.
-            </div>
-            <div id="warn-floor-area-range" class="msg-box warn hide">
-              Must be in range 25-1500 m<sup>2</sup>.
-            </div>
-            <div id="warn-floor-area-none" class="msg-box warn hide">
-              Your
-              <a
-                href=""
-                class="epc-url"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                EPC Certificate</a
-              >
-              does not contain a floor area estimate. Either enter it manually
-              or select a neighbour's address who does.
-            </div>
-          </div>
 
-          <div id="input-box-temperature" class="input-box">
-            <div class="input-spacer"></div>
-            <div class="input-row">
-              <div class="input-field">
-                <input
-                  type="number"
-                  id="input-temperature"
-                  class="hide-spinner"
-                  autocomplete="off"
-                />
-                <p>Thermostat Temperature (°C)</p>
+            <div id="input-box-tes-volume" class="input-box">
+              <div class="input-spacer"></div>
+              <div class="input-row">
+                <div class="input-field">
+                  <input
+                    type="number"
+                    id="input-tes-volume"
+                    class="hide-spinner"
+                    autocomplete="off"
+                  />
+                  <p>Max Hot Water Tank Size (m<sup>3</sup>)</p>
+                </div>
+                <div
+                  class="input-side-button active"
+                  onclick="input_help('tes-volume')"
+                >
+                  ?
+                </div>
               </div>
-              <div
-                class="input-side-button"
-                onclick="input_help('temperature')"
-              >
-                ?
+              <div id="help-tes-volume" class="msg-box info">
+                The maximum volume of hot water tank you could install in your
+                home. Must be in range 0.1-3.0 m<sup>3</sup>. Typical value 0.5
+                m<sup>3</sup>.
+              </div>
+              <div id="warn-tes-volume-range" class="msg-box warn hide">
+                Must be in range 0.1-3.0 m<sup>3</sup>
               </div>
             </div>
-            <div id="help-temperature" class="msg-box info hide">
-              The temperature you like your home at. Must be in the range 0.0 to
-              35.0°C.
-            </div>
-            <div id="warn-temperature-range" class="msg-box warn hide">
-              Must be in range 0.0-35.0°C
-            </div>
-          </div>
 
-          <div id="input-box-occupants" class="input-box">
-            <div class="input-spacer"></div>
-            <div class="input-row">
-              <div class="input-field">
-                <input
-                  type="number"
-                  id="input-occupants"
-                  class="hide-spinner"
-                  autocomplete="off"
-                />
-                <p>No. Occupants</p>
-              </div>
-              <div class="input-side-button" onclick="input_help('occupants')">
-                ?
-              </div>
+            <div id="help-advanced" class="msg-box info hide click-dismiss">
+              Advanced input mode. These features are experimental and may not
+              produce accurate results. Click to dismiss.
             </div>
-            <div id="help-occupants" class="msg-box info hide">
-              The number of people who live in your home. Must be in range 1-20
-              people.
-            </div>
-            <div id="warn-occupants-range" class="msg-box warn hide">
-              Must be in range 1-20 people
-            </div>
-          </div>
-
-          <div id="input-box-tes-volume" class="input-box">
-            <div class="input-spacer"></div>
-            <div class="input-row">
-              <div class="input-field">
-                <input
-                  type="number"
-                  id="input-tes-volume"
-                  class="hide-spinner"
-                  autocomplete="off"
-                />
-                <p>Max Water Tank Volume (m<sup>3</sup>)</p>
-              </div>
-              <div
-                class="input-side-button active"
-                onclick="input_help('tes-volume')"
-              >
-                ?
-              </div>
-            </div>
-            <div id="help-tes-volume" class="msg-box info">
-              The maximum volume water tank you could install in your home. Must
-              be in range 0.1-3.0 m<sup>3</sup>. Typical value 0.5
-              m<sup>3</sup>.
-            </div>
-            <div id="warn-tes-volume-range" class="msg-box warn hide">
-              Must be in range 0.1-3.0 m<sup>3</sup>
-            </div>
-          </div>
-
-          <div id="help-advanced" class="msg-box info hide click-dismiss">
-            Advanced input mode. These features are experimental and may not
-            produce accurate results. Click to dismiss.
-          </div>
-          <select
-            id="run-location"
-            class="hide"
-            onchange="set_run_location();"
-            autocomplete="off"
-          >
-            <option value="server-rust">Run Server-Side using Rust</option>
-            <option value="client-rust">Run Client-Side using Rust</option>
-            <option value="client-cpp">Run Client-Side using C++</option>
-          </select>
-
-          <div id="input-box-optimisation" class="check-row hide ticked">
-            <p>Enable Optimisation</p>
-            <div
-              id="input-optimisation"
-              class="checkbox"
-              onclick="toggle_optimisation();"
+            <select
+              id="run-location"
+              class="hide"
+              onchange="set_run_location();"
+              autocomplete="off"
             >
-              <div class="checkmark"></div>
-              <div class="checkmark other"></div>
-            </div>
-          </div>
+              <option value="server-rust">Run Server-Side using Rust</option>
+              <option value="client-rust">Run Client-Side using Rust</option>
+              <option value="client-cpp">Run Client-Side using C++</option>
+            </select>
 
-          <div id="submit-group" class="action-row">
-            <button
-              id="input-submit"
-              class="invalid"
-              onclick="submit_simulation();"
-            >
-              <p>Submit</p>
-            </button>
-            <div class="input-side-button" onclick="toggle_advanced_inputs()">
-              +
+            <div id="input-box-optimisation" class="check-row hide ticked">
+              <p>Enable Optimisation</p>
+              <div
+                id="input-optimisation"
+                class="checkbox"
+                onclick="toggle_optimisation();"
+              >
+                <div class="checkmark"></div>
+                <div class="checkmark other"></div>
+              </div>
             </div>
-          </div>
 
-          <!-- <div id="submit-group" class="input-box submit-group">
+            <div id="submit-group" class="action-row">
+              <button
+                id="input-submit"
+                class="invalid"
+                onclick="submit_simulation();"
+              >
+                <p>Submit</p>
+              </button>
+              <div class="input-side-button" onclick="toggle_advanced_inputs()">
+                +
+              </div>
+            </div>
+
+            <!-- <div id="submit-group" class="input-box submit-group">
           <div></div>
           <button
             id="input-submit"
@@ -657,125 +665,138 @@
             +
           </div>
         </div> -->
-          <div id="warn-submit" class="msg-box warn hide">
-            Cannot submit simulation. Not all input parameters are valid.
-          </div>
-          <div id="submit-waiting" class="msg-box search info hide">
-            Simulating
-            <div><div class="dots"></div></div>
-          </div>
-          <div
-            id="warn-sim-api-connection"
-            class="msg-box warn hide click-dismiss"
-          >
-            Could not connect to Simulator API. Please check your internet
-            connection. Run the simulation client-side under experimental
-            options or try again later. If the problem persists please
-            <a href="">contact us</a>
-            to report the problem.
-          </div>
-          <div id="warn-sim-api-error" class="msg-box warn hide click-dismiss">
-            Connected to Simulator API but an error occurred. Run the simulation
-            client-side under experimental options or try again later. If the
-            problem persists please <a href="">contact us</a>
-            to report the problem. Please provide input parameters.
-          </div>
-          <div id="warn-sim-api-busy" class="msg-box warn hide click-dismiss">
-            Connected to Simulator API but maximum request time exceeded. The
-            server may be busy. Run the simulation client-side under
-            experimental or try running the simulation later. If the problem
-            persists please
-            <a href="">contact us</a>
-            to report the problem.
-          </div>
-
-          <div id="warn-sim-cpp-error" class="msg-box warn hide click-dismiss">
-            An unexpected error occured running the simulator using client side
-            C++. If the problem persists please <a href="">contact us</a> to
-            report the problem.
-          </div>
-          <div id="warn-sim-rust-error" class="msg-box warn hide click-dismiss">
-            An unexpected error occured running the simulator using client side
-            Rust. If the problem persists please <a href="">contact us</a> to
-            report the problem.
-          </div>
-          <div
-            id="warn-sim-client-timeout"
-            class="msg-box warn hide click-dismiss"
-          >
-            The simulation exceeded the maximum allotted runtime of 10 minutes.
-            This could be due to device performance and compatitibility, or not
-            using surface optimisation for simulations with a large floor area
-            and maximum water tank volume.
-          </div>
-          <div
-            id="warn-sim-client-worker"
-            class="msg-box warn hide click-dismiss"
-          >
-            Your browser does not seem to support JavaScript WebWorkers. Please
-            switch to a
-            <a
-              href="https://developer.mozilla.org/en-US/docs/Web/API/Worker#browser_compatibility"
-              target="_blank"
-              rel="noopener noreferrer"
-              >supported browser</a
-            >.
-          </div>
-          <div id="submit-complete" class="msg-box info hide">
-            Simulation complete.
-          </div>
-
-          <div id="input-box-load-results" class="action-row">
-            <label for="load-results">Upload Results</label>
-            <input
-              type="file"
-              id="load-results"
-              type="file"
-              class="hide"
-              accept=".txt"
-            />
-            <div class="input-side-button" onclick="input_help('load-results')">
-              ?
+            <div id="warn-submit" class="msg-box warn hide">
+              Cannot submit simulation. Not all input parameters are valid.
             </div>
-          </div>
-          <div id="help-load-results" class="msg-box info hide">
-            Once you have run a simulation, you can download your results and
-            reupload them to make use of the result exploration page.
-          </div>
-
-          <div id="input-box-save-url" class="action-row hide">
-            <button id="save-url" onclick="copy_input_url_to_clipboard();">
-              Copy Inputs as Link
-            </button>
-            <div class="input-side-button" onclick="input_help('save-url')">
-              ?
+            <div id="submit-waiting" class="msg-box search info hide">
+              Simulating
+              <div><div class="dots"></div></div>
             </div>
-          </div>
-          <div id="help-save-url" class="msg-box info hide">
-            Copy the input parameters as a link to allow you to load them back
-            up for later.
-          </div>
-
-          <div id="input-box-download-link" class="action-row hide">
-            <a id="download-link" href="">Download Results</a>
             <div
-              class="input-side-button"
-              onclick="input_help('download-link')"
+              id="warn-sim-api-connection"
+              class="msg-box warn hide click-dismiss"
             >
-              ?
+              Could not connect to Simulator API. Please check your internet
+              connection. Run the simulation client-side under experimental
+              options or try again later. If the problem persists please
+              <a href="">contact us</a>
+              to report the problem.
             </div>
-          </div>
-          <div id="help-download-link" class="msg-box info hide">
-            By downloading your results you can re-upload them at a later date
-            to explore.
-          </div>
+            <div
+              id="warn-sim-api-error"
+              class="msg-box warn hide click-dismiss"
+            >
+              Connected to Simulator API but an error occurred. Run the
+              simulation client-side under experimental options or try again
+              later. If the problem persists please <a href="">contact us</a>
+              to report the problem. Please provide input parameters.
+            </div>
+            <div id="warn-sim-api-busy" class="msg-box warn hide click-dismiss">
+              Connected to Simulator API but maximum request time exceeded. The
+              server may be busy. Run the simulation client-side under
+              experimental or try running the simulation later. If the problem
+              persists please
+              <a href="">contact us</a>
+              to report the problem.
+            </div>
 
-          <div
-            id="guide"
-            class="msg-box info hide"
-            onclick="guide_state(false);"
-          >
-            Results Page Guide
+            <div
+              id="warn-sim-cpp-error"
+              class="msg-box warn hide click-dismiss"
+            >
+              An unexpected error occured running the simulator using client
+              side C++. If the problem persists please
+              <a href="">contact us</a> to report the problem.
+            </div>
+            <div
+              id="warn-sim-rust-error"
+              class="msg-box warn hide click-dismiss"
+            >
+              An unexpected error occured running the simulator using client
+              side Rust. If the problem persists please
+              <a href="">contact us</a> to report the problem.
+            </div>
+            <div
+              id="warn-sim-client-timeout"
+              class="msg-box warn hide click-dismiss"
+            >
+              The simulation exceeded the maximum allotted runtime of 10
+              minutes. This could be due to device performance and
+              compatitibility, or not using surface optimisation for simulations
+              with a large floor area and maximum water tank volume.
+            </div>
+            <div
+              id="warn-sim-client-worker"
+              class="msg-box warn hide click-dismiss"
+            >
+              Your browser does not seem to support JavaScript WebWorkers.
+              Please switch to a
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/API/Worker#browser_compatibility"
+                target="_blank"
+                rel="noopener noreferrer"
+                >supported browser</a
+              >.
+            </div>
+            <div id="submit-complete" class="msg-box info hide">
+              Simulation complete.
+            </div>
+
+            <div id="input-box-load-results" class="action-row">
+              <label for="load-results">Upload Results</label>
+              <input
+                type="file"
+                id="load-results"
+                type="file"
+                class="hide"
+                accept=".txt"
+              />
+              <div
+                class="input-side-button"
+                onclick="input_help('load-results')"
+              >
+                ?
+              </div>
+            </div>
+            <div id="help-load-results" class="msg-box info hide">
+              Once you have run a simulation, you can download your results and
+              reupload them to make use of the result exploration page.
+            </div>
+
+            <div id="input-box-save-url" class="action-row hide">
+              <button id="save-url" onclick="copy_input_url_to_clipboard();">
+                Copy Inputs as Link
+              </button>
+              <div class="input-side-button" onclick="input_help('save-url')">
+                ?
+              </div>
+            </div>
+            <div id="help-save-url" class="msg-box info hide">
+              Copy the input parameters as a link to allow you to load them back
+              up for later.
+            </div>
+
+            <div id="input-box-download-link" class="action-row hide">
+              <a id="download-link" href="">Download Results</a>
+              <div
+                class="input-side-button"
+                onclick="input_help('download-link')"
+              >
+                ?
+              </div>
+            </div>
+            <div id="help-download-link" class="msg-box info hide">
+              By downloading your results you can re-upload them at a later date
+              to explore.
+            </div>
+
+            <div
+              id="guide"
+              class="msg-box info hide"
+              onclick="guide_state(false);"
+            >
+              Results Page Guide
+            </div>
           </div>
         </div>
         <div id="results-guide">

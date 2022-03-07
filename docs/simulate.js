@@ -797,12 +797,12 @@ async function get_epc_data() {
             if (result['space-heating'] && result['floor-area']) {
                 document.getElementById('help-address').innerHTML = `Your address was used to fill out the space heating estimate and floor
                 area parameters from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>.
-                You may wish to adjust the parameters manually. Click to dismiss.`
+                You may wish to adjust the parameters manually.`
                 unhide_ids(['help-address']);
             } else if (result['space-heating'] && !result['floor-area']) {
                 document.getElementById('help-address').innerHTML = `Your address was used to fill out the space heating estimate
                 from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>. 
-                You may wish to adjust the parameter manually. Click to dismiss.`
+                You may wish to adjust the parameter manually.`
 
                 document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
                 does not contain a floor area estimate. Enter it manually or select a neighbour's address whose home is similar in size to yours.`;
@@ -811,7 +811,7 @@ async function get_epc_data() {
             } else if (!result['space-heating'] && result['floor-area']) {
                 document.getElementById('help-address').innerHTML = `Your address was used to fill out the floor area parameter
                 from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>. 
-                You may wish to adjust the parameter manually. Click to dismiss.`
+                You may wish to adjust the parameter manually.`
 
                 document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
                 does not contain a space heating estimate. Enter it manually or select a neighbour's address whose home has similar heating and hot water requirements to yours.`;
@@ -1198,8 +1198,8 @@ function update_epc_urls() {
     // GOV EPC, scotland EPC, postcode-specific EPC, address-specific EPC
     if (scottish_postcode) {
         for (let url of epc_urls) {
-            url.href = 'https://www.gov.uk/find-energy-certificate';
-            // https://www.scottishepcregister.org.uk
+            // url.href = 'https://www.gov.uk/find-energy-certificate';
+            url.href = 'https://www.scottishepcregister.org.uk';
         }
     } else {
         let epc_urls = document.getElementsByClassName('epc-url');
