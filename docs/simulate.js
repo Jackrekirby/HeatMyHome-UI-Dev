@@ -359,8 +359,9 @@ function fill_neighbour_address() {
         //console.log(address, certificate);
         let option_element = document.createElement('option');
         option_element.value = certificate;
-        option_element.classList.add("color-neutral");
-        option_element.text = address;
+        option_element.classList.add("color-black");
+        // shorten address and remove any trailing commas or spaces
+        option_element.text = address.substring(0, 45).replace(/,\s*$/, "");
         address_element.appendChild(option_element);
     }
     unhide_elements([address_element]);
@@ -1083,12 +1084,14 @@ async function get_address_certificates(postcode) {
                     //console.log(address, certificate);
                     let option_element = document.createElement('option');
                     option_element.value = certificate;
-                    option_element.classList.add("color-neutral");
+                    option_element.classList.add("color-black");
 
                     // capitalise each word
                     address = address.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+
                     address_certificate_list.push([address, certificate]);
-                    option_element.text = address.substring(0, 45);
+                    // shorten address and remove any trailing commas or spaces
+                    option_element.text = address.substring(0, 45).replace(/,\s*$/, "");
                     address_element.appendChild(option_element);
                 }
                 unhide_elements([address_element]);
@@ -1133,11 +1136,12 @@ async function get_neighbours_address_certificates(postcode) {
                     //console.log(address, certificate);
                     let option_element = document.createElement('option');
                     option_element.value = certificate;
-                    option_element.classList.add("color-neutral");
+                    option_element.classList.add("color-black");
 
                     // capitalise each word
                     address = address.toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
-                    option_element.text = address.substring(0, 45);
+                    // shorten address and remove any trailing commas or spaces
+                    option_element.text = address.substring(0, 45).replace(/,\s*$/, "");
                     address_element.appendChild(option_element);
                 }
                 unhide_elements([address_element]);

@@ -364,6 +364,10 @@ input.hide-spinner[type="number"] {
   color: var(--neutral-color);
 }
 
+.color-black {
+  color: var(--black-color);
+}
+
 .color-valid {
   color: var(--valid-color);
 }
