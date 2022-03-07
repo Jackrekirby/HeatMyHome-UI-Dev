@@ -28,6 +28,7 @@ main {
   margin: 1rem;
   padding: 1rem;
   max-width: 35rem;
+  width: 50%;
 }
 
 .divider-group {
@@ -60,7 +61,7 @@ main {
   border-top-right-radius: 1rem;
 }
 
-@media screen and (max-width: 85rem) {
+/* @media screen and (max-width: 85rem) {
   #home-discover img {
     width: 25rem;
     margin-top: 3rem;
@@ -68,7 +69,7 @@ main {
   }
 
   #home-discover h2 {
-    font-size: 3.5rem;
+    font-size: 4rem;
   }
 
   #home-discover p {
@@ -82,11 +83,52 @@ main {
     padding: 0.5rem;
     padding-right: 1.5rem;
   }
-}
+} */
 
-@media screen and (max-width: 60rem) {
+@media screen and (max-width: 80rem) {
   .mobile-col {
     flex-direction: column;
+  }
+  .info-box {
+    width: 100%;
+  }
+  #home-img {
+    width: min(100%, 40rem);
+  }
+}
+
+@media screen and (max-width: 45rem) {
+  #home-discover a {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  #home-discover img {
+    margin-top: 1rem;
+    width: 20rem;
+  }
+
+  /* #home-img {
+    margin-top: 1rem;
+    width: 20rem;
+  } */
+
+  #home-discover h3 {
+    font-size: 1.5rem;
+  }
+
+  #home-discover h2 {
+    font-size: 3rem;
+    margin: 0.25rem;
+  }
+
+  #home-discover p {
+    font-size: 1rem;
+    padding: 0.5rem 0rem;
+  }
+
+  .info-box {
+    max-width: 25rem;
   }
 }
 
