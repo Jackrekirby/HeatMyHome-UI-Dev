@@ -6,7 +6,7 @@ In summary, the website simulates a range of domestic heating systems alongside 
 
 The GitHub repository for HeatMyHome can be found at [here](https://github.com/heatmyhome-ninja/HeatMyHome-Website). The repository used to develop the HeatMyHome simulator can be found [here](https://github.com/Jackrekirby/HeatMyHome-Simulator-Dev). The final simulation code along with API, and user interface can be found at the HeatMyHome repository. However this repository contains additional raw files, and one can go back through the commit history to view its progression. 
 
-The webpage which is hosted from this repository  can be found [here](https://jackrekirby.github.io/heat_ninja_ui/).
+The webpage which is hosted from this repository  can be found [here](https://jackrekirby.github.io/HeatMyHome-UI-Dev/).
 
 Here is a guide to the folder structure:
 
