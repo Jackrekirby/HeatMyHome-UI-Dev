@@ -973,3 +973,9 @@ ul.minus > li:before {
   content: "-";
   background-color: #ff2300;
 }
+
+.flexcentre {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
