@@ -798,29 +798,29 @@ async function get_epc_data() {
 
             if (result['space-heating'] && result['floor-area']) {
                 document.getElementById('help-address').innerHTML = `Your address was used to fill out the space heating estimate and floor
-                area parameters from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>.
+                area parameters from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC</a>.
                 You may wish to adjust the parameters manually.`
                 unhide_ids(['help-address']);
             } else if (result['space-heating'] && !result['floor-area']) {
                 document.getElementById('help-address').innerHTML = `Your address was used to fill out the space heating estimate
-                from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>. 
+                from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC</a>. 
                 You may wish to adjust the parameter manually.`
 
-                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
+                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC</a>
                 does not contain a floor area estimate. Enter it manually or select a neighbour's address whose home is similar in size to yours.`;
                 unhide_ids(['help-address', 'warn-address-missing-data', 'input-box-epc-space-heating']);
                 open_neighbour_menu();
             } else if (!result['space-heating'] && result['floor-area']) {
                 document.getElementById('help-address').innerHTML = `Your address was used to fill out the floor area parameter
-                from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>. 
+                from your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC</a>. 
                 You may wish to adjust the parameter manually.`
 
-                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
+                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC</a>
                 does not contain a space heating estimate. Enter it manually or select a neighbour's address whose home has similar heating and hot water requirements to yours.`;
                 unhide_ids(['help-address', 'warn-address-missing-data', 'input-box-floor-area']);
                 open_neighbour_menu();
             } else { // neither
-                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC certificate</a>
+                document.getElementById('warn-address-missing-data').innerHTML = ` Your home's <a href="" class="epc-url" target="_blank" rel="noopener noreferrer">EPC</a>
                 does not contain a space heating or floor area estimate. Enter them manually or select a neighbour's address whose home is of similar size and has similar heating and hot water requirements to yours.`;
                 unhide_ids(['warn-address-missing-data', 'input-box-floor-area']);
                 open_neighbour_menu();
@@ -884,15 +884,15 @@ async function get_neighbour_epc_data() {
             }
 
             if (!have_valid_space_heating && !have_valid_floor_area && !result['space-heating'] && !result['floor-area']) {
-                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC</a>
                     does not contain a space heating or floor estimate. Select a different neighbour.`;
                 warn_no_data.classList.remove('hide');
             } else if (!have_valid_space_heating && !result['space-heating']) {
-                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC</a>
                     does not contain a space heating estimate. Select a different neighbour.`;
                 warn_no_data.classList.remove('hide');
             } else if (!have_valid_floor_area && !result['floor-area']) {
-                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC Certificate</a>
+                warn_no_data.innerHTML = ` Neighbour's <a href="" class="epc-url-neighbour" target="_blank" rel="noopener noreferrer">EPC</a>
                     does not contain a floor area estimate. Select a different neighbour.`;
                 warn_no_data.classList.remove('hide');
             }
