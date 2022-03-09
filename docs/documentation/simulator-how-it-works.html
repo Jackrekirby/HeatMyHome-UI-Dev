@@ -47,22 +47,125 @@
         <div class="flex">
           <section id="education-slides" class="foreground">
             <div class="">
+              <h3>Notices & Links</h3>
               <p>
                 This page provide an overview on how the simulator works. For
                 full details on the heating model read the journal article,
-                which will be linked here shortly.
+                which will be linked here shortly. The source code for the
+                website and heating simulator, along with documentation can be
+                found on out
+                <a
+                  href="https://github.com/heatmyhome-ninja"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >GitHub</a
+                >
               </p>
               <p>
-                We wish to thank
-                <a href="www.renewables.ninja">www.renewables.ninja</a> who
-                provided the weather data used by the simulator.
+                The costs of the various technologies and their fuel prices are
+                based on data prior to Covid-19. One should therefore expect the
+                price estimates from the simulation to underestimate the costs
+                under current cirmcumstances.
+              </p>
+              <h3>Model Overview</h3>
+              <p>
+                The simulation model requires six inputs from the user, being
+                the homes:
+              </p>
+              <ol class="fmt">
+                <li>Postcode</li>
+                <li>Number of Occupants</li>
+                <li>Thermostat Temperature</li>
+                <li>Floor Area</li>
+                <li>Yearly Space Heating Energy Consumption</li>
+                <li>Maximum Hot Water Tank Volume</li>
+              </ol>
+              <p>
+                From the postcode, the longitude and latitude of the home can be
+                determined, which are rounded to the nearest half a degree. The
+                rounded position is used to load the hourly outside temperature
+                and solar radiation datasets for the location. We wish to thank
+                <a href="renewables.ninja">www.renewables.ninja</a> who provided
+                the weather data used by the simulator.
               </p>
               <p>
-                Its important to note the costs of the various technologies and
-                their fuel prices are based on data prior to Covid-19. One
-                should therefore expect the price estimates from the simulation
-                to underestimate the costs under current cirmcumstances.
+                A home’s floor area and yearly space heating energy consumption
+                can usually be found on your Energy Performance Certificate
+                (EPC), a legal requirement for any building sold, let or
+                constructed in the UK since 2007.
               </p>
+              <p>
+                As the simulator only outputs the optimal hot water tank size
+                for each heating system an upper size limit is required as input
+                to ensure the simulator does not optimise for a tank size that
+                could not feasibly fit into the home.
+              </p>
+              <p>
+                The first step of the model is to estimate the thermal
+                transmittance (U value) of the property. This refers to how
+                quickly heat is tranferred between the property and environment.
+                The U value is calculated by simulating the home’s yearly space
+                heating demand at an hourly resolution using a range of U values
+                from 0.5 to 3.0 in 0.01 W/m<sup>2</sup>K step increments and
+                selecting the U value which results in a yearly space heating
+                demand closest to that specified by the user.
+              </p>
+              <p>
+                The hourly space heating demand is taken as the energy required
+                to raise the inside temperature to the desired temperature. The
+                inside temperature is a function of heat loss to the
+                environment, and gain from body heat and solar radiation. With
+                the U value calculated, the space heating demand is
+                recalculated, in addition to hot water demand, using the
+                inputted thermostat temperature.
+              </p>
+              <p>
+                Hot water energy consumption is a function of inlet cold water
+                temperature and hot water consumption per occupant, accounting
+                for daily and monthly variation. The total demand is then used
+                to calculate the operational costs and emissions of the
+                hydrogen, biomass and gas heating systems, by multiplying the
+                energy demand with operating costs and emissions per unit energy
+                respectively, whilst adjusting for system efficiencies.
+              </p>
+              <p>
+                As for the electrified heating technologies, the model is more
+                complex, being simulated for a range of solar thermal and
+                photovoltaic ancillary technology sizes and combinations, TES
+                sizes and tariffs. The peak hourly demand is used to size the
+                electrified heating technologies. Each solar ancillary is
+                simulated in 2m<sup>2</sup> area increments from 2m<sup>2</sup>
+                up to a quarter of the inputted floor area (assumed half the
+                roof area). The TES size is incremented in 0.1m<sup>3</sup>
+                steps from 0.1 up to 3.0m<sup>3</sup>. As for tariff options,
+                there are five, including flat-rate, night off-peak,
+                evening-peak, EV off-peak and variable.For each hour over a
+                year, the following steps occur.
+              </p>
+              <ol class="fmt">
+                <li>
+                  Calculate the change in inside temperature due to heat loss to
+                  the environment and heat gain from body heat, solar radiation
+                  and heat loss from the TES into the living space.
+                </li>
+                <li>
+                  Update the TES state of charge due to heat loss, solar thermal
+                  generation, space and hot water usage, and heat produced from
+                  the electrified heating technology, powered either from grid
+                  import or solar photovoltaics.
+                </li>
+                <li>
+                  Calculate operational costs from electricity import for the
+                  hour using the selected tariff and operational emissions
+                  associated with the solar ancillaries and grid import.
+                </li>
+                <li>
+                  The optimal solar ancillary size, TES size and tariff is then
+                  outputted to the user for each electrified heat technology -
+                  solar ancillary combination, where the optimal system is
+                  considered that with the lowest lifetime cost.
+                </li>
+              </ol>
             </div>
           </section>
         </div>
