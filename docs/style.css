@@ -141,7 +141,7 @@ nav .mobile {
   display: none;
 }
 
-nav a {
+nav a.text {
   text-decoration: none;
   color: var(--white);
   padding: 0.5rem 1rem;
@@ -162,7 +162,7 @@ nav .button {
   border-style: none;
 }
 
-nav a:hover,
+nav a.text:hover,
 #nav-menu .showing {
   /* color: #69a7a7; */
   /* transition: all 0.3s ease; */
