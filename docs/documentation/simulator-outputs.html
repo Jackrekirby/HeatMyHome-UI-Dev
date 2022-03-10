@@ -110,6 +110,7 @@
               Emissions
             </h2>
           </div>
+          <div id="scroll-location"></div>
         </section>
 
         <div class="flex">
@@ -386,10 +387,10 @@
           .getElementsByClassName("heat-option")
           [new_slide_id].classList.add("grow");
 
-        document.getElementById("education-slides").scrollIntoView({
+        document.getElementById("scroll-location").scrollIntoView({
           behavior: "smooth",
-          block: "end",
-          inline: "nearest",
+          block: "start",
+          inline: "start",
         });
 
         window.location.hash = heat_options[new_slide_id];

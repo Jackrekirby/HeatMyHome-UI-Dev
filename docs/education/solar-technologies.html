@@ -77,7 +77,7 @@
             <h2>Photovoltaic<br />Thermal Hybrid Collectors</h2>
           </div>
         </section>
-
+        <div id="scroll-location"></div>
         <section id="education-slides">
           <div class="">
             <h1>Photovoltaic Panels</h1>
@@ -619,10 +619,10 @@
           .getElementsByClassName("heat-option")
           [new_slide_id].classList.add("grow");
 
-        document.getElementById("education-slides").scrollIntoView({
+        document.getElementById("scroll-location").scrollIntoView({
           behavior: "smooth",
-          block: "end",
-          inline: "nearest",
+          block: "start",
+          inline: "start",
         });
 
         window.location.hash = heat_options[new_slide_id];
