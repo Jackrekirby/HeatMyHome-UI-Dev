@@ -707,7 +707,7 @@ fn main() {
     println!("The current directory is {}", path.display());
     let now = Instant::now();
 
-    run_simulation_with_default_parameters();
+     run_simulation_with_default_parameters();
     //surf_test();
     //run_simulations_using_input_file();
     //test_surfaces();
